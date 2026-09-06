@@ -8,10 +8,12 @@
   :root{
     --bg:#f7f8fa; --card:#ffffff; --border:#e3e5e9; --text:#15171c; --muted:#6b7280;
     --green:#17803d; --red:#dc2626; --accent:#2563eb; --greenSoft:rgba(23,128,61,.10); --redSoft:rgba(220,38,38,.10);
+    --stripe:#eef1f5; --borderStrong:#c7cbd3;
   }
   [data-theme="dark"]{
     --bg:#0b0c10; --card:#15171c; --border:#242731; --text:#e8e9ec; --muted:#8a8f9c;
     --green:#1fae5f; --red:#ff4d4f; --accent:#3b82f6; --greenSoft:rgba(31,174,95,.15); --redSoft:rgba(255,77,79,.15);
+    --stripe:#121319; --borderStrong:#3a3f4c;
   }
   *{box-sizing:border-box;}
   body{
@@ -90,13 +92,26 @@
   table.maps th{ position:sticky; top:0; background:var(--card); color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.03em; }
   table.maps td:first-child, table.maps th:first-child{ text-align:left; position:sticky; left:0; background:var(--bg); }
   table.maps th:first-child{ background:var(--card); }
-  table.maps tbody tr:hover{ background:var(--card); }
+  /* Zebra striping so rows don't visually run together, tuned to stay subtle
+     in both themes; the sticky date column gets the same tint explicitly
+     since it otherwise always paints with --bg regardless of row. */
+  table.maps tbody tr:nth-child(even) td{ background:var(--stripe); }
+  table.maps tbody tr:nth-child(even) td:first-child{ background:var(--stripe); }
+  table.maps tbody tr:hover td{ background:var(--card); }
   .half-day{ color:var(--muted); font-weight:600; }
   .grp{ font-weight:700; }
   .grp.above{ color:var(--green); }
   .grp.below{ color:var(--red); }
   .extreme-hi{ background:var(--greenSoft); font-weight:700; }
   .extreme-lo{ background:var(--redSoft); font-weight:700; }
+  /* Extreme highlighting must win over the zebra stripe's higher-specificity
+     selector on even rows, otherwise the stripe silently masks it. */
+  table.maps tbody tr:nth-child(even) td.extreme-hi{ background:var(--greenSoft); }
+  table.maps tbody tr:nth-child(even) td.extreme-lo{ background:var(--redSoft); }
+  /* Calendar separators: a heavier neutral line between two different months,
+     a heavier colored line between two different years (e.g. Dec -> Jan). */
+  table.maps tbody tr.month-sep td{ border-bottom:3px solid var(--borderStrong); }
+  table.maps tbody tr.year-sep td{ border-bottom:3px solid var(--accent); }
   #mapsEmpty{ text-align:center; color:var(--muted); padding:40px 0; font-size:13px; }
 </style>
 </head>
@@ -247,8 +262,20 @@ function renderMaps(){
     ratio5: rollingRatio(chrono, i, 5),
     ratio10: rollingRatio(chrono, i, 10),
   })).reverse(); // most recent day first
-  for(const r of rows){
+  // Rows are in descending date order (today on top). A separator belongs on
+  // a row when the NEXT row down (i.e. chronologically the prior trading day)
+  // falls in a different month or year — that's the actual calendar boundary.
+  function calendarSepClass(idx){
+    if(idx + 1 >= rows.length) return '';
+    const [y1, m1] = rows[idx].date.split('-');
+    const [y2, m2] = rows[idx + 1].date.split('-');
+    if(y1 !== y2) return 'year-sep';
+    if(m1 !== m2) return 'month-sep';
+    return '';
+  }
+  rows.forEach((r, idx) => {
     const tr = document.createElement('tr');
+    tr.className = calendarSepClass(idx);
     const dateLabel = r.is_half_day ? `${r.date} <span class="half-day" title="Half trading day (early close)">*</span>` : r.date;
     tr.innerHTML = `
       <td>${dateLabel}</td>
@@ -265,7 +292,7 @@ function renderMaps(){
       <td>${r.universe.toLocaleString()}</td>
     `;
     body.appendChild(tr);
-  }
+  });
 }
 
 async function loadMovers(){
