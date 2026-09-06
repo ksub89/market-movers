@@ -2,7 +2,7 @@ name: Update Movers Feed
 
 on:
   schedule:
-    - cron: '*/15 * * * *'   # every 15 minutes, all times UTC
+    - cron: '*/5 * * * *'   # every 5 minutes, all times UTC
   workflow_dispatch:          # lets you trigger it manually from the Actions tab
 
 permissions:
