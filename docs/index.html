@@ -25,6 +25,7 @@
     position:sticky; top:0; background:var(--bg); z-index:5;
   }
   header h1{ font-size:18px; margin:0; font-weight:700; }
+    .sub{ color:var(--muted); font-size:12px; margin-top:2px; }
   .controls{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
   .pill{
     background:var(--card); border:1px solid var(--border); color:var(--muted);
@@ -67,7 +68,10 @@
 <body>
 
 <header>
-  <h1>Market Movers Feed</h1>
+  <div>
+    <h1>Market Movers Feed</h1>
+    <div class="sub" id="lastUpdated"></div>
+  </div>
   <div class="controls" id="filters">
     <span class="pill active" data-f="all">All</span>
     <span class="pill" data-f="up">Gainers</span>
@@ -85,7 +89,8 @@
 
 <script>
 const DATA = [];
-
+const GENERATED_AT = "2026-09-06T07:18:20.044418+00:00";
+  
 function fmtTime(iso){
   const d = new Date(iso);
   let h = d.getHours(), m = d.getMinutes();
@@ -148,6 +153,16 @@ themeToggle.addEventListener('click', ()=>{
   }
 });
 
+function showLastUpdated(){
+  const d = new Date(GENERATED_AT);
+  const label = d.toLocaleString('en-US', {
+    timeZone: 'America/New_York',
+    month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
+    timeZoneName: 'short'
+  });
+  document.getElementById('lastUpdated').textContent = 'Last updated: ' + label;
+}
+showLastUpdated();
 render();
 </script>
 </body>
