@@ -10,7 +10,7 @@ Run this on a schedule (cron) to keep the HTML file current.
 import json
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 import requests
@@ -135,7 +135,9 @@ def build_dataset():
 def main():
     data = build_dataset()
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
+    generated_at = datetime.now(timezone.utc).isoformat()
     html = template.replace("__DATA_JSON__", json.dumps(data, ensure_ascii=False))
+    html = html.replace("__GENERATED_AT__", generated_at)
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(html, encoding="utf-8")
     print(f"{datetime.now().isoformat(timespec='seconds')}  wrote {len(data)} entries to {OUTPUT_PATH}")
