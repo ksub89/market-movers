@@ -7,11 +7,11 @@
 <style>
   :root{
     --bg:#0b0c10; --card:#15171c; --border:#242731; --text:#e8e9ec; --muted:#8a8f9c;
-    --green:#1fae5f; --red:#ff4d4f; --accent:#3b82f6;
+    --green:#1fae5f; --red:#ff4d4f; --accent:#3b82f6; --greenSoft:rgba(31,174,95,.15); --redSoft:rgba(255,77,79,.15);
   }
   [data-theme="light"]{
     --bg:#f7f8fa; --card:#ffffff; --border:#e3e5e9; --text:#15171c; --muted:#6b7280;
-    --green:#17803d; --red:#dc2626; --accent:#2563eb;
+    --green:#17803d; --red:#dc2626; --accent:#2563eb; --greenSoft:rgba(23,128,61,.10); --redSoft:rgba(220,38,38,.10);
   }
   *{box-sizing:border-box;}
   body{
@@ -25,7 +25,7 @@
     position:sticky; top:0; background:var(--bg); z-index:5;
   }
   header h1{ font-size:18px; margin:0; font-weight:700; }
-    .sub{ color:var(--muted); font-size:12px; margin-top:2px; }
+  .sub{ color:var(--muted); font-size:12px; margin-top:2px; }
   .controls{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
   .pill{
     background:var(--card); border:1px solid var(--border); color:var(--muted);
@@ -36,6 +36,20 @@
     background:var(--card); border:1px solid var(--border); color:var(--text);
     font-size:14px; padding:5px 10px; border-radius:20px; cursor:pointer; user-select:none;
   }
+
+  /* Top-level page tabs (Movers / Market Maps) */
+  .pagetabs{
+    max-width:900px; margin:14px auto 0; padding:0 14px; display:flex; gap:8px;
+  }
+  .pagetab{
+    background:var(--card); border:1px solid var(--border); color:var(--muted);
+    font-size:13px; font-weight:600; padding:8px 16px; border-radius:10px 10px 0 0;
+    cursor:pointer; user-select:none; border-bottom:none;
+  }
+  .pagetab.active{ color:var(--text); border-bottom:2px solid var(--accent); }
+  .page{ display:none; }
+  .page.active{ display:block; }
+
   #feed{ max-width:900px; margin:0 auto; padding:10px 14px 60px; }
   .row{
     display:flex; align-items:flex-start; gap:12px;
@@ -63,13 +77,30 @@
   .headline a:hover{ color:var(--accent); text-decoration:underline; }
   .name{ color:var(--muted); font-size:11.5px; margin-top:1px; }
   #empty{ text-align:center; color:var(--muted); padding:40px 0; font-size:13px; }
+
+  /* Market Maps */
+  #maps{ max-width:1100px; margin:0 auto; padding:16px 14px 60px; }
+  .maps-meta{ color:var(--muted); font-size:12px; margin-bottom:12px; }
+  .maps-table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:10px; }
+  table.maps{ border-collapse:collapse; width:100%; font-size:12.5px; white-space:nowrap; }
+  table.maps th, table.maps td{ padding:8px 10px; text-align:right; border-bottom:1px solid var(--border); }
+  table.maps th{ position:sticky; top:0; background:var(--card); color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.03em; }
+  table.maps td:first-child, table.maps th:first-child{ text-align:left; position:sticky; left:0; background:var(--bg); }
+  table.maps th:first-child{ background:var(--card); }
+  table.maps tbody tr:hover{ background:var(--card); }
+  .grp{ font-weight:700; }
+  .grp.above{ color:var(--green); }
+  .grp.below{ color:var(--red); }
+  .extreme-hi{ background:var(--greenSoft); font-weight:700; }
+  .extreme-lo{ background:var(--redSoft); font-weight:700; }
+  #mapsEmpty{ text-align:center; color:var(--muted); padding:40px 0; font-size:13px; }
 </style>
 </head>
 <body>
 
 <header>
   <div>
-    <h1>Market Movers Feed</h1>
+    <h1 id="pageTitle">Market Movers Feed</h1>
     <div class="sub" id="lastUpdated"></div>
   </div>
   <div class="controls" id="filters">
@@ -84,13 +115,47 @@
   </div>
 </header>
 
-<div id="feed"></div>
-<div id="empty" style="display:none;">No movers match this filter.</div>
+<div class="pagetabs" id="pagetabs">
+  <span class="pagetab active" data-page="movers">Movers</span>
+  <span class="pagetab" data-page="maps">Market Maps</span>
+</div>
+
+<div id="moversPage" class="page active">
+  <div id="feed"></div>
+  <div id="empty" style="display:none;">No movers match this filter.</div>
+</div>
+
+<div id="mapsPage" class="page">
+  <div id="maps">
+    <div class="maps-meta" id="mapsMeta">Loading Market Maps…</div>
+    <div class="maps-table-wrap">
+      <table class="maps">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Universe</th>
+            <th class="grp above">Above 5D</th>
+            <th class="grp below">Below 5D</th>
+            <th class="grp above">Above 10D</th>
+            <th class="grp below">Below 10D</th>
+            <th class="grp above">Above 20D</th>
+            <th class="grp below">Below 20D</th>
+            <th class="grp above">Above 50D</th>
+            <th class="grp below">Below 50D</th>
+          </tr>
+        </thead>
+        <tbody id="mapsBody"></tbody>
+      </table>
+    </div>
+    <div id="mapsEmpty" style="display:none;">No Market Maps data yet.</div>
+  </div>
+</div>
 
 <script>
-const DATA = [];
-const GENERATED_AT = "2026-09-06T14:23:03.242212+00:00";
-  
+let activeFilter = 'all';
+let MOVERS = [];
+let MAPS_HISTORY = [];
+
 function fmtTime(iso){
   const d = new Date(iso);
   let h = d.getHours(), m = d.getMinutes();
@@ -99,13 +164,11 @@ function fmtTime(iso){
   return h + ':' + String(m).padStart(2,'0') + ' ' + ap;
 }
 
-let activeFilter = 'all';
-
-function render(){
+function renderMovers(){
   const feed = document.getElementById('feed');
   const empty = document.getElementById('empty');
   feed.innerHTML = '';
-  const rows = DATA.filter(e=>{
+  const rows = MOVERS.filter(e=>{
     if(activeFilter==='all') return true;
     if(activeFilter==='up' || activeFilter==='down') return e.direction===activeFilter;
     return e.source_page===activeFilter;
@@ -132,13 +195,87 @@ function render(){
   }
 }
 
+function pctCell(v, extremeHi, extremeLo){
+  let cls = '';
+  if(v >= extremeHi) cls = 'extreme-hi';
+  else if(v <= extremeLo) cls = 'extreme-lo';
+  return `<td class="${cls}">${v.toFixed(1)}%</td>`;
+}
+
+function renderMaps(){
+  const body = document.getElementById('mapsBody');
+  const empty = document.getElementById('mapsEmpty');
+  body.innerHTML = '';
+  empty.style.display = MAPS_HISTORY.length ? 'none' : 'block';
+  // most recent day first
+  const rows = [...MAPS_HISTORY].reverse();
+  for(const r of rows){
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.date}</td>
+      <td>${r.universe.toLocaleString()}</td>
+      ${pctCell(r.pct_above_5, 80, 20)}
+      ${pctCell(r.pct_below_5, 80, 20)}
+      ${pctCell(r.pct_above_10, 80, 20)}
+      ${pctCell(r.pct_below_10, 80, 20)}
+      ${pctCell(r.pct_above_20, 80, 20)}
+      ${pctCell(r.pct_below_20, 80, 20)}
+      ${pctCell(r.pct_above_50, 80, 20)}
+      ${pctCell(r.pct_below_50, 80, 20)}
+    `;
+    body.appendChild(tr);
+  }
+}
+
+async function loadMovers(){
+  try{
+    const res = await fetch('movers.json?_=' + Date.now());
+    const json = await res.json();
+    MOVERS = json.data || [];
+    showMoversUpdated(json.generated_at);
+    renderMovers();
+  }catch(e){
+    document.getElementById('lastUpdated').textContent = 'Could not load movers.json';
+  }
+}
+
+async function loadMaps(){
+  try{
+    const res = await fetch('market_maps.json?_=' + Date.now());
+    const json = await res.json();
+    MAPS_HISTORY = json.history || [];
+    const latest = MAPS_HISTORY[MAPS_HISTORY.length - 1];
+    const genLabel = json.generated_at ? new Date(json.generated_at).toLocaleString('en-US', {
+      timeZone: 'America/New_York', month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'short'
+    }) : 'unknown';
+    document.getElementById('mapsMeta').textContent = latest
+      ? `Latest session: ${latest.date} · Universe: ${latest.universe.toLocaleString()} stocks (price > $3, volume > 100k) · Data refreshed: ${genLabel}`
+      : 'No data yet — the daily job hasn\'t run.';
+    renderMaps();
+  }catch(e){
+    document.getElementById('mapsMeta').textContent = 'Could not load market_maps.json';
+  }
+}
+
 document.getElementById('filters').addEventListener('click', (ev)=>{
   const p = ev.target.closest('.pill');
   if(!p) return;
   document.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
   p.classList.add('active');
   activeFilter = p.dataset.f;
-  render();
+  renderMovers();
+});
+
+document.getElementById('pagetabs').addEventListener('click', (ev)=>{
+  const t = ev.target.closest('.pagetab');
+  if(!t) return;
+  document.querySelectorAll('.pagetab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  const page = t.dataset.page;
+  document.getElementById('moversPage').classList.toggle('active', page==='movers');
+  document.getElementById('mapsPage').classList.toggle('active', page==='maps');
+  document.getElementById('filters').style.display = page==='movers' ? 'flex' : 'none';
+  document.getElementById('pageTitle').textContent = page==='movers' ? 'Market Movers Feed' : 'Market Maps';
 });
 
 const themeToggle = document.getElementById('themeToggle');
@@ -153,8 +290,8 @@ themeToggle.addEventListener('click', ()=>{
   }
 });
 
-function showLastUpdated(){
-  const d = new Date(GENERATED_AT);
+function showMoversUpdated(generatedAtIso){
+  const d = new Date(generatedAtIso);
   const label = d.toLocaleString('en-US', {
     timeZone: 'America/New_York',
     month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
@@ -162,8 +299,9 @@ function showLastUpdated(){
   });
   document.getElementById('lastUpdated').textContent = 'Last updated: ' + label;
 }
-showLastUpdated();
-render();
+
+loadMovers();
+loadMaps();
 </script>
 </body>
 </html>
