@@ -84,13 +84,14 @@
   /* Market Maps */
   #maps{ max-width:1100px; margin:0 auto; padding:16px 14px 60px; }
   .maps-meta{ color:var(--muted); font-size:12px; margin-bottom:12px; }
-  .maps-table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:10px; }
-  table.maps{ border-collapse:collapse; width:100%; font-size:12.5px; white-space:nowrap; }
-  table.maps th, table.maps td{ padding:8px 10px; text-align:right; border-bottom:1px solid var(--border); }
+  .maps-table-wrap{ overflow-x:auto; border-radius:10px; }
+  table.maps{ border-collapse:collapse; width:100%; font-size:12.5px; white-space:nowrap; border:1px solid var(--border); }
+  table.maps th, table.maps td{ padding:8px 10px; text-align:right; border:1px solid var(--border); }
   table.maps th{ position:sticky; top:0; background:var(--card); color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.03em; }
   table.maps td:first-child, table.maps th:first-child{ text-align:left; position:sticky; left:0; background:var(--bg); }
   table.maps th:first-child{ background:var(--card); }
   table.maps tbody tr:hover{ background:var(--card); }
+  .half-day{ color:var(--muted); font-weight:600; }
   .grp{ font-weight:700; }
   .grp.above{ color:var(--green); }
   .grp.below{ color:var(--red); }
@@ -248,8 +249,9 @@ function renderMaps(){
   })).reverse(); // most recent day first
   for(const r of rows){
     const tr = document.createElement('tr');
+    const dateLabel = r.is_half_day ? `${r.date} <span class="half-day" title="Half trading day (early close)">*</span>` : r.date;
     tr.innerHTML = `
-      <td>${r.date}</td>
+      <td>${dateLabel}</td>
       ${pctCell(r.pct_above_5, 80, 20)}
       ${pctCell(r.pct_below_5, 80, 20)}
       ${pctCell(r.pct_above_10, 80, 20)}
@@ -288,7 +290,7 @@ async function loadMaps(){
       timeZone: 'America/New_York', month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'short'
     }) : 'unknown';
     document.getElementById('mapsMeta').textContent = latest
-      ? `Latest session: ${latest.date} · Universe: ${latest.universe.toLocaleString()} stocks (price > $3, volume > 100k) · Data refreshed: ${genLabel}`
+      ? `Latest session: ${latest.date} · Universe: ${latest.universe.toLocaleString()} stocks (price > $3, volume > 100k) · Data refreshed: ${genLabel} · * = half (early-close) trading day`
       : 'No data yet — the daily job hasn\'t run.';
     renderMaps();
   }catch(e){
