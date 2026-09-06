@@ -21,7 +21,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests pandas_market_calendars
 
       - name: Run Market Maps update
         env:
