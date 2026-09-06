@@ -1,10 +1,19 @@
 #!/usr/bin/env python3
 """
 Pulls TheStockCatalyst.com premarket/afterhours movers + earnings-movers pages,
-filters out anything under $5, and rebuilds market_movers_feed.html with the
-fresh data baked in.
+filters out anything under $5, and writes the fresh data to docs/movers.json.
 
-Run this on a schedule (cron) to keep the HTML file current.
+CHANGED from the original version: this used to bake the JSON straight into
+docs/index.html by string-replacing markers in template.html. It now writes a
+small JSON file instead, and index.html (now a static file, committed once)
+fetches it client-side. Reason: index.html also has to host the new "Market
+Maps" tab, which is updated once a day by a completely separate workflow
+(update_market_maps.py / docs/market_maps.json). Two schedules independently
+regenerating the *same* full HTML file from a template would each blow away
+whatever the other had just written. Two small JSON files updated by two
+independent workflows, read by one static page, avoids that entirely.
+
+Run this on a schedule (cron) to keep the feed current.
 """
 
 import json
@@ -18,11 +27,10 @@ from bs4 import BeautifulSoup
 
 # ---- CONFIG -----------------------------------------------------------
 SCRIPT_DIR = Path(__file__).resolve().parent
-TEMPLATE_PATH = SCRIPT_DIR / "template.html"
 
-# For GitHub Pages: this writes to docs/index.html, which Pages serves as your
-# site's homepage once Pages is enabled with "Deploy from branch: main /docs".
-OUTPUT_PATH = SCRIPT_DIR / "docs" / "index.html"
+# For GitHub Pages: docs/index.html (static, not written by this script) is
+# your site's homepage once Pages is enabled with "Deploy from branch: main /docs".
+OUTPUT_PATH = SCRIPT_DIR / "docs" / "movers.json"
 
 MIN_PRICE = 5.0
 
@@ -134,12 +142,12 @@ def build_dataset():
 
 def main():
     data = build_dataset()
-    template = TEMPLATE_PATH.read_text(encoding="utf-8")
     generated_at = datetime.now(timezone.utc).isoformat()
-    html = template.replace("__DATA_JSON__", json.dumps(data, ensure_ascii=False))
-    html = html.replace("__GENERATED_AT__", generated_at)
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_PATH.write_text(html, encoding="utf-8")
+    OUTPUT_PATH.write_text(
+        json.dumps({"generated_at": generated_at, "data": data}, ensure_ascii=False),
+        encoding="utf-8",
+    )
     print(f"{datetime.now().isoformat(timespec='seconds')}  wrote {len(data)} entries to {OUTPUT_PATH}")
 
 
