@@ -12,6 +12,17 @@ workflow — it fires at 22:00 UTC, which is after 4pm ET in both EST and EDT).
 It appends one row per trading day to docs/market_maps.json; it does NOT
 touch docs/index.html or docs/movers.json, so it can run on a completely
 independent schedule from update_movers.py without clobbering it.
+
+The "date" stored for each row is always an actual NYSE trading session —
+never a weekend or holiday. If this runs on a non-trading day (a manual
+test run on a Sunday, or the scheduled run happening to land on a market
+holiday since GitHub cron doesn't know the NYSE calendar), it looks up the
+most recent real trading day and files the data under that date instead.
+Half (early-close) trading days are flagged with is_half_day=True so the
+page can mark them with a "*". The NYSE calendar comes from the
+pandas_market_calendars package (exchange 'NYSE'), which encodes the
+exchange's official holiday/half-day schedule rather than anything
+hardcoded or scraped here.
 """
 
 import csv
@@ -19,10 +30,11 @@ import io
 import json
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta, time as dtime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+import pandas_market_calendars as mcal
 import requests
 
 # ---- CONFIG -------------------------------------------------------------
@@ -71,6 +83,27 @@ def fetch_count(filter_str: str) -> int:
     return len(rows) - 1  # minus header row
 
 
+NYSE = mcal.get_calendar("NYSE")
+
+
+def last_trading_session():
+    """Return (date_str, is_half_day) for the most recent actual NYSE trading
+    session as of right now — today's date if today is a normal trading day,
+    otherwise the most recent prior trading day (skips weekends and NYSE
+    holidays automatically)."""
+    today = datetime.now(ZoneInfo("America/New_York")).date()
+    sched = NYSE.schedule(start_date=today - timedelta(days=10), end_date=today)
+    if sched.empty:
+        raise RuntimeError(
+            f"pandas_market_calendars found no NYSE trading days in the 10 days "
+            f"up to {today} — that shouldn't happen, check the library/date."
+        )
+    last_day = sched.index[-1].date()
+    close_et = sched.iloc[-1]["market_close"].tz_convert("America/New_York").time()
+    is_half_day = close_et < dtime(16, 0)
+    return last_day.strftime("%Y-%m-%d"), is_half_day
+
+
 def build_snapshot():
     counts = {}
     for key, filt in FILTERS.items():
@@ -84,10 +117,11 @@ def build_snapshot():
     def pct(n):
         return round(100.0 * n / total, 2)
 
-    trading_date = datetime.now(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+    trading_date, is_half_day = last_trading_session()
 
     return {
         "date": trading_date,
+        "is_half_day": is_half_day,
         "universe": total,
         "pct_above_5": pct(counts["above_5"]),
         "pct_below_5": pct(counts["below_5"]),
