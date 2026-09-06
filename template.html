@@ -155,8 +155,10 @@ themeToggle.addEventListener('click', ()=>{
 
 function showLastUpdated(){
   const d = new Date(GENERATED_AT);
-  const label = d.toLocaleString(undefined, {
-    month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit'
+  const label = d.toLocaleString('en-US', {
+    timeZone: 'America/New_York',
+    month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit',
+    timeZoneName: 'short'
   });
   document.getElementById('lastUpdated').textContent = 'Last updated: ' + label;
 }
