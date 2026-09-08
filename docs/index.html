@@ -63,7 +63,7 @@
   }
   @keyframes fadeIn{ from{opacity:0; transform:translateY(-3px);} to{opacity:1; transform:none;} }
   .time{
-    width:88px; flex:0 0 88px; color:var(--muted); font-size:12px; padding-top:2px; font-variant-numeric:tabular-nums; white-space:nowrap;
+    width:88px; flex:0 0 88px; color:var(--muted); font-size:12px; padding-top:2px; font-variant-numeric:tabular-nums; line-height:1.4;
   }
   .bar{ width:3px; align-self:stretch; border-radius:2px; flex:0 0 3px; }
   .bar.up{ background:var(--green); } .bar.down{ background:var(--red); }
@@ -193,13 +193,29 @@ let MAPS_HISTORY = [];
 // wall-clock value is already correct ET, this reads the hour/minute
 // straight out of the string instead of going through Date/timezone
 // conversion at all — always ET, regardless of where the page is viewed.
+// TheStockCatalyst.com's grids can carry a headline whose OWN publish
+// timestamp is from a previous session, even though the stock is moving
+// again today (the mover is current, the linked article isn't). Shown as
+// just a bare time, an entry like that can look like it's from "the future"
+// relative to right now (e.g. "12:16 PM ET" sitting above a page that says
+// "8:31 AM" is currently). So: show a compact date prefix ("Sep 7, ") only
+// when the entry's date differs from today in ET — same-day entries stay as
+// plain "11:52 AM ET" like before.
 function fmtTime(iso){
-  const m = iso.match(/T(\d{2}):(\d{2})/);
+  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
   if(!m) return iso;
-  let h = parseInt(m[1], 10), min = m[2];
+  const [, y, mo, d, hh, mm] = m;
+  let h = parseInt(hh, 10);
   const ap = h >= 12 ? 'PM' : 'AM';
   h = h % 12; if(h===0) h=12;
-  return h + ':' + min + ' ' + ap + ' ET';
+  const timeStr = h + ':' + mm + ' ' + ap + ' ET';
+
+  const todayET = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
+  const entryDate = `${y}-${mo}-${d}`;
+  if(entryDate === todayET) return timeStr;
+
+  const dateLabel = new Date(`${entryDate}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  return dateLabel + ', ' + timeStr;
 }
 
 function renderMovers(){
