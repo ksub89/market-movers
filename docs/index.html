@@ -209,7 +209,14 @@ let MAPS_HISTORY = [];
 // viewer's own timezone, so this does a real UTC -> America/New_York
 // conversion rather than any string-slicing or timezone guessing.
 function fmtTime(iso){
-  const d = new Date(iso);
+  // The underlying timestamp from the scraper is always UTC, but movers.json
+  // may or may not have an explicit "+00:00"/"Z" suffix on it depending on
+  // which version of the script wrote it. A date-time string with NO offset
+  // is parsed by browsers as LOCAL time, not UTC, which silently produces a
+  // wrong result — so force a UTC interpretation here explicitly regardless
+  // of whether the suffix is already present.
+  const utcIso = /[Zz]|[+-]\d\d:\d\d$/.test(iso) ? iso : iso + 'Z';
+  const d = new Date(utcIso);
   if(isNaN(d.getTime())) return iso;
 
   const timeStr = d.toLocaleTimeString('en-US', {
