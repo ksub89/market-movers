@@ -21,6 +21,7 @@ import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 from bs4 import BeautifulSoup
@@ -97,6 +98,14 @@ def parse_page(html: str, label: str):
                     continue
                 ts = mt.group(1)
                 headline = text[: mt.start()].strip()
+                # TheStockCatalyst.com's [MM/DD/YYYY H:MM AM/PM] timestamps are
+                # in UTC (verified against a linked article's own stated
+                # publish time, which was 4 hours behind what we were
+                # displaying — exactly the EDT/UTC offset). Attach an
+                # explicit UTC tzinfo here so downstream consumers (this
+                # script's own generated_at, and the page's JS) do a real
+                # timezone conversion instead of guessing.
+                dt_utc = datetime.strptime(ts, "%m/%d/%Y %I:%M %p").replace(tzinfo=timezone.utc)
                 entries.append(
                     {
                         "source_page": label,
@@ -107,7 +116,7 @@ def parse_page(html: str, label: str):
                         "chg_pct": chg_pct,
                         "headline": headline,
                         "url": href,
-                        "dt": datetime.strptime(ts, "%m/%d/%Y %I:%M %p"),
+                        "dt": dt_utc,
                     }
                 )
     return entries
