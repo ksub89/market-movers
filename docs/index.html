@@ -63,7 +63,7 @@
   }
   @keyframes fadeIn{ from{opacity:0; transform:translateY(-3px);} to{opacity:1; transform:none;} }
   .time{
-    width:64px; flex:0 0 64px; color:var(--muted); font-size:12px; padding-top:2px; font-variant-numeric:tabular-nums;
+    width:88px; flex:0 0 88px; color:var(--muted); font-size:12px; padding-top:2px; font-variant-numeric:tabular-nums; white-space:nowrap;
   }
   .bar{ width:3px; align-self:stretch; border-radius:2px; flex:0 0 3px; }
   .bar.up{ background:var(--green); } .bar.down{ background:var(--red); }
@@ -186,12 +186,20 @@ let activeFilter = 'all';
 let MOVERS = [];
 let MAPS_HISTORY = [];
 
+// The scraper's timestamps come from TheStockCatalyst.com already in US
+// Eastern time, but stored as a plain (timezone-less) ISO string. Handing
+// that to `new Date()` makes the browser reinterpret it in the VIEWER's own
+// local timezone, which is wrong for anyone not physically in ET. Since the
+// wall-clock value is already correct ET, this reads the hour/minute
+// straight out of the string instead of going through Date/timezone
+// conversion at all — always ET, regardless of where the page is viewed.
 function fmtTime(iso){
-  const d = new Date(iso);
-  let h = d.getHours(), m = d.getMinutes();
+  const m = iso.match(/T(\d{2}):(\d{2})/);
+  if(!m) return iso;
+  let h = parseInt(m[1], 10), min = m[2];
   const ap = h >= 12 ? 'PM' : 'AM';
   h = h % 12; if(h===0) h=12;
-  return h + ':' + String(m).padStart(2,'0') + ' ' + ap;
+  return h + ':' + min + ' ' + ap + ' ET';
 }
 
 function renderMovers(){
