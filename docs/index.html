@@ -201,20 +201,25 @@ let MAPS_HISTORY = [];
 // "8:31 AM" is currently). So: show a compact date prefix ("Sep 7, ") only
 // when the entry's date differs from today in ET — same-day entries stay as
 // plain "11:52 AM ET" like before.
+// The scraper stores each headline's timestamp as a genuine UTC-offset ISO
+// string (verified: TheStockCatalyst.com's own [MM/DD/YYYY H:MM AM/PM] value
+// is UTC, confirmed against a linked article's stated ET publish time, which
+// was exactly 4 hours behind — the EDT/UTC offset). `new Date(iso)` on a
+// string with an explicit "+00:00" offset parses correctly regardless of the
+// viewer's own timezone, so this does a real UTC -> America/New_York
+// conversion rather than any string-slicing or timezone guessing.
 function fmtTime(iso){
-  const m = iso.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
-  if(!m) return iso;
-  const [, y, mo, d, hh, mm] = m;
-  let h = parseInt(hh, 10);
-  const ap = h >= 12 ? 'PM' : 'AM';
-  h = h % 12; if(h===0) h=12;
-  const timeStr = h + ':' + mm + ' ' + ap + ' ET';
+  const d = new Date(iso);
+  if(isNaN(d.getTime())) return iso;
 
-  const todayET = new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
-  const entryDate = `${y}-${mo}-${d}`;
-  if(entryDate === todayET) return timeStr;
+  const timeStr = d.toLocaleTimeString('en-US', {
+    timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', hour12: true
+  }) + ' ET';
 
-  const dateLabel = new Date(`${entryDate}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const fmtDate = (dt) => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(dt);
+  if(fmtDate(d) === fmtDate(new Date())) return timeStr;
+
+  const dateLabel = d.toLocaleDateString('en-US', { timeZone: 'America/New_York', month: 'short', day: 'numeric' });
   return dateLabel + ', ' + timeStr;
 }
 
