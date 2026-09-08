@@ -34,6 +34,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 OUTPUT_PATH = SCRIPT_DIR / "docs" / "movers.json"
 
 MIN_PRICE = 5.0
+MIN_VOLUME = 300_000
 
 PAGES = {
     "https://www.thestockcatalyst.com/NYSEPMMovers": "Premarket",
@@ -90,6 +91,14 @@ def parse_page(html: str, label: str):
             symbol = sym_a.get_text(strip=True) if sym_a else tds[2].get_text(strip=True)
             name = tds[3].get_text(strip=True)
 
+            vol_text = tds[4].get_text(strip=True).replace(",", "")
+            try:
+                volume = int(float(vol_text))
+            except ValueError:
+                continue
+            if volume <= MIN_VOLUME:
+                continue
+
             for a in tds[5].find_all("a"):
                 text = a.get_text(" ", strip=True)
                 href = a.get("href")
@@ -113,6 +122,7 @@ def parse_page(html: str, label: str):
                         "symbol": symbol,
                         "name": name,
                         "price": price,
+                        "volume": volume,
                         "chg_pct": chg_pct,
                         "headline": headline,
                         "url": href,
