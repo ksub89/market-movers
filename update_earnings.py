@@ -50,7 +50,30 @@ BASE = "https://elite.finviz.com/export/calendar/earnings"
 MIN_SURPRISE_PCT = 20.0
 NUM_DAYS = 4
 
+# The workflow fires 4x/day (not 2x) because a GitHub Actions cron schedule is
+# a fixed UTC time with no DST awareness, so "8am ET" and "5pm ET" each need
+# two cron lines — one for EDT, one for EST — to land at the right wall-clock
+# time year-round. Only one of each pair is ever actually correct at a given
+# time of year; the other fires an hour off. This guard makes the "wrong"
+# firing a harmless no-op (exits before touching the file) instead of writing
+# a redundant/misleading update, so docs/earnings.json only ever actually
+# changes at true 8am ET and true 5pm ET (BMO and AMC), Mon-Fri.
+RUN_WINDOWS_ET = [(8, 0), (17, 0)]  # (hour, minute), 24h clock, America/New_York
+RUN_TOLERANCE_MIN = 20
+
 NYSE = mcal.get_calendar("NYSE")
+
+
+def in_run_window() -> bool:
+    # Manual runs (workflow_dispatch) always proceed regardless of time of day.
+    if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch":
+        return True
+    now = datetime.now(ZoneInfo("America/New_York"))
+    now_minutes = now.hour * 60 + now.minute
+    for h, m in RUN_WINDOWS_ET:
+        if abs(now_minutes - (h * 60 + m)) <= RUN_TOLERANCE_MIN:
+            return True
+    return False
 
 
 def last_n_trading_days(n: int):
@@ -155,6 +178,15 @@ def build_days():
 
 
 def main():
+    if not in_run_window():
+        now = datetime.now(ZoneInfo("America/New_York"))
+        print(
+            f"Skipping: {now.strftime('%H:%M %Z')} is not within {RUN_TOLERANCE_MIN} min of "
+            f"a scheduled run time ({RUN_WINDOWS_ET} ET) — this is the DST-offset cron "
+            f"firing a no-op, not an error."
+        )
+        return
+
     print("Fetching Finviz Elite earnings calendar...")
     days = build_days()
     for d in days:
