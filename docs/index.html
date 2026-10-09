@@ -235,7 +235,7 @@
         <tbody id="earningsBody"></tbody>
       </table>
     </div>
-    <div id="earningsEmpty" style="display:none;">No names cleared the ±20% EPS/Revenue surprise bar this day.</div>
+    <div id="earningsEmpty" style="display:none;">No names beat EPS or Revenue estimates by 20%+ this day.</div>
   </div>
 </div>
 
@@ -465,7 +465,7 @@ async function loadEarnings(){
       timeZone: 'America/New_York', month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'short'
     }) : 'unknown';
     document.getElementById('earningsMeta').textContent = EARNINGS_DAYS.length
-      ? `Last ${EARNINGS_DAYS.length} trading days · Showing names with EPS or Revenue surprise beyond ±${json.min_surprise_pct}% · Data refreshed: ${genLabel}`
+      ? `Last ${EARNINGS_DAYS.length} trading days · Showing names that beat EPS or Revenue estimates by ${json.min_surprise_pct}%+ · Data refreshed: ${genLabel}`
       : 'No data yet — the daily job hasn\'t run.';
     renderDayTabs();
     renderEarnings();
