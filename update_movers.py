@@ -17,6 +17,7 @@ Run this on a schedule (cron) to keep the feed current.
 """
 
 import json
+import os
 import re
 import sys
 from datetime import datetime, timezone
@@ -36,6 +37,22 @@ OUTPUT_PATH = SCRIPT_DIR / "docs" / "movers.json"
 MIN_PRICE = 5.0
 MIN_VOLUME = 300_000
 
+# Active windows: premarket (every 30 min, ending near the 9:30am open) and
+# the late-day/afterhours window (every 30 min, starting just ahead of the
+# 4:00pm close and running through early evening). Outside these marks the
+# feed simply stays as it last was — nothing runs, nothing to commit — which
+# is the "maintain the feed" behavior for the rest of the day/night.
+#
+# This replaces the old around-the-clock */5 schedule (288 runs/day), which
+# is almost certainly why the feed went stale for hours at a time on a
+# private repo: GitHub Free's 2,000 Actions-minutes/month cap gets burned
+# through fast at that rate. ~11 real runs/day fixes that outright.
+RUN_MARKS_ET = [
+    (7, 15), (7, 45), (8, 15), (8, 45), (9, 15),          # premarket
+    (15, 30), (16, 0), (16, 30), (17, 0), (17, 30), (18, 0),  # afterhours
+]
+RUN_TOLERANCE_MIN = 10
+
 PAGES = {
     "https://www.thestockcatalyst.com/NYSEPMMovers": "Premarket",
     "https://www.thestockcatalyst.com/NYSEAHMovers": "Afterhours",
@@ -46,6 +63,18 @@ PAGES = {
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
 
 TIME_RE = re.compile(r"\[(\d{1,2}/\d{1,2}/\d{4}\s+\d{1,2}:\d{2}\s*[AP]M)\]\s*$")
+
+
+def in_run_window() -> bool:
+    # Manual runs (workflow_dispatch) always proceed regardless of time of day.
+    if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch":
+        return True
+    now = datetime.now(ZoneInfo("America/New_York"))
+    now_minutes = now.hour * 60 + now.minute
+    for h, m in RUN_MARKS_ET:
+        if abs(now_minutes - (h * 60 + m)) <= RUN_TOLERANCE_MIN:
+            return True
+    return False
 
 
 def fetch(url: str) -> str:
@@ -160,6 +189,15 @@ def build_dataset():
 
 
 def main():
+    if not in_run_window():
+        now = datetime.now(ZoneInfo("America/New_York"))
+        print(
+            f"Skipping: {now.strftime('%H:%M %Z')} is not within {RUN_TOLERANCE_MIN} min of "
+            f"a scheduled run mark — this is the every-15-min poller finding nothing to do, "
+            f"not an error."
+        )
+        return
+
     data = build_dataset()
     generated_at = datetime.now(timezone.utc).isoformat()
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
