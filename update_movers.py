@@ -179,13 +179,19 @@ def parse_page(html: str, label: str):
                 ts = mt.group(1)
                 headline = text[: mt.start()].strip()
                 # TheStockCatalyst.com's [MM/DD/YYYY H:MM AM/PM] timestamps are
-                # in UTC (verified against a linked article's own stated
-                # publish time, which was 4 hours behind what we were
-                # displaying — exactly the EDT/UTC offset). Attach an
-                # explicit UTC tzinfo here so downstream consumers (this
-                # script's own generated_at, and the page's JS) do a real
-                # timezone conversion instead of guessing.
-                dt_utc = datetime.strptime(ts, "%m/%d/%Y %I:%M %p").replace(tzinfo=timezone.utc)
+                # already US Eastern time (NOT UTC — an earlier version of this
+                # script got that backwards). Confirmed directly: on a live
+                # pull, the freshest bracket on the Premarket Movers page
+                # capped out at 9:34 AM — four minutes after the real 9:30 AM
+                # ET market open, which only makes sense if the bracket IS
+                # ET (a headline naturally stops being "premarket" once the
+                # bell rings). If the brackets were UTC that cutoff would
+                # fall at 5:34 AM ET, which lines up with nothing. Tag with
+                # America/New_York (via zoneinfo, so EDT/EST/DST resolve
+                # correctly) rather than UTC.
+                dt_et = datetime.strptime(ts, "%m/%d/%Y %I:%M %p").replace(
+                    tzinfo=ZoneInfo("America/New_York")
+                )
                 entries.append(
                     {
                         "source_page": label,
@@ -197,7 +203,7 @@ def parse_page(html: str, label: str):
                         "chg_pct": chg_pct,
                         "headline": headline,
                         "url": href,
-                        "dt": dt_utc,
+                        "dt": dt_et,
                     }
                 )
     return entries
