@@ -24,6 +24,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+import pandas_market_calendars as mcal
 import requests
 from bs4 import BeautifulSoup
 
@@ -76,6 +77,35 @@ PAGES = {
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
 
 TIME_RE = re.compile(r"\[(\d{1,2}/\d{1,2}/\d{4}\s+\d{1,2}:\d{2}\s*[AP]M)\]\s*$")
+
+
+NYSE = mcal.get_calendar("NYSE")
+
+
+def most_recent_market_open() -> datetime:
+    """The most recent NYSE 9:30am-ET open that has already happened, as a
+    UTC-aware datetime. A symbol often carries several headlines spanning
+    multiple days (e.g. an analyst note two days ago, an after-hours release
+    last night, a wire-service rehash this morning) — the one that actually
+    explains a PREmarket or afterhours move is the newest one that landed
+    before the open, not whatever's merely most recent chronologically.
+    Anything stamped after that open is just same-day market-hours noise by
+    the time this runs again (next premarket or afterhours window), so it's
+    deprioritized in favor of the real pre-open catalyst. Computed via the
+    exchange calendar (not hardcoded 9:30) for the same reason the other two
+    scripts do — holidays/early closes shift what "today's session" even is,
+    though the open time itself is always 9:30 ET on a trading day."""
+    now_utc = datetime.now(timezone.utc)
+    sched = NYSE.schedule(
+        start_date=(now_utc - timedelta(days=10)).date(), end_date=now_utc.date()
+    )
+    opens = [o.to_pydatetime() for o in sched["market_open"] if o.to_pydatetime() <= now_utc]
+    if not opens:
+        raise RuntimeError(
+            f"pandas_market_calendars found no past NYSE opens in the 10 days "
+            f"up to {now_utc.date()} — that shouldn't happen."
+        )
+    return opens[-1]
 
 
 def in_run_window() -> bool:
@@ -212,7 +242,25 @@ def load_existing() -> dict:
     return existing
 
 
+def better_entry(a, b, cutoff):
+    """Which of two candidate entries for the same (symbol, source_page,
+    direction) key should win — preferring a headline before the most recent
+    market open over one after it, and only falling back to "simply newer"
+    when both candidates are on the same side of that cutoff (or when neither
+    is pre-open, so there's no real catalyst headline to prefer and the
+    latest one is the best available)."""
+    if b is None:
+        return a
+    a_pre = a["dt"] < cutoff
+    b_pre = b["dt"] < cutoff
+    if a_pre != b_pre:
+        return a if a_pre else b
+    return a if a["dt"] > b["dt"] else b
+
+
 def build_dataset():
+    cutoff = most_recent_market_open()
+
     all_entries = []
     for url, label in PAGES.items():
         try:
@@ -222,21 +270,22 @@ def build_dataset():
             continue
         all_entries.extend(parse_page(html, label))
 
-    # keep only the most recent headline per (symbol, source_page, direction)
-    # out of what THIS run just scraped
+    # Per (symbol, source_page, direction), keep whichever headline this run
+    # scraped is the best candidate: the latest one before the most recent
+    # market open, or — only if none exists — the latest one overall.
     fresh = {}
     for e in all_entries:
         key = (e["symbol"], e["source_page"], e["direction"])
-        if key not in fresh or e["dt"] > fresh[key]["dt"]:
-            fresh[key] = e
+        fresh[key] = better_entry(e, fresh.get(key), cutoff)
 
-    # merge with whatever was already stored — newest timestamp wins per key,
-    # so a quiet run (nothing new on the live page right now) doesn't erase
-    # entries from the last run that fetched something real
+    # merge with whatever was already stored, using the same preference, so a
+    # quiet run (nothing new on the live page right now) doesn't erase
+    # yesterday's pre-open catalyst in favor of nothing, and a later run
+    # doesn't let a fresh post-open rehash bump out an already-stored pre-open
+    # headline that's still the real explanation for the move
     merged = load_existing()
     for key, e in fresh.items():
-        if key not in merged or e["dt"] > merged[key]["dt"]:
-            merged[key] = e
+        merged[key] = better_entry(e, merged.get(key), cutoff)
 
     cutoff = datetime.now(timezone.utc) - timedelta(hours=PRUNE_AFTER_HOURS)
     final = [e for e in merged.values() if e["dt"] >= cutoff]
