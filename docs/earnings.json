@@ -1,0 +1,236 @@
+{
+  "generated_at": "2026-10-09T12:21:00.418078-04:00",
+  "min_surprise_pct": 20.0,
+  "days": [
+    {
+      "date": "2026-10-09",
+      "entries": [
+        {
+          "ticker": "HOVR",
+          "company": "New Horizon Aircraft Ltd",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 102.36437939876444,
+          "eps_estimate": -0.0863,
+          "eps_actual": -0.0422,
+          "eps_surprise": 51.1,
+          "revenue_estimate": 0.0,
+          "revenue_actual": 0.0,
+          "revenue_surprise": null,
+          "price_reaction": -0.33
+        }
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "entries": [
+        {
+          "ticker": "TLRY",
+          "company": "Tilray Brands Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 514.136142813662,
+          "eps_estimate": -0.1814,
+          "eps_actual": -0.32,
+          "eps_surprise": -76.41,
+          "revenue_estimate": 266.2564,
+          "revenue_actual": 257.147,
+          "revenue_surprise": -3.42,
+          "price_reaction": -3.36
+        },
+        {
+          "ticker": "ANGO",
+          "company": "Angiodynamic Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 496.4512663742405,
+          "eps_estimate": -0.1125,
+          "eps_actual": -0.04,
+          "eps_surprise": 64.44,
+          "revenue_estimate": 80.5102,
+          "revenue_actual": 80.915,
+          "revenue_surprise": 0.5,
+          "price_reaction": -20.86
+        },
+        {
+          "ticker": "PKE",
+          "company": "Park Aerospace Corp",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 575.6732387551638,
+          "eps_estimate": 0.16,
+          "eps_actual": 0.2573,
+          "eps_surprise": 60.81,
+          "revenue_estimate": 20.012,
+          "revenue_actual": 20.791,
+          "revenue_surprise": 3.89,
+          "price_reaction": -10.77
+        },
+        {
+          "ticker": "HELE",
+          "company": "Helen of Troy Ltd",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 619.4341877058122,
+          "eps_estimate": 0.4974,
+          "eps_actual": 0.79,
+          "eps_surprise": 58.83,
+          "revenue_estimate": 442.3326,
+          "revenue_actual": 440.926,
+          "revenue_surprise": -0.32,
+          "price_reaction": 3.91
+        },
+        {
+          "ticker": "NG",
+          "company": "Novagold Resources Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 2933.4800679690347,
+          "eps_estimate": -0.0656,
+          "eps_actual": -0.08,
+          "eps_surprise": -21.95,
+          "revenue_estimate": null,
+          "revenue_actual": 0.0,
+          "revenue_surprise": null,
+          "price_reaction": -1.26
+        }
+      ]
+    },
+    {
+      "date": "2026-10-07",
+      "entries": [
+        {
+          "ticker": "RELL",
+          "company": "Richardson Electronics Ltd",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 304.65542364678765,
+          "eps_estimate": 0.09,
+          "eps_actual": 0.27,
+          "eps_surprise": 200.0,
+          "revenue_estimate": 58.985,
+          "revenue_actual": 64.923,
+          "revenue_surprise": 10.07,
+          "price_reaction": -0.15
+        },
+        {
+          "ticker": "APLD",
+          "company": "Applied Digital Corp",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 7044.10512423957,
+          "eps_estimate": -0.2954,
+          "eps_actual": -0.82,
+          "eps_surprise": -177.59,
+          "revenue_estimate": 116.2886,
+          "revenue_actual": 341.875,
+          "revenue_surprise": 193.99,
+          "price_reaction": 0.17
+        },
+        {
+          "ticker": "LEVI",
+          "company": "Levi Strauss & Co",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 7112.1959401987615,
+          "eps_estimate": 0.3581,
+          "eps_actual": 0.48,
+          "eps_surprise": 34.04,
+          "revenue_estimate": 1616.6319,
+          "revenue_actual": 1609.7,
+          "revenue_surprise": -0.43,
+          "price_reaction": -2.36
+        }
+      ]
+    },
+    {
+      "date": "2026-10-06",
+      "entries": [
+        {
+          "ticker": "APOG",
+          "company": "Apogee Enterprises Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 837.0302859619422,
+          "eps_estimate": 0.59,
+          "eps_actual": 1.17,
+          "eps_surprise": 98.31,
+          "revenue_estimate": 362.61,
+          "revenue_actual": 391.135,
+          "revenue_surprise": 7.87,
+          "price_reaction": 12.17
+        },
+        {
+          "ticker": "AXIL",
+          "company": "AXIL Brands Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 39.230568339094944,
+          "eps_estimate": 0.13,
+          "eps_actual": 0.05,
+          "eps_surprise": -61.54,
+          "revenue_estimate": 8.118,
+          "revenue_actual": 6.0904,
+          "revenue_surprise": -24.98,
+          "price_reaction": -3.08
+        },
+        {
+          "ticker": "NEOG",
+          "company": "Neogen Corp",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 2596.7466499701723,
+          "eps_estimate": 0.0533,
+          "eps_actual": 0.08,
+          "eps_surprise": 50.09,
+          "revenue_estimate": 208.175,
+          "revenue_actual": 222.8,
+          "revenue_surprise": 7.03,
+          "price_reaction": -2.34
+        },
+        {
+          "ticker": "WS",
+          "company": "Worthington Steel Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 1832.164154701295,
+          "eps_estimate": 0.92,
+          "eps_actual": 0.57,
+          "eps_surprise": -38.04,
+          "revenue_estimate": 3136.8497,
+          "revenue_actual": 2726.6,
+          "revenue_surprise": -13.08,
+          "price_reaction": -6.89
+        },
+        {
+          "ticker": "PENG",
+          "company": "Penguin Solutions Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 3758.6519428668466,
+          "eps_estimate": 0.7716,
+          "eps_actual": 1.0,
+          "eps_surprise": 29.6,
+          "revenue_estimate": 520.9897,
+          "revenue_actual": 566.685,
+          "revenue_surprise": 8.77,
+          "price_reaction": 13.08
+        },
+        {
+          "ticker": "LW",
+          "company": "Lamb Weston Holdings Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 6629.994201195745,
+          "eps_estimate": 0.587,
+          "eps_actual": 0.75,
+          "eps_surprise": 27.77,
+          "revenue_estimate": 1654.3094,
+          "revenue_actual": 1670.3,
+          "revenue_surprise": 0.97,
+          "price_reaction": 7.49
+        }
+      ]
+    }
+  ]
+}
