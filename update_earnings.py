@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
 Earnings tab — last 4 NYSE trading days of earnings reports, filtered down to
-only the names with a big surprise: abs(EPS Surprise %) > 20 OR
-abs(Revenue/"Sales" Surprise %) > 20.
+only the names that BEAT estimates by 20% or more: EPS Surprise % >= 20 OR
+Revenue/"Sales" Surprise % >= 20. A big miss (e.g. -76%) does NOT qualify —
+only positive beats count.
 
 Data source: Finviz Elite's earnings-calendar export
 (https://elite.finviz.com/export/calendar/earnings?dateFrom=...&dateTo=...&auth=...).
@@ -143,8 +144,10 @@ def build_days():
         eps_surprise = to_float(row.get("EPS Surprise"))
         rev_surprise = to_float(row.get("Revenue Surprise"))
 
-        hits_eps = eps_surprise is not None and abs(eps_surprise) > MIN_SURPRISE_PCT
-        hits_rev = rev_surprise is not None and abs(rev_surprise) > MIN_SURPRISE_PCT
+        # Positive beats only — a name that missed estimates (even by a lot)
+        # doesn't qualify, only one that beat EPS or Revenue by 20%+.
+        hits_eps = eps_surprise is not None and eps_surprise >= MIN_SURPRISE_PCT
+        hits_rev = rev_surprise is not None and rev_surprise >= MIN_SURPRISE_PCT
         if not (hits_eps or hits_rev):
             continue
 
@@ -190,7 +193,7 @@ def main():
     print("Fetching Finviz Elite earnings calendar...")
     days = build_days()
     for d in days:
-        print(f"  {d['date']}: {len(d['entries'])} name(s) with >{MIN_SURPRISE_PCT:.0f}% EPS/Revenue surprise")
+        print(f"  {d['date']}: {len(d['entries'])} name(s) beating EPS/Revenue by {MIN_SURPRISE_PCT:.0f}%+")
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(
