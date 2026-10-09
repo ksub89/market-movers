@@ -20,7 +20,7 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -34,8 +34,21 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 # your site's homepage once Pages is enabled with "Deploy from branch: main /docs".
 OUTPUT_PATH = SCRIPT_DIR / "docs" / "movers.json"
 
-MIN_PRICE = 5.0
-MIN_VOLUME = 300_000
+# Two price/volume bands (OR'd together) instead of one flat cutoff:
+#   $5 < price < $58  AND  volume > 300,000   (lower-priced names need more volume to count)
+#   price >= $58      AND  volume > 100,000   (higher-priced names qualify on less volume)
+PRICE_BAND_LOW = 5.0
+PRICE_BAND_HIGH = 58.0
+VOLUME_LOW_BAND = 300_000   # required when PRICE_BAND_LOW < price < PRICE_BAND_HIGH
+VOLUME_HIGH_BAND = 100_000  # required when price >= PRICE_BAND_HIGH
+
+
+def passes_price_volume_filter(price: float, volume: int) -> bool:
+    if PRICE_BAND_LOW < price < PRICE_BAND_HIGH:
+        return volume > VOLUME_LOW_BAND
+    if price >= PRICE_BAND_HIGH:
+        return volume > VOLUME_HIGH_BAND
+    return False  # price <= $5
 
 # Active windows: premarket (every 30 min, ending near the 9:30am open) and
 # the late-day/afterhours window (every 30 min, starting just ahead of the
@@ -113,8 +126,6 @@ def parse_page(html: str, label: str):
                 price = float(price_text)
             except ValueError:
                 continue
-            if price < MIN_PRICE:
-                continue
 
             sym_a = tds[2].find("a")
             symbol = sym_a.get_text(strip=True) if sym_a else tds[2].get_text(strip=True)
@@ -125,7 +136,8 @@ def parse_page(html: str, label: str):
                 volume = int(float(vol_text))
             except ValueError:
                 continue
-            if volume <= MIN_VOLUME:
+
+            if not passes_price_volume_filter(price, volume):
                 continue
 
             for a in tds[5].find_all("a"):
@@ -161,6 +173,45 @@ def parse_page(html: str, label: str):
     return entries
 
 
+# How long a scraped entry stays in the feed after its own timestamp before
+# it's pruned, even if nothing fresher for that (symbol, source_page,
+# direction) has come in. Needs to comfortably survive the longest gap
+# between active windows: Friday's 3:30-6pm afterhours run through to
+# Monday's 7:15am premarket run is ~61 hours, so this gives real margin for
+# a 3-day weekend (or a Monday holiday) without dropping Friday's feed early.
+PRUNE_AFTER_HOURS = 96
+
+
+def load_existing() -> dict:
+    """Entries already in docs/movers.json, keyed the same way build_dataset
+    keys fresh scrapes, with "dt" parsed back to a real datetime for merge
+    comparisons. Each run OVERWRITES movers.json, so without this, anything
+    the live site isn't showing at THIS exact moment (e.g. yesterday's 6pm
+    afterhours movers, once it's past the 3:30-6pm window and the site's own
+    grids have moved on) would vanish from the feed the next time a premarket
+    run fires — even though nothing's actually "wrong", there's just no fresh
+    data for that slot yet. Merging fresh scrapes into what's already stored
+    (newest wins per key) keeps last session's entries visible until this
+    session's actually replaces them."""
+    if not OUTPUT_PATH.exists():
+        return {}
+    try:
+        stored = json.loads(OUTPUT_PATH.read_text(encoding="utf-8")).get("data", [])
+    except (json.JSONDecodeError, OSError):
+        return {}
+    existing = {}
+    for e in stored:
+        try:
+            dt = datetime.fromisoformat(e["time_iso"])
+            if dt.tzinfo is None:  # guard against any pre-UTC-tagging legacy entries
+                dt = dt.replace(tzinfo=timezone.utc)
+        except (KeyError, ValueError):
+            continue
+        key = (e["symbol"], e["source_page"], e["direction"])
+        existing[key] = {**e, "dt": dt}
+    return existing
+
+
 def build_dataset():
     all_entries = []
     for url, label in PAGES.items():
@@ -172,13 +223,23 @@ def build_dataset():
         all_entries.extend(parse_page(html, label))
 
     # keep only the most recent headline per (symbol, source_page, direction)
-    best = {}
+    # out of what THIS run just scraped
+    fresh = {}
     for e in all_entries:
         key = (e["symbol"], e["source_page"], e["direction"])
-        if key not in best or e["dt"] > best[key]["dt"]:
-            best[key] = e
+        if key not in fresh or e["dt"] > fresh[key]["dt"]:
+            fresh[key] = e
 
-    final = list(best.values())
+    # merge with whatever was already stored — newest timestamp wins per key,
+    # so a quiet run (nothing new on the live page right now) doesn't erase
+    # entries from the last run that fetched something real
+    merged = load_existing()
+    for key, e in fresh.items():
+        if key not in merged or e["dt"] > merged[key]["dt"]:
+            merged[key] = e
+
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=PRUNE_AFTER_HOURS)
+    final = [e for e in merged.values() if e["dt"] >= cutoff]
     final.sort(key=lambda x: x["dt"], reverse=True)
 
     for e in final:
