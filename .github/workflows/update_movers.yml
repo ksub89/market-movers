@@ -2,8 +2,18 @@ name: Update Movers Feed
 
 on:
   schedule:
-    - cron: '*/5 * * * *'   # every 5 minutes, all times UTC
-  workflow_dispatch:          # lets you trigger it manually from the Actions tab
+    # Polls every 15 minutes, but ONLY inside the two UTC hour-ranges that can
+    # possibly contain the real target marks (7:15-9:15am ET premarket,
+    # 3:30-6:00pm ET afterhours) across both EDT and EST — the script's own
+    # in_run_window() guard then does nothing (no fetch, no commit, exits in
+    # ~1s) unless the actual ET clock is within 10 minutes of one of the 11
+    # real marks. This replaces the old */5 * * * * (every 5 min, all day,
+    # 288 runs/day) schedule, which is almost certainly what was burning
+    # through GitHub's free Actions-minutes cap and leaving the feed stale
+    # for hours at a time.
+    - cron: '*/15 11-14 * * 1-5'   # covers 7:15-9:15am ET in both EDT and EST
+    - cron: '*/15 19-23 * * 1-5'   # covers 3:30-6:00pm ET in both EDT and EST
+  workflow_dispatch:          # lets you trigger it manually from the Actions tab — always runs, bypasses the time-window guard
 
 permissions:
   contents: write
@@ -22,6 +32,8 @@ jobs:
         run: pip install requests beautifulsoup4 lxml
 
       - name: Run scraper
+        env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
         run: python update_movers.py
 
       - name: Commit updated feed
