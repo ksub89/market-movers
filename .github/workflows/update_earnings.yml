@@ -1,0 +1,43 @@
+name: Update Earnings
+
+on:
+  schedule:
+    # GitHub Actions cron is fixed UTC with no DST awareness, so hitting a
+    # fixed ET wall-clock time (8am and 5pm ET) year-round needs two lines
+    # per target — one for EDT (UTC-4), one for EST (UTC-5). The script's own
+    # in_run_window() guard then no-ops whichever of each pair is currently
+    # the "wrong" offset, so docs/earnings.json only actually updates at the
+    # two real target times, Mon-Fri:
+    - cron: '0 12 * * 1-5'   # 8:00am EDT (summer)
+    - cron: '0 13 * * 1-5'   # 8:00am EST (winter)
+    - cron: '0 21 * * 1-5'   # 5:00pm EDT (summer)
+    - cron: '0 22 * * 1-5'   # 5:00pm EST (winter)
+  workflow_dispatch:   # lets you trigger it manually from the Actions tab — always runs, bypasses the time-window guard
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests "pandas_market_calendars==5.4.0"
+
+      - name: Run Earnings update
+        env:
+          FINVIZ_API_TOKEN: ${{ secrets.FINVIZ_API_TOKEN }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: python update_earnings.py
+
+      - name: Commit updated data
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-update earnings"
+          file_pattern: docs/earnings.json
