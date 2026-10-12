@@ -246,13 +246,22 @@ let MAPS_HISTORY = [];
 let EARNINGS_DAYS = [];
 let activeEarningsDay = null;
 
-// The scraper's timestamps come from TheStockCatalyst.com already in US
-// Eastern time, but stored as a plain (timezone-less) ISO string. Handing
-// that to `new Date()` makes the browser reinterpret it in the VIEWER's own
-// local timezone, which is wrong for anyone not physically in ET. Since the
-// wall-clock value is already correct ET, this reads the hour/minute
-// straight out of the string instead of going through Date/timezone
-// conversion at all — always ET, regardless of where the page is viewed.
+// This project standardizes on ET everywhere — the Python scrapers write
+// every stored timestamp (headline times, generated_at) as a real ET-offset
+// ISO string (e.g. "...-04:00" / "...-05:00", via Python's zoneinfo), never
+// UTC. That keeps every raw value in docs/*.json directly human-readable —
+// no mental timezone math needed when you're looking at the JSON yourself.
+// TheStockCatalyst.com's own [MM/DD/YYYY H:MM AM/PM] bracket values are
+// already ET too (confirmed directly: the freshest "premarket" headline on
+// a live pull capped out right at 9:34am — 4 minutes after the real 9:30am
+// ET open, which only makes sense if the bracket is ET; an earlier version
+// of this project had mistakenly assumed those brackets were UTC).
+//
+// `new Date(iso)` parses an explicit offset correctly regardless of the
+// viewer's own timezone, and asking for `timeZone: 'America/New_York'` below
+// is then just confirming the display zone (a no-op conversion, since the
+// source is already ET) — it ALSO means a browser viewing this from Dubai,
+// or anywhere else, still always renders ET, which is the whole point.
 // TheStockCatalyst.com's grids can carry a headline whose OWN publish
 // timestamp is from a previous session, even though the stock is moving
 // again today (the mover is current, the linked article isn't). Shown as
@@ -261,20 +270,12 @@ let activeEarningsDay = null;
 // "8:31 AM" is currently). So: show a compact date prefix ("Sep 7, ") only
 // when the entry's date differs from today in ET — same-day entries stay as
 // plain "11:52 AM ET" like before.
-// The scraper stores each headline's timestamp as a genuine UTC-offset ISO
-// string (verified: TheStockCatalyst.com's own [MM/DD/YYYY H:MM AM/PM] value
-// is UTC, confirmed against a linked article's stated ET publish time, which
-// was exactly 4 hours behind — the EDT/UTC offset). `new Date(iso)` on a
-// string with an explicit "+00:00" offset parses correctly regardless of the
-// viewer's own timezone, so this does a real UTC -> America/New_York
-// conversion rather than any string-slicing or timezone guessing.
 function fmtTime(iso){
-  // The underlying timestamp from the scraper is always UTC, but movers.json
-  // may or may not have an explicit "+00:00"/"Z" suffix on it depending on
-  // which version of the script wrote it. A date-time string with NO offset
-  // is parsed by browsers as LOCAL time, not UTC, which silently produces a
-  // wrong result — so force a UTC interpretation here explicitly regardless
-  // of whether the suffix is already present.
+  // Defensive only: a handful of entries committed before the ET-vs-UTC fix
+  // may still be sitting in movers.json without a real offset, or mistagged
+  // as "+00:00" — they age out on their own (replaced or pruned) within a
+  // few days. Any string that already carries a real offset (the normal
+  // case going forward) passes through untouched here.
   const utcIso = /[Zz]|[+-]\d\d:\d\d$/.test(iso) ? iso : iso + 'Z';
   const d = new Date(utcIso);
   if(isNaN(d.getTime())) return iso;
