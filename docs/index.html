@@ -44,6 +44,8 @@
   }
   header h1{ font-size:18px; margin:0; font-weight:700; }
   .sub{ color:var(--muted); font-size:12px; margin-top:2px; }
+  #lastUpdated.triggerable{ cursor:pointer; }
+  #lastUpdated.triggerable:hover{ text-decoration:underline; color:var(--accent); }
   .controls{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
   .pill{
     background:var(--card); border:1px solid var(--border); color:var(--muted);
@@ -566,6 +568,53 @@ function showMoversUpdated(generatedAtIso){
   });
   document.getElementById('lastUpdated').textContent = 'Last updated: ' + label;
 }
+
+// ---- Manual refresh trigger ------------------------------------------
+// Clicking the "Last updated: ..." text kicks off a fresh Movers run via a
+// Cloudflare Worker (see cloudflare-worker.js), instead of waiting on
+// GitHub's own schedule — useful since GitHub's native cron can silently
+// skip a firing under load. The real GitHub token never touches this page;
+// it lives only in the Worker as a secret. TRIGGER_SHARED_SECRET below is
+// NOT sensitive (it's visible to anyone viewing this page's source) — it
+// only deters a stray bot from spamming the Worker, nothing more.
+//
+// Fill these in once the Worker is deployed (see cloudflare-worker.js for
+// setup steps). Leave TRIGGER_WORKER_URL blank to leave the click disabled.
+const TRIGGER_WORKER_URL = 'https://mover-trigger.kishan-sub89.workers.dev';
+const TRIGGER_SHARED_SECRET = 'adjfblqwekjfasfinivnaoisngf'; // must match the Worker's SHARED_SECRET
+
+function setupManualTrigger(){
+  const el = document.getElementById('lastUpdated');
+  if(!TRIGGER_WORKER_URL || !el) return;
+  el.classList.add('triggerable');
+  el.title = 'Click to trigger a fresh Movers update now';
+  el.addEventListener('click', async () => {
+    if(el.dataset.busy === '1') return;
+    el.dataset.busy = '1';
+    const original = el.textContent;
+    el.textContent = 'Triggering refresh...';
+    try{
+      const resp = await fetch(TRIGGER_WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ secret: TRIGGER_SHARED_SECRET }),
+      });
+      const json = await resp.json().catch(() => ({}));
+      if(resp.ok && json.ok){
+        el.textContent = 'Refresh triggered — updates in ~30-60s, reload the page to see it';
+      } else {
+        el.textContent = 'Could not trigger refresh (' + (json.error || resp.status) + ')';
+      }
+    } catch(e){
+      el.textContent = 'Could not trigger refresh (network error)';
+    }
+    setTimeout(() => {
+      el.dataset.busy = '0';
+      el.textContent = original;
+    }, 8000);
+  });
+}
+setupManualTrigger();
 
 loadMovers();
 loadMaps();
