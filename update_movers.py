@@ -20,7 +20,7 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -62,7 +62,7 @@ def passes_price_volume_filter(price: float, volume: int) -> bool:
 # private repo: GitHub Free's 2,000 Actions-minutes/month cap gets burned
 # through fast at that rate. ~11 real runs/day fixes that outright.
 RUN_MARKS_ET = [
-    (7, 15), (7, 45), (8, 15), (8, 45), (9, 15),          # premarket
+    (7, 15), (7, 45), (8, 15), (8, 28), (8, 45), (9, 15),          # premarket
     (15, 30), (16, 0), (16, 30), (17, 0), (17, 30), (18, 0),  # afterhours
 ]
 RUN_TOLERANCE_MIN = 10
@@ -83,27 +83,37 @@ NYSE = mcal.get_calendar("NYSE")
 
 
 def most_recent_market_open() -> datetime:
-    """The most recent NYSE 9:30am-ET open that has already happened, as a
-    UTC-aware datetime. A symbol often carries several headlines spanning
-    multiple days (e.g. an analyst note two days ago, an after-hours release
-    last night, a wire-service rehash this morning) — the one that actually
-    explains a PREmarket or afterhours move is the newest one that landed
-    before the open, not whatever's merely most recent chronologically.
-    Anything stamped after that open is just same-day market-hours noise by
-    the time this runs again (next premarket or afterhours window), so it's
-    deprioritized in favor of the real pre-open catalyst. Computed via the
-    exchange calendar (not hardcoded 9:30) for the same reason the other two
-    scripts do — holidays/early closes shift what "today's session" even is,
-    though the open time itself is always 9:30 ET on a trading day."""
-    now_utc = datetime.now(timezone.utc)
+    """The most recent NYSE 9:30am-ET open that has already happened, as an
+    ET-aware datetime (the project standardizes on ET everywhere — no UTC —
+    to keep every timestamp in the code, logs, and JSON directly readable
+    without a mental timezone conversion). A symbol often carries several
+    headlines spanning multiple days (e.g. an analyst note two days ago, an
+    after-hours release last night, a wire-service rehash this morning) —
+    the one that actually explains a PREmarket or afterhours move is the
+    newest one that landed before the open, not whatever's merely most
+    recent chronologically. Anything stamped after that open is just
+    same-day market-hours noise by the time this runs again (next premarket
+    or afterhours window), so it's deprioritized in favor of the real
+    pre-open catalyst. Computed via the exchange calendar (not hardcoded
+    9:30) for the same reason the other two scripts do — holidays/early
+    closes shift what "today's session" even is. pandas_market_calendars
+    hands back its schedule in UTC internally (that's the library's own
+    native format, not something we control), so each open is immediately
+    converted to America/New_York here — nothing UTC-labeled ever leaves
+    this function."""
+    now_et = datetime.now(ZoneInfo("America/New_York"))
     sched = NYSE.schedule(
-        start_date=(now_utc - timedelta(days=10)).date(), end_date=now_utc.date()
+        start_date=(now_et - timedelta(days=10)).date(), end_date=now_et.date()
     )
-    opens = [o.to_pydatetime() for o in sched["market_open"] if o.to_pydatetime() <= now_utc]
+    opens = [
+        o.to_pydatetime().astimezone(ZoneInfo("America/New_York"))
+        for o in sched["market_open"]
+    ]
+    opens = [o for o in opens if o <= now_et]
     if not opens:
         raise RuntimeError(
             f"pandas_market_calendars found no past NYSE opens in the 10 days "
-            f"up to {now_utc.date()} — that shouldn't happen."
+            f"up to {now_et.date()} — that shouldn't happen."
         )
     return opens[-1]
 
@@ -239,8 +249,8 @@ def load_existing() -> dict:
     for e in stored:
         try:
             dt = datetime.fromisoformat(e["time_iso"])
-            if dt.tzinfo is None:  # guard against any pre-UTC-tagging legacy entries
-                dt = dt.replace(tzinfo=timezone.utc)
+            if dt.tzinfo is None:  # guard against any legacy entries saved without tzinfo
+                dt = dt.replace(tzinfo=ZoneInfo("America/New_York"))
         except (KeyError, ValueError):
             continue
         key = (e["symbol"], e["source_page"], e["direction"])
@@ -293,7 +303,7 @@ def build_dataset():
     for key, e in fresh.items():
         merged[key] = better_entry(e, merged.get(key), cutoff)
 
-    cutoff = datetime.now(timezone.utc) - timedelta(hours=PRUNE_AFTER_HOURS)
+    cutoff = datetime.now(ZoneInfo("America/New_York")) - timedelta(hours=PRUNE_AFTER_HOURS)
     final = [e for e in merged.values() if e["dt"] >= cutoff]
     final.sort(key=lambda x: x["dt"], reverse=True)
 
@@ -315,13 +325,16 @@ def main():
         return
 
     data = build_dataset()
-    generated_at = datetime.now(timezone.utc).isoformat()
+    generated_at = datetime.now(ZoneInfo("America/New_York")).isoformat()
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(
         json.dumps({"generated_at": generated_at, "data": data}, ensure_ascii=False),
         encoding="utf-8",
     )
-    print(f"{datetime.now().isoformat(timespec='seconds')}  wrote {len(data)} entries to {OUTPUT_PATH}")
+    print(
+        f"{datetime.now(ZoneInfo('America/New_York')).isoformat(timespec='seconds')}  "
+        f"wrote {len(data)} entries to {OUTPUT_PATH}"
+    )
 
 
 if __name__ == "__main__":
