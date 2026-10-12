@@ -7,9 +7,10 @@ Universe for every count below: US common stock, price > $3, volume > 100,000
 shares (the same base filter is baked into every one of the 9 Finviz URLs, so
 numerator and denominator are always measuring the same population).
 
-Run this once per trading day, after the close (see the accompanying
-workflow — it fires at 22:00 UTC, which is after 4pm ET in both EST and EDT).
-It appends one row per trading day to docs/market_maps.json; it does NOT
+Run this once per trading day, shortly after the close: targets 4:05pm ET,
+Mon-Fri (see in_run_window() below for why the workflow fires on 2 cron lines
+but this only actually runs at one real time of day). It appends one row per
+trading day to docs/market_maps.json; it does NOT
 touch docs/index.html or docs/movers.json, so it can run on a completely
 independent schedule from update_movers.py without clobbering it.
 
@@ -83,6 +84,31 @@ def fetch_count(filter_str: str) -> int:
     return len(rows) - 1  # minus header row
 
 
+# Target: 4:05pm ET, Mon-Fri — 5 minutes after the 4:00pm close, and
+# deliberately 55 minutes clear of Update Earnings' 5:00pm ET run so the two
+# workflows' Finviz requests never land in the same 5-second rate-limit
+# window (Finviz allows 10 requests/5s; this script alone sends 9 in one run,
+# so any overlap with another Finviz-calling workflow eats into that margin).
+#
+# GitHub Actions cron is fixed UTC with no DST awareness, so hitting a fixed
+# ET wall-clock time year-round needs two cron lines — one for EDT (UTC-4),
+# one for EST (UTC-5) — with this guard no-op'ing whichever one is currently
+# the "wrong" offset, so docs/market_maps.json only actually updates once a
+# day, at the real 4:05pm ET.
+RUN_WINDOW_ET = (16, 5)
+RUN_TOLERANCE_MIN = 20
+
+
+def in_run_window() -> bool:
+    # Manual runs (workflow_dispatch) always proceed regardless of time of day.
+    if os.environ.get("GITHUB_EVENT_NAME") == "workflow_dispatch":
+        return True
+    now = datetime.now(ZoneInfo("America/New_York"))
+    now_minutes = now.hour * 60 + now.minute
+    h, m = RUN_WINDOW_ET
+    return abs(now_minutes - (h * 60 + m)) <= RUN_TOLERANCE_MIN
+
+
 NYSE = mcal.get_calendar("NYSE")
 
 
@@ -98,9 +124,13 @@ def last_trading_session():
             f"pandas_market_calendars found no NYSE trading days in the 10 days "
             f"up to {today} — that shouldn't happen, check the library/date."
         )
+    print(f"DEBUG last_trading_session: today(ET)={today}, trading days in window:")
+    for idx in sched.index:
+        print(f"  {idx.date()}")
     last_day = sched.index[-1].date()
     close_et = sched.iloc[-1]["market_close"].tz_convert("America/New_York").time()
     is_half_day = close_et < dtime(16, 0)
+    print(f"DEBUG last_trading_session: resolved date={last_day}, is_half_day={is_half_day}")
     return last_day.strftime("%Y-%m-%d"), is_half_day
 
 
@@ -156,6 +186,14 @@ def is_same_as_last(new_row, history):
 
 
 def main():
+    if not in_run_window():
+        now = datetime.now(ZoneInfo("America/New_York"))
+        print(
+            f"Skipping: {now.strftime('%H:%M %Z')} is not within {RUN_TOLERANCE_MIN} min of "
+            f"the 4:05pm ET run time — this is the DST-offset cron firing a no-op, not an error."
+        )
+        return
+
     print("Fetching Finviz Elite breadth counts...")
     snapshot = build_snapshot()
     history = load_history()
