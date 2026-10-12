@@ -20,7 +20,7 @@ import json
 import os
 import re
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -189,18 +189,25 @@ def parse_page(html: str, label: str):
                 ts = mt.group(1)
                 headline = text[: mt.start()].strip()
                 # TheStockCatalyst.com's [MM/DD/YYYY H:MM AM/PM] timestamps are
-                # already US Eastern time (NOT UTC — an earlier version of this
-                # script got that backwards). Confirmed directly: on a live
-                # pull, the freshest bracket on the Premarket Movers page
-                # capped out at 9:34 AM — four minutes after the real 9:30 AM
-                # ET market open, which only makes sense if the bracket IS
-                # ET (a headline naturally stops being "premarket" once the
-                # bell rings). If the brackets were UTC that cutoff would
-                # fall at 5:34 AM ET, which lines up with nothing. Tag with
-                # America/New_York (via zoneinfo, so EDT/EST/DST resolve
-                # correctly) rather than UTC.
-                dt_et = datetime.strptime(ts, "%m/%d/%Y %I:%M %p").replace(
-                    tzinfo=ZoneInfo("America/New_York")
+                # UTC. This has flip-flopped twice in this project's history —
+                # worth recording why the current answer is the one that
+                # sticks. A prior version tagged these as UTC; that got
+                # reverted to "it's already ET" based on one coincidental
+                # data point (a freshest premarket bracket landing at 9:34 AM,
+                # close to the 9:30 AM ET open). That coincidence didn't hold
+                # up: pulling the FULL live page and comparing every unique
+                # bracket against an independently-verified true clock (local
+                # UTC time cross-checked against an HTTP Date response header)
+                # showed the freshest bracket was only explicable as UTC (a
+                # 22-minute lag) — read as ET, the same bracket would mean a
+                # headline posted 3h38m in the future, which is impossible.
+                # So: parse as UTC here, and convert to US/Eastern only when
+                # serializing (see build_dataset below) — this keeps every
+                # stored/displayed timestamp in ET as the project standard,
+                # while parsing the source data at the timezone it's actually
+                # in.
+                dt_utc = datetime.strptime(ts, "%m/%d/%Y %I:%M %p").replace(
+                    tzinfo=timezone.utc
                 )
                 entries.append(
                     {
@@ -213,7 +220,7 @@ def parse_page(html: str, label: str):
                         "chg_pct": chg_pct,
                         "headline": headline,
                         "url": href,
-                        "dt": dt_et,
+                        "dt": dt_utc,
                     }
                 )
     return entries
@@ -308,7 +315,11 @@ def build_dataset():
     final.sort(key=lambda x: x["dt"], reverse=True)
 
     for e in final:
-        e["time_iso"] = e["dt"].isoformat()
+        # Source brackets are parsed as UTC (see parse_page above), but every
+        # stored/displayed timestamp in this project is ET — convert here,
+        # at the point of serialization, so time_iso always carries a real
+        # America/New_York offset.
+        e["time_iso"] = e["dt"].astimezone(ZoneInfo("America/New_York")).isoformat()
         del e["dt"]
 
     return final
