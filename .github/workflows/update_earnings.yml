@@ -7,7 +7,13 @@ on:
     # per target — one for EDT (UTC-4), one for EST (UTC-5). The script's own
     # in_run_window() guard then no-ops whichever of each pair is currently
     # the "wrong" offset, so docs/earnings.json only actually updates at the
-    # two real target times, Mon-Fri:
+    # two real target times, Mon-Fri: 8:00am and 5:00pm ET.
+    #
+    # (Update Market Maps runs at 4:05pm ET — well clear of this workflow's
+    # 5:00pm ET run — specifically so the two workflows' Finviz requests
+    # never land in the same 5-second rate-limit window. Staggering lives on
+    # that workflow's side, not here, so Earnings stays at the exact time
+    # you asked for.)
     - cron: '0 12 * * 1-5'   # 8:00am EDT (summer)
     - cron: '0 13 * * 1-5'   # 8:00am EST (winter)
     - cron: '0 21 * * 1-5'   # 5:00pm EDT (summer)
