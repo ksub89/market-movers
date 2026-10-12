@@ -252,16 +252,22 @@ let activeEarningsDay = null;
 // UTC. That keeps every raw value in docs/*.json directly human-readable —
 // no mental timezone math needed when you're looking at the JSON yourself.
 // TheStockCatalyst.com's own [MM/DD/YYYY H:MM AM/PM] bracket values are
-// already ET too (confirmed directly: the freshest "premarket" headline on
-// a live pull capped out right at 9:34am — 4 minutes after the real 9:30am
-// ET open, which only makes sense if the bracket is ET; an earlier version
-// of this project had mistakenly assumed those brackets were UTC).
+// actually UTC at the source — update_movers.py parses them as UTC and
+// converts to ET before writing time_iso, so by the time this page ever
+// sees the string it's already a real ET offset. (This took two reversals
+// to pin down: a coincidental match between one freshest-headline time and
+// the market open briefly looked like evidence the brackets were already
+// ET, but pulling the full page and comparing every bracket against an
+// independently-verified true clock showed that was wrong — read as ET,
+// the freshest bracket would mean a headline posted hours in the future,
+// which is impossible; read as UTC, it was a normal few-minutes lag.)
 //
 // `new Date(iso)` parses an explicit offset correctly regardless of the
 // viewer's own timezone, and asking for `timeZone: 'America/New_York'` below
-// is then just confirming the display zone (a no-op conversion, since the
-// source is already ET) — it ALSO means a browser viewing this from Dubai,
-// or anywhere else, still always renders ET, which is the whole point.
+// is then just confirming the display zone (a no-op conversion, since
+// update_movers.py already converted to ET before storing it) — it ALSO
+// means a browser viewing this from Dubai, or anywhere else, still always
+// renders ET, which is the whole point.
 // TheStockCatalyst.com's grids can carry a headline whose OWN publish
 // timestamp is from a previous session, even though the stock is moving
 // again today (the mover is current, the linked article isn't). Shown as
