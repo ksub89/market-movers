@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-14T03:04:00.997854-04:00",
+  "generated_at": "2026-10-14T08:01:22.519515-04:00",
   "min_surprise_pct": 20.0,
   "days": [
     {
@@ -14,14 +14,16 @@
           "company": "Goldman Sachs Group Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 259698.69,
+          "market_cap": 257855.58773109698,
           "eps_estimate": 12.8648,
           "eps_actual": 17.01,
           "eps_surprise": 32.22,
           "revenue_estimate": 16833.2226,
           "revenue_actual": 18679.0,
           "revenue_surprise": 10.97,
-          "price_reaction": -0.23
+          "price_reaction": -0.23,
+          "cmp": 885.58,
+          "ah_bmo_move": null
         }
       ]
     },
@@ -33,14 +35,16 @@
           "company": "Nurix Therapeutics Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 2296.69,
+          "market_cap": 2333.0241426932985,
           "eps_estimate": -0.6009,
           "eps_actual": 4.73,
           "eps_surprise": 887.15,
           "revenue_estimate": 24.3484,
           "revenue_actual": 673.064,
           "revenue_surprise": 2664.3,
-          "price_reaction": -0.14
+          "price_reaction": -0.14,
+          "cmp": 22.48,
+          "ah_bmo_move": null
         }
       ]
     },
@@ -59,7 +63,9 @@
           "revenue_estimate": 0.0,
           "revenue_actual": 0.0,
           "revenue_surprise": null,
-          "price_reaction": 1.31
+          "price_reaction": 1.31,
+          "cmp": 1.46,
+          "ah_bmo_move": null
         }
       ]
     }
