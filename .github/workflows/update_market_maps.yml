@@ -1,18 +1,13 @@
 name: Update Market Maps
 
 on:
-  schedule:
-    # Targets 4:05pm ET, Mon-Fri — 5 min after the close, and deliberately
-    # clear of Update Earnings' 5:00pm ET run (see update_market_maps.py's
-    # in_run_window() for why: Finviz's 10-req/5s rate limit is fine for
-    # either workflow alone, but not if both started at the same instant).
-    # Two lines because GitHub cron is fixed UTC with no DST awareness — the
-    # script's own guard no-ops whichever one is the "wrong" offset for the
-    # current season, so this only actually runs once a day, at the real
-    # 4:05pm ET:
-    - cron: '5 20 * * 1-5'   # 4:05pm EDT (summer) — targets the 4:05pm ET mark
-    - cron: '5 21 * * 1-5'   # 4:05pm EST (winter) — targets the 4:05pm ET mark
-  workflow_dispatch:   # lets you trigger it manually from the Actions tab — always runs, bypasses the time-window guard
+  # No `schedule:` trigger here on purpose — GitHub's own cron scheduler is
+  # best-effort and can silently skip firings. Scheduling now lives in a
+  # Cloudflare Worker (cloudflare-worker.js) with a reliable Cron Trigger
+  # that calls workflow_dispatch below at 4:05pm ET (still deliberately
+  # clear of Update Earnings' 5:00pm ET run — see update_market_maps.py's
+  # in_run_window() for the Finviz rate-limit reasoning, unchanged).
+  workflow_dispatch:
 
 permissions:
   contents: write
