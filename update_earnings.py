@@ -47,6 +47,8 @@ if not FINVIZ_TOKEN:
     sys.exit(1)
 
 BASE = "https://elite.finviz.com/export/calendar/earnings"
+SCREENER_BASE = "https://elite.finviz.com/export/screener"
+MOVERS_PATH = SCRIPT_DIR / "docs" / "movers.json"
 
 MIN_SURPRISE_PCT = 20.0
 NUM_DAYS = 4
@@ -124,6 +126,79 @@ def session_label(time_str: str) -> str:
     return time_str or "—"
 
 
+def fetch_quotes(tickers: list[str]) -> dict:
+    """Most-recent regular-session close price per ticker, via Finviz Elite's
+    screener export restricted to specific symbols (t=TICK1,TICK2,... instead
+    of a filter string) — same endpoint/auth Market Maps already uses, just
+    targeted at exactly the tickers that qualified today. Best-effort: a
+    ticker Finviz doesn't recognize (delisted, OTC, renamed) is simply absent
+    from the result rather than an error, and shows as "–" on the page."""
+    if not tickers:
+        return {}
+    quotes = {}
+    CHUNK = 100  # defensive cap on symbols per request; Finviz's own limit is higher
+    for i in range(0, len(tickers), CHUNK):
+        chunk = tickers[i : i + CHUNK]
+        url = f"{SCREENER_BASE}?v=111&t={','.join(chunk)}&auth={FINVIZ_TOKEN}"
+        try:
+            r = requests.get(url, timeout=30)
+            r.raise_for_status()
+        except requests.RequestException as exc:
+            print(f"WARN: quote lookup failed for a chunk of tickers: {exc}", file=sys.stderr)
+            continue
+        reader = csv.DictReader(io.StringIO(r.text))
+        if reader.fieldnames is None or "Ticker" not in reader.fieldnames:
+            print("WARN: unexpected response from Finviz quote lookup, skipping chunk", file=sys.stderr)
+            continue
+        for row in reader:
+            t = (row.get("Ticker") or "").strip().upper()
+            price = to_float(row.get("Price"))
+            if t and price is not None:
+                quotes[t] = price
+    return quotes
+
+
+def load_movers_lookup() -> dict:
+    """Best-effort cross-reference for the afterhours/BMO move: keyed by
+    (TICKER, "YYYY-MM-DD", "premarket"|"afterhours") -> signed % move, built
+    from whatever update_movers.py has currently stored in docs/movers.json.
+    This only covers tickers that were big enough movers to appear in that
+    scrape on that session — most earnings names won't be, and that's
+    expected, not a bug; those show as "–" rather than a fabricated number."""
+    if not MOVERS_PATH.exists():
+        return {}
+    try:
+        data = json.loads(MOVERS_PATH.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return {}
+    lookup = {}
+    for e in data.get("data", []):
+        src = e.get("source_page", "")
+        if "Premarket" in src:
+            session = "premarket"
+        elif "Afterhours" in src:
+            session = "afterhours"
+        else:
+            continue
+        time_iso = e.get("time_iso")
+        symbol = (e.get("symbol") or "").upper()
+        if not time_iso or not symbol:
+            continue
+        try:
+            date_str = datetime.fromisoformat(time_iso).date().isoformat()
+            chg_pct = float(e.get("chg_pct"))
+        except (ValueError, TypeError):
+            continue
+        # If both the general and "*Earnings"-labeled movers page produced an
+        # entry for the same (symbol, date, session), either is the same
+        # real move — last one in wins, no need to prefer one over the other.
+        lookup[(symbol, date_str, session)] = chg_pct
+    return lookup
+
+
+SESSION_TO_MOVERS_KEY = {"BMO": "premarket", "AMC": "afterhours"}
+
+
 def build_days():
     trading_days = last_n_trading_days(NUM_DAYS)  # oldest -> newest
     date_from = trading_days[0].strftime("%Y-%m-%d")
@@ -164,12 +239,34 @@ def build_days():
             "revenue_actual": to_float(row.get("Revenue Actual")),
             "revenue_surprise": rev_surprise,
             "price_reaction": to_float(row.get("1-Day Price Reaction")),
+            "report_date": date_part,  # kept internally for the movers cross-reference below; stripped before writing
         }
         buckets[date_part].append(entry)
 
     def sort_key(e):
         mags = [abs(v) for v in (e["eps_surprise"], e["revenue_surprise"]) if v is not None]
         return -(max(mags) if mags else 0)
+
+    all_entries = [e for bucket in buckets.values() for e in bucket]
+
+    # CMP: one bulk Finviz quote lookup for every qualifying ticker across all
+    # 4 days, rather than a request per entry.
+    tickers = sorted({e["ticker"].upper() for e in all_entries if e["ticker"]})
+    quotes = fetch_quotes(tickers)
+
+    # Afterhours/BMO move: cross-reference against whatever update_movers.py
+    # currently has stored — see load_movers_lookup()'s docstring for why most
+    # entries will legitimately show "–" here.
+    movers_lookup = load_movers_lookup()
+    for e in all_entries:
+        e["cmp"] = quotes.get(e["ticker"].upper())
+        movers_key = SESSION_TO_MOVERS_KEY.get(e["session"])
+        e["ah_bmo_move"] = (
+            movers_lookup.get((e["ticker"].upper(), e["report_date"], movers_key))
+            if movers_key
+            else None
+        )
+        del e["report_date"]
 
     days = []
     for d in reversed(trading_days):  # most recent first
