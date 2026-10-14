@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T17:03:58.793756-04:00",
+  "generated_at": "2026-10-14T02:51:28.462616-04:00",
   "history": [
     {
       "date": "2026-09-04",
@@ -623,6 +623,30 @@
         "below_20": 2863,
         "above_50": 1408,
         "below_50": 3381
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "is_half_day": false,
+      "universe": 4977,
+      "pct_above_5": 54.15,
+      "pct_below_5": 45.81,
+      "pct_above_10": 53.77,
+      "pct_below_10": 46.23,
+      "pct_above_20": 41.61,
+      "pct_below_20": 58.39,
+      "pct_above_50": 28.93,
+      "pct_below_50": 71.07,
+      "counts": {
+        "universe": 4977,
+        "above_5": 2695,
+        "below_5": 2280,
+        "above_10": 2676,
+        "below_10": 2301,
+        "above_20": 2071,
+        "below_20": 2906,
+        "above_50": 1440,
+        "below_50": 3537
       }
     }
   ]
