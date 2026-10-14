@@ -414,6 +414,11 @@ function fmtPct(v){
   return `<span class="${cls}">${sign}${v.toFixed(2)}%</span>`;
 }
 
+function fmtPrice(v){
+  if(v === null || v === undefined) return '–';
+  return '$' + v.toFixed(2);
+}
+
 function renderDayTabs(){
   const wrap = document.getElementById('dayTabs');
   wrap.innerHTML = '';
@@ -456,6 +461,14 @@ function renderEarnings(){
         <div class="stat">
           <span class="stat-label">1-Day Reaction</span>
           <span class="stat-val">${fmtPct(e.price_reaction)}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">CMP</span>
+          <span class="stat-val">${fmtPrice(e.cmp)}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">${e.session} Move</span>
+          <span class="stat-val" title="${e.ah_bmo_move === null || e.ah_bmo_move === undefined ? 'Not a big enough mover to appear in the Movers feed that session' : ''}">${fmtPct(e.ah_bmo_move)}</span>
         </div>
       </div>
     `;
