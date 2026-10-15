@@ -61,18 +61,55 @@ def passes_price_volume_filter(price: float, volume: int) -> bool:
 # is almost certainly why the feed went stale for hours at a time on a
 # private repo: GitHub Free's 2,000 Actions-minutes/month cap gets burned
 # through fast at that rate. ~11 real runs/day fixes that outright.
-RUN_MARKS_ET = [
-    (7, 15), (7, 45), (8, 15), (8, 28), (8, 45), (9, 15),          # premarket
-    (15, 30), (16, 0), (16, 30), (17, 0), (17, 30), (18, 0),  # afterhours
-]
+PREMARKET_MARKS_ET = [(7, 15), (7, 45), (8, 15), (8, 28), (8, 45), (9, 15)]
+AFTERHOURS_MARKS_ET = [(15, 30), (16, 0), (16, 30), (17, 0), (17, 30), (18, 0)]
+RUN_MARKS_ET = PREMARKET_MARKS_ET + AFTERHOURS_MARKS_ET
 RUN_TOLERANCE_MIN = 10
 
-PAGES = {
+PREMARKET_PAGES = {
     "https://www.thestockcatalyst.com/NYSEPMMovers": "Premarket",
-    "https://www.thestockcatalyst.com/NYSEAHMovers": "Afterhours",
     "https://www.thestockcatalyst.com/NasdaqPMEarningsMovers": "Premarket Earnings",
+}
+AFTERHOURS_PAGES = {
+    "https://www.thestockcatalyst.com/NYSEAHMovers": "Afterhours",
     "https://www.thestockcatalyst.com/NasdaqAHEarningsMovers": "Afterhours Earnings",
 }
+PAGES = {**PREMARKET_PAGES, **AFTERHOURS_PAGES}
+
+
+def _near_any(marks, now_minutes: int, tolerance: int) -> bool:
+    return any(abs(now_minutes - (h * 60 + m)) <= tolerance for h, m in marks)
+
+
+def pages_to_scrape() -> dict:
+    """Which TheStockCatalyst leaderboard(s) to fetch THIS run.
+
+    Previously every run fetched all 4 pages regardless of what time it was —
+    a premarket run would also pull the Afterhours page, and an afterhours
+    run would also pull the Premarket page. That's what caused a headline
+    timestamped 9:25am (well into the regular session) to show up on the site
+    tagged "Afterhours": the row was really on TheStockCatalyst's Afterhours
+    leaderboard, which doesn't stop showing/updating just because it's now
+    morning, so a premarket-window run innocently scraped it and inherited
+    whatever headline that leaderboard happened to have attached at that
+    moment — not necessarily anything that actually happened after hours.
+
+    Restricting each run to only the page(s) that match its own window fixes
+    that at the source: a premarket run only ever writes "Premarket"/
+    "Premarket Earnings" entries, an afterhours run only ever writes
+    "Afterhours"/"Afterhours Earnings" entries. A run outside either window
+    (e.g. the website's manual refresh button clicked off-schedule) has no
+    session to infer, so it falls back to fetching everything, same as this
+    script's original behavior."""
+    now = datetime.now(ZoneInfo("America/New_York"))
+    now_minutes = now.hour * 60 + now.minute
+    is_premarket = _near_any(PREMARKET_MARKS_ET, now_minutes, RUN_TOLERANCE_MIN)
+    is_afterhours = _near_any(AFTERHOURS_MARKS_ET, now_minutes, RUN_TOLERANCE_MIN)
+    if is_premarket and not is_afterhours:
+        return PREMARKET_PAGES
+    if is_afterhours and not is_premarket:
+        return AFTERHOURS_PAGES
+    return PAGES  # neither window (manual/off-schedule run) — fetch everything
 
 HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"}
 
@@ -116,6 +153,28 @@ def most_recent_market_open() -> datetime:
             f"up to {now_et.date()} — that shouldn't happen."
         )
     return opens[-1]
+
+
+def most_recent_market_close() -> datetime:
+    """The most recent NYSE 4:00pm-ET close that has already happened, as an
+    ET-aware datetime — the Afterhours-side counterpart to
+    most_recent_market_open() above, and computed the same way (via the
+    exchange calendar, so holidays/early closes shift it correctly)."""
+    now_et = datetime.now(ZoneInfo("America/New_York"))
+    sched = NYSE.schedule(
+        start_date=(now_et - timedelta(days=10)).date(), end_date=now_et.date()
+    )
+    closes = [
+        c.to_pydatetime().astimezone(ZoneInfo("America/New_York"))
+        for c in sched["market_close"]
+    ]
+    closes = [c for c in closes if c <= now_et]
+    if not closes:
+        raise RuntimeError(
+            f"pandas_market_calendars found no past NYSE closes in the 10 days "
+            f"up to {now_et.date()} — that shouldn't happen."
+        )
+    return closes[-1]
 
 
 def in_run_window() -> bool:
@@ -265,27 +324,58 @@ def load_existing() -> dict:
     return existing
 
 
-def better_entry(a, b, cutoff):
+def better_entry(a, b, window):
     """Which of two candidate entries for the same (symbol, source_page,
-    direction) key should win — preferring a headline before the most recent
-    market open over one after it, and only falling back to "simply newer"
-    when both candidates are on the same side of that cutoff (or when neither
-    is pre-open, so there's no real catalyst headline to prefer and the
-    latest one is the best available)."""
+    direction) key should win — preferring whichever headline actually falls
+    inside `window` (the real session that source_page is supposed to
+    represent) over one that falls outside it, and only falling back to
+    "simply newer" when both candidates are on the same side (both inside,
+    or both outside — so there's no genuine in-session catalyst to prefer and
+    the latest one is the best available).
+
+    This used to be a single before/after split around one cutoff timestamp,
+    which worked for Premarket (the real catalyst for a premarket move is the
+    newest headline before the open — open-ended on the early side, since any
+    headline that old is still a valid pre-open catalyst) but broke for
+    Afterhours: using the same "before/after" cutoff there meant a stray
+    headline from THE NEXT MORNING could still read as "after the close" and,
+    being newer, would win over the actual prior-evening afterhours headline
+    — which is exactly the "AM headline next to an Afterhours entry" bug.
+    A proper two-sided window (closed on the late side too) fixes that: a
+    next-morning headline falls outside the Afterhours window entirely, so it
+    can never outrank a real in-session one."""
     if b is None:
         return a
-    a_pre = a["dt"] < cutoff
-    b_pre = b["dt"] < cutoff
-    if a_pre != b_pre:
-        return a if a_pre else b
+    start, end = window
+    a_in = start <= a["dt"] < end
+    b_in = start <= b["dt"] < end
+    if a_in != b_in:
+        return a if a_in else b
     return a if a["dt"] > b["dt"] else b
 
 
+_EPOCH = datetime(2000, 1, 1, tzinfo=timezone.utc)  # open-ended lower bound for Premarket windows
+
+
+def window_for(source_page: str, open_cutoff: datetime, close: datetime) -> tuple:
+    """The acceptance window a candidate headline must fall in to be
+    considered "really" from that source_page's session — see better_entry()
+    above for why Afterhours needs a closed window and Premarket doesn't.
+    Afterhours's window runs from the most recent close through the end of
+    that same ET calendar day (generous enough for a late post-close
+    earnings-call headline, but never into the next morning)."""
+    if "Afterhours" in source_page:
+        end_of_day = close.replace(hour=23, minute=59, second=59, microsecond=999999)
+        return (close, end_of_day)
+    return (_EPOCH, open_cutoff)  # Premarket / Premarket Earnings
+
+
 def build_dataset():
-    cutoff = most_recent_market_open()
+    open_cutoff = most_recent_market_open()
+    close = most_recent_market_close()
 
     all_entries = []
-    for url, label in PAGES.items():
+    for url, label in pages_to_scrape().items():
         try:
             html = fetch(url)
         except Exception as exc:  # noqa: BLE001
@@ -294,21 +384,22 @@ def build_dataset():
         all_entries.extend(parse_page(html, label))
 
     # Per (symbol, source_page, direction), keep whichever headline this run
-    # scraped is the best candidate: the latest one before the most recent
-    # market open, or — only if none exists — the latest one overall.
+    # scraped is the best candidate — see better_entry()/window_for() above.
     fresh = {}
     for e in all_entries:
         key = (e["symbol"], e["source_page"], e["direction"])
-        fresh[key] = better_entry(e, fresh.get(key), cutoff)
+        window = window_for(e["source_page"], open_cutoff, close)
+        fresh[key] = better_entry(e, fresh.get(key), window)
 
     # merge with whatever was already stored, using the same preference, so a
     # quiet run (nothing new on the live page right now) doesn't erase
     # yesterday's pre-open catalyst in favor of nothing, and a later run
-    # doesn't let a fresh post-open rehash bump out an already-stored pre-open
-    # headline that's still the real explanation for the move
+    # doesn't let a fresh out-of-session rehash bump out an already-stored
+    # in-session headline that's still the real explanation for the move
     merged = load_existing()
     for key, e in fresh.items():
-        merged[key] = better_entry(e, merged.get(key), cutoff)
+        window = window_for(key[1], open_cutoff, close)
+        merged[key] = better_entry(e, merged.get(key), window)
 
     cutoff = datetime.now(ZoneInfo("America/New_York")) - timedelta(hours=PRUNE_AFTER_HOURS)
     final = [e for e in merged.values() if e["dt"] >= cutoff]
