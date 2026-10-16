@@ -53,15 +53,17 @@ MOVERS_PATH = SCRIPT_DIR / "docs" / "movers.json"
 MIN_SURPRISE_PCT = 20.0
 NUM_DAYS = 4
 
-# The workflow fires 4x/day (not 2x) because a GitHub Actions cron schedule is
-# a fixed UTC time with no DST awareness, so "8am ET" and "5pm ET" each need
-# two cron lines — one for EDT, one for EST — to land at the right wall-clock
-# time year-round. Only one of each pair is ever actually correct at a given
-# time of year; the other fires an hour off. This guard makes the "wrong"
-# firing a harmless no-op (exits before touching the file) instead of writing
-# a redundant/misleading update, so docs/earnings.json only ever actually
-# changes at true 8am ET and true 5pm ET (BMO and AMC), Mon-Fri.
-RUN_WINDOWS_ET = [(8, 0), (17, 0)]  # (hour, minute), 24h clock, America/New_York
+# This guard is effectively dead code now — every trigger arrives as
+# workflow_dispatch (from the Cloudflare Worker's scheduler or a manual
+# click), and in_run_window() below always lets that through regardless of
+# time. Kept in sync with the Worker's SCHEDULES anyway as documentation /
+# a safety net should a `schedule:` trigger ever come back. The evening mark
+# is 17:45, not 17:00 — update_movers.yml also has a 17:00 mark of its own,
+# and two different workflows firing at the same moment can race to commit
+# to main at the same time (one workflow's push getting rejected because the
+# other just moved main out from under it); see cloudflare-worker.js's
+# SCHEDULES comment for the full explanation.
+RUN_WINDOWS_ET = [(8, 0), (17, 45)]  # (hour, minute), 24h clock, America/New_York
 RUN_TOLERANCE_MIN = 20
 
 NYSE = mcal.get_calendar("NYSE")

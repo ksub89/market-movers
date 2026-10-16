@@ -84,18 +84,22 @@ def fetch_count(filter_str: str) -> int:
     return len(rows) - 1  # minus header row
 
 
-# Target: 4:05pm ET, Mon-Fri — 5 minutes after the 4:00pm close, and
-# deliberately 55 minutes clear of Update Earnings' 5:00pm ET run so the two
-# workflows' Finviz requests never land in the same 5-second rate-limit
-# window (Finviz allows 10 requests/5s; this script alone sends 9 in one run,
-# so any overlap with another Finviz-calling workflow eats into that margin).
+# Target: 4:15pm ET, Mon-Fri — 15 minutes after the 4:00pm close (moved from
+# 4:05pm: that was only 5 minutes from update_movers.yml's own 4:00pm mark,
+# close enough that the Cloudflare Worker's scheduler could dispatch both
+# workflows on the same tick — and two workflows committing to main around
+# the same moment can race, with one's push getting rejected; see
+# cloudflare-worker.js's SCHEDULES comment). Still clear of Update Earnings'
+# 5:45pm ET run so the two workflows' Finviz requests never land in the same
+# 5-second rate-limit window (Finviz allows 10 requests/5s; this script
+# alone sends 9 in one run, so any overlap with another Finviz-calling
+# workflow eats into that margin).
 #
-# GitHub Actions cron is fixed UTC with no DST awareness, so hitting a fixed
-# ET wall-clock time year-round needs two cron lines — one for EDT (UTC-4),
-# one for EST (UTC-5) — with this guard no-op'ing whichever one is currently
-# the "wrong" offset, so docs/market_maps.json only actually updates once a
-# day, at the real 4:05pm ET.
-RUN_WINDOW_ET = (16, 5)
+# This guard is effectively dead code now — every trigger arrives as
+# workflow_dispatch, which in_run_window() below always lets through
+# regardless of time. Kept in sync with the Worker's SCHEDULES anyway as
+# documentation / a safety net should a `schedule:` trigger ever come back.
+RUN_WINDOW_ET = (16, 15)
 RUN_TOLERANCE_MIN = 20
 
 
