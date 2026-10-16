@@ -1,7 +1,28 @@
 {
-  "generated_at": "2026-10-15T17:01:19.684574-04:00",
+  "generated_at": "2026-10-16T08:00:37.586497-04:00",
   "min_surprise_pct": 20.0,
   "days": [
+    {
+      "date": "2026-10-16",
+      "entries": [
+        {
+          "ticker": "TRV",
+          "company": "Travelers Companies Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 76755.60018664302,
+          "eps_estimate": 7.3923,
+          "eps_actual": 9.18,
+          "eps_surprise": 24.18,
+          "revenue_estimate": 11361.2282,
+          "revenue_actual": 12412.0,
+          "revenue_surprise": 9.25,
+          "price_reaction": -4.14,
+          "cmp": 368.0,
+          "ah_bmo_move": null
+        }
+      ]
+    },
     {
       "date": "2026-10-15",
       "entries": [
@@ -10,7 +31,7 @@
           "company": "Telefonaktiebolaget L M Ericsson ADR",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 32608.737116146087,
+          "market_cap": 32025.67794885635,
           "eps_estimate": 0.1448,
           "eps_actual": 0.1777,
           "eps_surprise": 22.72,
@@ -18,7 +39,7 @@
           "revenue_actual": 5970.7577,
           "revenue_surprise": 6.8,
           "price_reaction": 11.8,
-          "cmp": 10.71,
+          "cmp": 10.52,
           "ah_bmo_move": null
         },
         {
@@ -26,15 +47,15 @@
           "company": "Alcoa Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 10667.21823602239,
+          "market_cap": 10912.655880870452,
           "eps_estimate": 1.5143,
           "eps_actual": 1.82,
           "eps_surprise": 20.19,
           "revenue_estimate": 3768.5438,
           "revenue_actual": 3704.0,
           "revenue_surprise": -1.71,
-          "price_reaction": null,
-          "cmp": 40.42,
+          "price_reaction": 2.3,
+          "cmp": 41.35,
           "ah_bmo_move": null
         }
       ]
@@ -47,7 +68,7 @@
           "company": "Comtech Telecommunications Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 43.44336177468364,
+          "market_cap": 43.39560669387269,
           "eps_estimate": -0.51,
           "eps_actual": -0.31,
           "eps_surprise": 39.22,
@@ -55,7 +76,7 @@
           "revenue_actual": 66.232,
           "revenue_surprise": -40.68,
           "price_reaction": 13.28,
-          "cmp": 1.45,
+          "cmp": 1.44,
           "ah_bmo_move": null
         }
       ]
@@ -68,7 +89,7 @@
           "company": "Goldman Sachs Group Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 259515.27007241256,
+          "market_cap": 259433.7334725365,
           "eps_estimate": 12.8648,
           "eps_actual": 17.01,
           "eps_surprise": 32.22,
@@ -76,28 +97,7 @@
           "revenue_actual": 18679.0,
           "revenue_surprise": 10.97,
           "price_reaction": -0.23,
-          "cmp": 891.28,
-          "ah_bmo_move": null
-        }
-      ]
-    },
-    {
-      "date": "2026-10-12",
-      "entries": [
-        {
-          "ticker": "NRIX",
-          "company": "Nurix Therapeutics Inc",
-          "session": "AMC",
-          "report_time": "16:30",
-          "market_cap": 2725.779668988389,
-          "eps_estimate": -0.6009,
-          "eps_actual": 4.73,
-          "eps_surprise": 887.15,
-          "revenue_estimate": 24.3484,
-          "revenue_actual": 673.064,
-          "revenue_surprise": 2664.3,
-          "price_reaction": -0.14,
-          "cmp": 24.95,
+          "cmp": 891.0,
           "ah_bmo_move": null
         }
       ]
