@@ -1,16 +1,85 @@
 {
-  "generated_at": "2026-10-19T17:46:10.879273-04:00",
+  "generated_at": "2026-10-20T08:01:09.869308-04:00",
   "min_surprise_pct": 20.0,
   "days": [
     {
+      "date": "2026-10-20",
+      "entries": [
+        {
+          "ticker": "HAS",
+          "company": "Hasbro Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 14100.216295854123,
+          "eps_estimate": 1.8561,
+          "eps_actual": 2.9,
+          "eps_surprise": 56.24,
+          "revenue_estimate": 1475.894,
+          "revenue_actual": null,
+          "revenue_surprise": null,
+          "price_reaction": 1.5,
+          "cmp": 99.97,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "RTX",
+          "company": "RTX Corp",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 263998.8740029933,
+          "eps_estimate": 1.7802,
+          "eps_actual": 2.26,
+          "eps_surprise": 26.95,
+          "revenue_estimate": 24109.1871,
+          "revenue_actual": 24965.0,
+          "revenue_surprise": 3.55,
+          "price_reaction": 1.96,
+          "cmp": 195.88,
+          "ah_bmo_move": null
+        }
+      ]
+    },
+    {
       "date": "2026-10-19",
       "entries": [
+        {
+          "ticker": "USAS",
+          "company": "Americas Gold and Silver Corp",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 1264.7184032249452,
+          "eps_estimate": 0.024,
+          "eps_actual": 0.05,
+          "eps_surprise": 108.33,
+          "revenue_estimate": 63.4542,
+          "revenue_actual": 63.4542,
+          "revenue_surprise": 0.0,
+          "price_reaction": -0.26,
+          "cmp": 3.74,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "RLI",
+          "company": "RLI Corp",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 5672.4916092375015,
+          "eps_estimate": 0.5356,
+          "eps_actual": 0.86,
+          "eps_surprise": 60.57,
+          "revenue_estimate": 533.5093,
+          "revenue_actual": 522.247,
+          "revenue_surprise": -2.11,
+          "price_reaction": 1.0,
+          "cmp": 61.81,
+          "ah_bmo_move": null
+        },
         {
           "ticker": "CLF",
           "company": "Cleveland-Cliffs Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 8044.614217643737,
+          "market_cap": 7904.599312773514,
           "eps_estimate": 0.2139,
           "eps_actual": 0.28,
           "eps_surprise": 30.9,
@@ -18,7 +87,39 @@
           "revenue_actual": 5612.0,
           "revenue_surprise": -1.46,
           "price_reaction": 16.34,
-          "cmp": 14.1,
+          "cmp": 13.85,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "RBB",
+          "company": "RBB Bancorp",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 451.65489131110917,
+          "eps_estimate": 0.576,
+          "eps_actual": 0.74,
+          "eps_surprise": 28.47,
+          "revenue_estimate": 34.4323,
+          "revenue_actual": 36.366,
+          "revenue_surprise": 5.62,
+          "price_reaction": 4.91,
+          "cmp": 26.7,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "COSO",
+          "company": "CoastalSouth Bancshares Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 317.15,
+          "eps_estimate": 0.59,
+          "eps_actual": 0.71,
+          "eps_surprise": 20.34,
+          "revenue_estimate": 24.025,
+          "revenue_actual": 24.856,
+          "revenue_surprise": 3.46,
+          "price_reaction": null,
+          "cmp": 26.53,
           "ah_bmo_move": null
         }
       ]
@@ -31,7 +132,7 @@
           "company": "Ladder Capital Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1120.17379032135,
+          "market_cap": 1120.22,
           "eps_estimate": 0.3343,
           "eps_actual": 0.35,
           "eps_surprise": 4.7,
@@ -47,7 +148,7 @@
           "company": "Travelers Companies Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 80393.3090460205,
+          "market_cap": 79164.6212469912,
           "eps_estimate": 7.3923,
           "eps_actual": 9.18,
           "eps_surprise": 24.18,
@@ -55,7 +156,7 @@
           "revenue_actual": 11480.0,
           "revenue_surprise": 1.05,
           "price_reaction": 1.47,
-          "cmp": 385.45,
+          "cmp": 386.27,
           "ah_bmo_move": null
         }
       ]
@@ -68,7 +169,7 @@
           "company": "Aduro Clean Technologies Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 353.4299863815308,
+          "market_cap": 361.2447406768799,
           "eps_estimate": -0.1077,
           "eps_actual": 0.0225,
           "eps_surprise": 120.89,
@@ -76,7 +177,7 @@
           "revenue_actual": 0.0121,
           "revenue_surprise": -1.63,
           "price_reaction": -0.55,
-          "cmp": 9.9,
+          "cmp": 10.12,
           "ah_bmo_move": null
         },
         {
@@ -84,7 +185,7 @@
           "company": "Telefonaktiebolaget L M Ericsson ADR",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 31482.198464584348,
+          "market_cap": 31634.434045314785,
           "eps_estimate": 0.1448,
           "eps_actual": 0.1777,
           "eps_surprise": 22.72,
@@ -92,7 +193,7 @@
           "revenue_actual": 5970.7577,
           "revenue_surprise": 6.8,
           "price_reaction": 11.8,
-          "cmp": 10.34,
+          "cmp": 10.39,
           "ah_bmo_move": null
         },
         {
@@ -100,7 +201,7 @@
           "company": "Alcoa Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 10997.129216766358,
+          "market_cap": 10830.847715383476,
           "eps_estimate": 1.5143,
           "eps_actual": 1.82,
           "eps_surprise": 20.19,
@@ -108,28 +209,7 @@
           "revenue_actual": 3704.0,
           "revenue_surprise": -1.71,
           "price_reaction": 2.55,
-          "cmp": 41.67,
-          "ah_bmo_move": null
-        }
-      ]
-    },
-    {
-      "date": "2026-10-14",
-      "entries": [
-        {
-          "ticker": "CMTL",
-          "company": "Comtech Telecommunications Corp",
-          "session": "AMC",
-          "report_time": "16:30",
-          "market_cap": 41.045200142860416,
-          "eps_estimate": -0.51,
-          "eps_actual": -0.31,
-          "eps_surprise": 39.22,
-          "revenue_estimate": 111.652,
-          "revenue_actual": 66.232,
-          "revenue_surprise": -40.68,
-          "price_reaction": 13.28,
-          "cmp": 1.37,
+          "cmp": 41.04,
           "ah_bmo_move": null
         }
       ]
