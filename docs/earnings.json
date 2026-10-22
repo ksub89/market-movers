@@ -1,16 +1,85 @@
 {
-  "generated_at": "2026-10-21T17:46:16.399435-04:00",
+  "generated_at": "2026-10-22T08:01:20.615556-04:00",
   "min_surprise_pct": 20.0,
   "days": [
     {
+      "date": "2026-10-22",
+      "entries": [
+        {
+          "ticker": "NDAQ",
+          "company": "Nasdaq Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 54589.72555998699,
+          "eps_estimate": 1.0164,
+          "eps_actual": 1.04,
+          "eps_surprise": 2.32,
+          "revenue_estimate": 1466.5235,
+          "revenue_actual": 2393.0,
+          "revenue_surprise": 63.18,
+          "price_reaction": 1.6,
+          "cmp": 97.66,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "NOK",
+          "company": "Nokia Corp ADR",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 49684.9250263977,
+          "eps_estimate": 0.0701,
+          "eps_actual": 0.101,
+          "eps_surprise": 44.08,
+          "revenue_estimate": 5719.9755,
+          "revenue_actual": 5784.8491,
+          "revenue_surprise": 1.13,
+          "price_reaction": -5.08,
+          "cmp": 8.78,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "AAL",
+          "company": "American Airlines Group Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 7811.441729655811,
+          "eps_estimate": -0.361,
+          "eps_actual": -0.28,
+          "eps_surprise": 22.44,
+          "revenue_estimate": 16212.6528,
+          "revenue_actual": 16335.0,
+          "revenue_surprise": 0.75,
+          "price_reaction": -3.55,
+          "cmp": 11.8,
+          "ah_bmo_move": null
+        }
+      ]
+    },
+    {
       "date": "2026-10-21",
       "entries": [
+        {
+          "ticker": "SLG",
+          "company": "SL Green Realty Corp",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 3566.2100000000005,
+          "eps_estimate": -0.248,
+          "eps_actual": 1.01,
+          "eps_surprise": 507.26,
+          "revenue_estimate": 176.9653,
+          "revenue_actual": 165.552,
+          "revenue_surprise": -6.45,
+          "price_reaction": 0.0,
+          "cmp": 46.68,
+          "ah_bmo_move": null
+        },
         {
           "ticker": "UDR",
           "company": "UDR Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 18296.634002956638,
+          "market_cap": 18296.63,
           "eps_estimate": 0.152,
           "eps_actual": 0.67,
           "eps_surprise": 340.79,
@@ -22,11 +91,43 @@
           "ah_bmo_move": null
         },
         {
+          "ticker": "BDN",
+          "company": "Brandywine Realty Trust",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 490.87206364345434,
+          "eps_estimate": -0.1687,
+          "eps_actual": 0.4033,
+          "eps_surprise": 339.06,
+          "revenue_estimate": 111.4903,
+          "revenue_actual": 118.661,
+          "revenue_surprise": 6.43,
+          "price_reaction": 3.83,
+          "cmp": 2.8,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "EGBN",
+          "company": "Eagle Bancorp Inc (MD)",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 869.71,
+          "eps_estimate": 0.3417,
+          "eps_actual": 0.79,
+          "eps_surprise": 131.2,
+          "revenue_estimate": 71.7823,
+          "revenue_actual": 70.873,
+          "revenue_surprise": -1.27,
+          "price_reaction": null,
+          "cmp": 28.53,
+          "ah_bmo_move": null
+        },
+        {
           "ticker": "HCSG",
           "company": "Healthcare Services Group Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1490.0026767003258,
+          "market_cap": 1490.01,
           "eps_estimate": 0.2386,
           "eps_actual": 0.36,
           "eps_surprise": 50.88,
@@ -42,15 +143,31 @@
           "company": "Elevance Health Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 94149.46347696845,
-          "eps_estimate": 4.7139,
+          "market_cap": 94348.98604916976,
+          "eps_estimate": 4.714,
           "eps_actual": 6.99,
           "eps_surprise": 48.28,
-          "revenue_estimate": 49248.1935,
+          "revenue_estimate": 49281.4701,
           "revenue_actual": 50440.0,
-          "revenue_surprise": 2.42,
+          "revenue_surprise": 2.35,
           "price_reaction": -1.37,
-          "cmp": 434.13,
+          "cmp": 435.05,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "ASIC",
+          "company": "Ategrity Specialty Insurance Company Holdings",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 1327.0931610911568,
+          "eps_estimate": 0.4554,
+          "eps_actual": 0.29,
+          "eps_surprise": -36.32,
+          "revenue_estimate": 133.345,
+          "revenue_actual": 165.021,
+          "revenue_surprise": 23.75,
+          "price_reaction": -0.65,
+          "cmp": 27.69,
           "ah_bmo_move": null
         },
         {
@@ -58,7 +175,7 @@
           "company": "HomeTrust Bancshares Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 790.5894257533096,
+          "market_cap": 790.59,
           "eps_estimate": 0.898,
           "eps_actual": 1.1616,
           "eps_surprise": 29.35,
@@ -74,7 +191,7 @@
           "company": "Unifirst Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 4760.455750499145,
+          "market_cap": 4729.177182886722,
           "eps_estimate": 2.0394,
           "eps_actual": 2.61,
           "eps_surprise": 27.98,
@@ -82,7 +199,7 @@
           "revenue_actual": 645.005,
           "revenue_surprise": 1.67,
           "price_reaction": 2.76,
-          "cmp": 274.0,
+          "cmp": 272.2,
           "ah_bmo_move": null
         }
       ]
@@ -95,7 +212,7 @@
           "company": "Iridium Communications Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 4689.684431959525,
+          "market_cap": 4609.3983186124815,
           "eps_estimate": 0.3356,
           "eps_actual": 0.98,
           "eps_surprise": 192.01,
@@ -103,7 +220,7 @@
           "revenue_actual": 245.733,
           "revenue_surprise": 3.99,
           "price_reaction": -0.54,
-          "cmp": 44.25,
+          "cmp": 43.42,
           "ah_bmo_move": null
         },
         {
@@ -111,7 +228,7 @@
           "company": "Space Exploration Technologies Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 2162007.0162607552,
+          "market_cap": 2085643.2279934918,
           "eps_estimate": 0.1339,
           "eps_actual": 0.35,
           "eps_surprise": 161.39,
@@ -119,7 +236,7 @@
           "revenue_actual": 14575.0,
           "revenue_surprise": 13.29,
           "price_reaction": 7.79,
-          "cmp": 159.31,
+          "cmp": 155.36,
           "ah_bmo_move": null
         },
         {
@@ -127,7 +244,7 @@
           "company": "Hasbro Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 16079.069703947858,
+          "market_cap": 16011.368179154646,
           "eps_estimate": 1.8561,
           "eps_actual": 2.9,
           "eps_surprise": 56.24,
@@ -135,7 +252,7 @@
           "revenue_actual": 1595.3,
           "revenue_surprise": 8.09,
           "price_reaction": 11.2,
-          "cmp": 114.0,
+          "cmp": 113.52,
           "ah_bmo_move": null
         },
         {
@@ -143,7 +260,7 @@
           "company": "Stride Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 3174.75688645895,
+          "market_cap": 3174.76,
           "eps_estimate": 1.07,
           "eps_actual": 1.45,
           "eps_surprise": 35.51,
@@ -159,7 +276,7 @@
           "company": "RTX Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 258230.47394277048,
+          "market_cap": 261157.230401913,
           "eps_estimate": 1.7802,
           "eps_actual": 2.26,
           "eps_surprise": 26.95,
@@ -167,7 +284,7 @@
           "revenue_actual": 24965.0,
           "revenue_surprise": 3.55,
           "price_reaction": 0.64,
-          "cmp": 191.6,
+          "cmp": 193.53,
           "ah_bmo_move": null
         },
         {
@@ -175,7 +292,7 @@
           "company": "Weatherford International plc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 6214.133973241537,
+          "market_cap": 6214.13,
           "eps_estimate": 1.3326,
           "eps_actual": 1.66,
           "eps_surprise": 24.57,
@@ -187,27 +304,11 @@
           "ah_bmo_move": 4.68
         },
         {
-          "ticker": "COF",
-          "company": "Capital One Financial Corp",
-          "session": "AMC",
-          "report_time": "16:30",
-          "market_cap": 126782.77635623504,
-          "eps_estimate": 5.4966,
-          "eps_actual": 6.69,
-          "eps_surprise": 21.71,
-          "revenue_estimate": 16246.9327,
-          "revenue_actual": 16344.0,
-          "revenue_surprise": 0.6,
-          "price_reaction": 2.53,
-          "cmp": 206.66,
-          "ah_bmo_move": 5.02
-        },
-        {
           "ticker": "PEBO",
           "company": "Peoples Bancorp Inc (Marietta, OH)",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1341.7233048277146,
+          "market_cap": 1341.73,
           "eps_estimate": 0.9271,
           "eps_actual": 1.1245,
           "eps_surprise": 21.29,
@@ -217,6 +318,22 @@
           "price_reaction": 2.99,
           "cmp": 37.33,
           "ah_bmo_move": null
+        },
+        {
+          "ticker": "COF",
+          "company": "Capital One Financial Corp",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 125165.00527827909,
+          "eps_estimate": 5.5304,
+          "eps_actual": 6.69,
+          "eps_surprise": 20.97,
+          "revenue_estimate": 16246.9327,
+          "revenue_actual": 16344.0,
+          "revenue_surprise": 0.6,
+          "price_reaction": 2.53,
+          "cmp": 204.02,
+          "ah_bmo_move": 5.02
         }
       ]
     },
@@ -228,7 +345,7 @@
           "company": "Americas Gold and Silver Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1217.3759677505493,
+          "market_cap": 1170.0336128997803,
           "eps_estimate": 0.024,
           "eps_actual": 0.05,
           "eps_surprise": 108.33,
@@ -236,7 +353,7 @@
           "revenue_actual": 63.4542,
           "revenue_surprise": 0.0,
           "price_reaction": -0.26,
-          "cmp": 3.6,
+          "cmp": 3.46,
           "ah_bmo_move": null
         },
         {
@@ -244,7 +361,7 @@
           "company": "VinFast Auto Ltd",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 6995.214691488839,
+          "market_cap": 6948.419342431195,
           "eps_estimate": -0.42,
           "eps_actual": -0.02,
           "eps_surprise": 95.24,
@@ -252,7 +369,7 @@
           "revenue_actual": 1203.7155,
           "revenue_surprise": -5.42,
           "price_reaction": -7.05,
-          "cmp": 2.99,
+          "cmp": 2.97,
           "ah_bmo_move": null
         },
         {
@@ -260,7 +377,7 @@
           "company": "RLI Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 5864.290003994149,
+          "market_cap": 5864.29,
           "eps_estimate": 0.5356,
           "eps_actual": 0.86,
           "eps_surprise": 60.57,
@@ -276,7 +393,7 @@
           "company": "Cleveland-Cliffs Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 8004.675243513233,
+          "market_cap": 7736.678810717125,
           "eps_estimate": 0.2139,
           "eps_actual": 0.28,
           "eps_surprise": 30.9,
@@ -284,7 +401,7 @@
           "revenue_actual": 5612.0,
           "revenue_surprise": -1.46,
           "price_reaction": 16.34,
-          "cmp": 14.03,
+          "cmp": 13.56,
           "ah_bmo_move": null
         },
         {
@@ -292,7 +409,7 @@
           "company": "CoastalSouth Bancshares Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 325.5240895764103,
+          "market_cap": 325.52,
           "eps_estimate": 0.59,
           "eps_actual": 0.71,
           "eps_surprise": 20.34,
@@ -301,43 +418,6 @@
           "revenue_surprise": 3.46,
           "price_reaction": 2.15,
           "cmp": 27.23,
-          "ah_bmo_move": null
-        }
-      ]
-    },
-    {
-      "date": "2026-10-16",
-      "entries": [
-        {
-          "ticker": "LADR",
-          "company": "Ladder Capital Corp",
-          "session": "BMO",
-          "report_time": "08:30",
-          "market_cap": 1136.7121134792326,
-          "eps_estimate": 0.3343,
-          "eps_actual": 0.35,
-          "eps_surprise": 4.7,
-          "revenue_estimate": 79.6667,
-          "revenue_actual": 118.904,
-          "revenue_surprise": 49.25,
-          "price_reaction": 3.29,
-          "cmp": 8.96,
-          "ah_bmo_move": null
-        },
-        {
-          "ticker": "TRV",
-          "company": "Travelers Companies Inc",
-          "session": "BMO",
-          "report_time": "08:30",
-          "market_cap": 81763.34748629878,
-          "eps_estimate": 7.3923,
-          "eps_actual": 9.18,
-          "eps_surprise": 24.18,
-          "revenue_estimate": 11361.2282,
-          "revenue_actual": 11480.0,
-          "revenue_surprise": 1.05,
-          "price_reaction": 1.47,
-          "cmp": 398.95,
           "ah_bmo_move": null
         }
       ]
