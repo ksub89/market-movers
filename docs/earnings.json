@@ -1,40 +1,152 @@
 {
-  "generated_at": "2026-11-02T08:01:00.400337-05:00",
+  "generated_at": "2026-11-02T17:45:59.790510-05:00",
   "min_surprise_pct": 20.0,
   "days": [
     {
       "date": "2026-11-02",
       "entries": [
         {
+          "ticker": "IBTA",
+          "company": "Ibotta Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 1160.4253043107726,
+          "eps_estimate": -0.0758,
+          "eps_actual": 0.62,
+          "eps_surprise": 917.94,
+          "revenue_estimate": 88.6043,
+          "revenue_actual": 97.825,
+          "revenue_surprise": 10.41,
+          "price_reaction": null,
+          "cmp": 50.07,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "LIFE",
+          "company": "Ethos Technologies Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 2769.622214305634,
+          "eps_estimate": 0.0811,
+          "eps_actual": 0.49,
+          "eps_surprise": 504.19,
+          "revenue_estimate": 169.0487,
+          "revenue_actual": 235.215,
+          "revenue_surprise": 39.14,
+          "price_reaction": null,
+          "cmp": 42.62,
+          "ah_bmo_move": 8.81
+        },
+        {
+          "ticker": "BMRN",
+          "company": "Biomarin Pharmaceutical Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 11118.876142689633,
+          "eps_estimate": -0.0833,
+          "eps_actual": 0.23,
+          "eps_surprise": 376.11,
+          "revenue_estimate": 1022.3824,
+          "revenue_actual": 1024.646,
+          "revenue_surprise": 0.22,
+          "price_reaction": null,
+          "cmp": 57.44,
+          "ah_bmo_move": null
+        },
+        {
           "ticker": "TEM",
           "company": "Tempus AI Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 13649.928709780881,
-          "eps_estimate": -0.0876,
+          "market_cap": 14302.355529263621,
+          "eps_estimate": -0.0937,
           "eps_actual": 0.07,
-          "eps_surprise": 179.91,
+          "eps_surprise": 174.71,
           "revenue_estimate": 409.39,
           "revenue_actual": 411.537,
           "revenue_surprise": 0.52,
-          "price_reaction": 3.71,
-          "cmp": 74.9,
+          "price_reaction": 8.67,
+          "cmp": 78.48,
           "ah_bmo_move": null
         },
         {
-          "ticker": "III",
-          "company": "Information Services Group Inc",
+          "ticker": "CIFR",
+          "company": "Cipher Digital Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 297.69708020408945,
-          "eps_estimate": 0.06,
-          "eps_actual": 0.1,
-          "eps_surprise": 66.67,
-          "revenue_estimate": 64.0215,
-          "revenue_actual": 65.105,
-          "revenue_surprise": 1.69,
-          "price_reaction": 0.8,
-          "cmp": 6.15,
+          "market_cap": 2847.1070936304104,
+          "eps_estimate": -0.2501,
+          "eps_actual": 0.08,
+          "eps_surprise": 131.99,
+          "revenue_estimate": 39.3127,
+          "revenue_actual": 26.701,
+          "revenue_surprise": -32.08,
+          "price_reaction": -5.9,
+          "cmp": 6.86,
+          "ah_bmo_move": 3.7
+        },
+        {
+          "ticker": "BLZE",
+          "company": "Backblaze Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 458.0590217274396,
+          "eps_estimate": 0.0471,
+          "eps_actual": 0.09,
+          "eps_surprise": 91.08,
+          "revenue_estimate": 44.5901,
+          "revenue_actual": 46.654,
+          "revenue_surprise": 4.63,
+          "price_reaction": null,
+          "cmp": 7.4,
+          "ah_bmo_move": 24.69
+        },
+        {
+          "ticker": "NBIX",
+          "company": "Neurocrine Biosciences Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 14774.713093533972,
+          "eps_estimate": 1.9102,
+          "eps_actual": 3.29,
+          "eps_surprise": 72.23,
+          "revenue_estimate": 1043.2946,
+          "revenue_actual": 1122.7,
+          "revenue_surprise": 7.61,
+          "price_reaction": null,
+          "cmp": 145.35,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "INSP",
+          "company": "Inspire Medical Systems Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 1943.0697380675313,
+          "eps_estimate": 0.087,
+          "eps_actual": 0.14,
+          "eps_surprise": 60.92,
+          "revenue_estimate": 204.3132,
+          "revenue_actual": 206.695,
+          "revenue_surprise": 1.17,
+          "price_reaction": null,
+          "cmp": 67.21,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "AXSM",
+          "company": "Axsome Therapeutics Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 7124.3136759833005,
+          "eps_estimate": -0.6343,
+          "eps_actual": -0.25,
+          "eps_surprise": 60.59,
+          "revenue_estimate": 249.1881,
+          "revenue_actual": 249.951,
+          "revenue_surprise": 0.31,
+          "price_reaction": -5.83,
+          "cmp": 136.01,
           "ah_bmo_move": null
         },
         {
@@ -42,15 +154,223 @@
           "company": "TAT Technologies Ltd",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 452.59430877863826,
+          "market_cap": 486.259424777227,
           "eps_estimate": 0.3933,
           "eps_actual": 0.58,
           "eps_surprise": 47.47,
           "revenue_estimate": 52.8441,
+          "revenue_actual": 55.563,
+          "revenue_surprise": 5.15,
+          "price_reaction": 17.64,
+          "cmp": 37.41,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "CLX",
+          "company": "Clorox Co",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 10872.342729991566,
+          "eps_estimate": 1.0729,
+          "eps_actual": 1.55,
+          "eps_surprise": 44.47,
+          "revenue_estimate": 1876.0893,
+          "revenue_actual": 1905.0,
+          "revenue_surprise": 1.54,
+          "price_reaction": null,
+          "cmp": 89.9,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "EL",
+          "company": "Estee Lauder Cos. Inc",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 37960.557906373506,
+          "eps_estimate": 0.5075,
+          "eps_actual": 0.73,
+          "eps_surprise": 43.84,
+          "revenue_estimate": 3652.9103,
+          "revenue_actual": 3715.0,
+          "revenue_surprise": 1.7,
+          "price_reaction": -4.08,
+          "cmp": 104.77,
+          "ah_bmo_move": 2.98
+        },
+        {
+          "ticker": "TNC",
+          "company": "Tennant Co",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 1171.8030665525703,
+          "eps_estimate": 0.98,
+          "eps_actual": 1.4,
+          "eps_surprise": 42.86,
+          "revenue_estimate": 330.75,
+          "revenue_actual": 322.3,
+          "revenue_surprise": -2.55,
+          "price_reaction": null,
+          "cmp": 68.73,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "ICHR",
+          "company": "Ichor Holdings Ltd",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 1379.8142138017115,
+          "eps_estimate": 0.4533,
+          "eps_actual": 0.63,
+          "eps_surprise": 38.98,
+          "revenue_estimate": 330.1503,
+          "revenue_actual": 328.699,
+          "revenue_surprise": -0.44,
+          "price_reaction": null,
+          "cmp": 36.84,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "HLIT",
+          "company": "Harmonic Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 1111.3873451188094,
+          "eps_estimate": 0.169,
+          "eps_actual": 0.23,
+          "eps_surprise": 36.09,
+          "revenue_estimate": 129.4713,
+          "revenue_actual": 148.838,
+          "revenue_surprise": 14.96,
+          "price_reaction": null,
+          "cmp": 10.19,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "UPWK",
+          "company": "Upwork Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 1214.0652642959953,
+          "eps_estimate": 0.3139,
+          "eps_actual": 0.4,
+          "eps_surprise": 27.43,
+          "revenue_estimate": 180.2153,
+          "revenue_actual": 185.599,
+          "revenue_surprise": 2.99,
+          "price_reaction": null,
+          "cmp": 9.72,
+          "ah_bmo_move": 12.51
+        },
+        {
+          "ticker": "RXRX",
+          "company": "Recursion Pharmaceuticals Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 2289.617552310986,
+          "eps_estimate": -0.219,
+          "eps_actual": null,
+          "eps_surprise": null,
+          "revenue_estimate": 14.8065,
+          "revenue_actual": 18.552,
+          "revenue_surprise": 25.3,
+          "price_reaction": null,
+          "cmp": 3.83,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "TTI",
+          "company": "Tetra Technologies Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 818.8457973933608,
+          "eps_estimate": 0.048,
+          "eps_actual": 0.06,
+          "eps_surprise": 25.0,
+          "revenue_estimate": 156.84,
+          "revenue_actual": 167.951,
+          "revenue_surprise": 7.08,
+          "price_reaction": null,
+          "cmp": 5.53,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "ALSN",
+          "company": "Allison Transmission Holdings Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 9338.752885006916,
+          "eps_estimate": 2.3217,
+          "eps_actual": 2.9,
+          "eps_surprise": 24.91,
+          "revenue_estimate": 1467.5331,
           "revenue_actual": null,
           "revenue_surprise": null,
-          "price_reaction": 9.5,
-          "cmp": 34.82,
+          "price_reaction": null,
+          "cmp": 113.09,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "HNGE",
+          "company": "Hinge Health Inc",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 9318.595862591746,
+          "eps_estimate": 0.5757,
+          "eps_actual": 0.71,
+          "eps_surprise": 23.33,
+          "revenue_estimate": 224.7799,
+          "revenue_actual": 234.97,
+          "revenue_surprise": 4.53,
+          "price_reaction": null,
+          "cmp": 115.48,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "FOX",
+          "company": "Fox Corp",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 25008.831927496587,
+          "eps_estimate": 2.074,
+          "eps_actual": 2.54,
+          "eps_surprise": 22.47,
+          "revenue_estimate": 4323.0587,
+          "revenue_actual": 4571.0,
+          "revenue_surprise": 5.74,
+          "price_reaction": -0.43,
+          "cmp": 55.96,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "FOXA",
+          "company": "Fox Corp",
+          "session": "BMO",
+          "report_time": "08:30",
+          "market_cap": 24925.454212633296,
+          "eps_estimate": 2.0754,
+          "eps_actual": 2.54,
+          "eps_surprise": 22.39,
+          "revenue_estimate": 4322.8407,
+          "revenue_actual": 4571.0,
+          "revenue_surprise": 5.74,
+          "price_reaction": -0.76,
+          "cmp": 62.76,
+          "ah_bmo_move": null
+        },
+        {
+          "ticker": "CRD-B",
+          "company": "Crawford & Co",
+          "session": "AMC",
+          "report_time": "16:30",
+          "market_cap": 592.0059357352931,
+          "eps_estimate": 0.3067,
+          "eps_actual": 0.37,
+          "eps_surprise": 20.64,
+          "revenue_estimate": 325.5633,
+          "revenue_actual": null,
+          "revenue_surprise": null,
+          "price_reaction": null,
+          "cmp": 12.19,
           "ah_bmo_move": null
         }
       ]
@@ -63,7 +383,7 @@
           "company": "Capri Holdings Ltd",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 2118.6116752708376,
+          "market_cap": 2278.7124295965777,
           "eps_estimate": 0.2096,
           "eps_actual": 0.42,
           "eps_surprise": 100.38,
@@ -71,7 +391,7 @@
           "revenue_actual": 809.0,
           "revenue_surprise": 2.85,
           "price_reaction": 16.31,
-          "cmp": 18.64,
+          "cmp": 20.05,
           "ah_bmo_move": null
         },
         {
@@ -79,7 +399,7 @@
           "company": "Verra Mobility Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 430.1094600151174,
+          "market_cap": 407.3121599395302,
           "eps_estimate": 0.2625,
           "eps_actual": 0.36,
           "eps_surprise": 37.14,
@@ -87,7 +407,7 @@
           "revenue_actual": 258.875,
           "revenue_surprise": 7.61,
           "price_reaction": -16.17,
-          "cmp": 2.83,
+          "cmp": 2.68,
           "ah_bmo_move": null
         },
         {
@@ -95,7 +415,7 @@
           "company": "Mastech Digital Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 75.44,
+          "market_cap": 78.08279993910455,
           "eps_estimate": 0.075,
           "eps_actual": 0.1,
           "eps_surprise": 33.33,
@@ -103,7 +423,7 @@
           "revenue_actual": 41.987,
           "revenue_surprise": 1.43,
           "price_reaction": -0.79,
-          "cmp": 6.28,
+          "cmp": 6.5,
           "ah_bmo_move": null
         },
         {
@@ -111,7 +431,7 @@
           "company": "Oil States International Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 582.7193426402671,
+          "market_cap": 535.6674856178965,
           "eps_estimate": 0.1225,
           "eps_actual": 0.15,
           "eps_surprise": 22.45,
@@ -119,7 +439,7 @@
           "revenue_actual": 169.764,
           "revenue_surprise": 4.39,
           "price_reaction": 5.73,
-          "cmp": 9.66,
+          "cmp": 8.88,
           "ah_bmo_move": null
         },
         {
@@ -127,7 +447,7 @@
           "company": "Regeneron Pharmaceuticals Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 95299.84715866286,
+          "market_cap": 98950.02507915844,
           "eps_estimate": 16.5103,
           "eps_actual": 20.07,
           "eps_surprise": 21.56,
@@ -135,7 +455,7 @@
           "revenue_actual": 5115.8,
           "revenue_surprise": 11.59,
           "price_reaction": 13.33,
-          "cmp": 925.8,
+          "cmp": 961.26,
           "ah_bmo_move": null
         },
         {
@@ -143,7 +463,7 @@
           "company": "Carters Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1157.87,
+          "market_cap": 1162.275299912119,
           "eps_estimate": 0.852,
           "eps_actual": 1.03,
           "eps_surprise": 20.89,
@@ -151,7 +471,7 @@
           "revenue_actual": 752.456,
           "revenue_surprise": 0.68,
           "price_reaction": -5.51,
-          "cmp": 31.54,
+          "cmp": 31.66,
           "ah_bmo_move": null
         }
       ]
@@ -164,7 +484,7 @@
           "company": "BCB Bancorp Inc (NJ)",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 272.46,
+          "market_cap": 274.6126385360001,
           "eps_estimate": -8.53,
           "eps_actual": -6.92,
           "eps_surprise": 18.87,
@@ -172,7 +492,7 @@
           "revenue_actual": 27.771,
           "revenue_surprise": 37428.38,
           "price_reaction": 0.47,
-          "cmp": 8.86,
+          "cmp": 8.93,
           "ah_bmo_move": null
         },
         {
@@ -180,7 +500,7 @@
           "company": "Medical Properties Trust Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1343.7,
+          "market_cap": 1301.8960398674012,
           "eps_estimate": -0.0088,
           "eps_actual": 0.34,
           "eps_surprise": 3963.64,
@@ -188,7 +508,7 @@
           "revenue_actual": 250.14,
           "revenue_surprise": -2.63,
           "price_reaction": -11.27,
-          "cmp": 2.25,
+          "cmp": 2.18,
           "ah_bmo_move": null
         },
         {
@@ -196,7 +516,7 @@
           "company": "Coinbase Global Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 37328.99650261182,
+          "market_cap": 36492.34311545495,
           "eps_estimate": -0.2305,
           "eps_actual": 2.51,
           "eps_surprise": 1188.94,
@@ -204,7 +524,7 @@
           "revenue_actual": 1215.6,
           "revenue_surprise": -0.01,
           "price_reaction": -10.62,
-          "cmp": 140.99,
+          "cmp": 137.83,
           "ah_bmo_move": null
         },
         {
@@ -212,7 +532,7 @@
           "company": "Alnylam Pharmaceuticals Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 22125.148466389976,
+          "market_cap": 21162.13696969697,
           "eps_estimate": 1.6596,
           "eps_actual": 15.72,
           "eps_surprise": 847.22,
@@ -220,7 +540,7 @@
           "revenue_actual": 1458.086,
           "revenue_surprise": 1.92,
           "price_reaction": -25.13,
-          "cmp": 165.19,
+          "cmp": 158.0,
           "ah_bmo_move": null
         },
         {
@@ -228,7 +548,7 @@
           "company": "Porch Group Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 2676.0391636535783,
+          "market_cap": 2307.2140442388004,
           "eps_estimate": 0.0143,
           "eps_actual": 0.1,
           "eps_surprise": 599.3,
@@ -236,7 +556,7 @@
           "revenue_actual": 140.785,
           "revenue_surprise": 4.56,
           "price_reaction": 28.16,
-          "cmp": 20.17,
+          "cmp": 20.18,
           "ah_bmo_move": null
         },
         {
@@ -244,7 +564,7 @@
           "company": "Therealreal Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 1515.2654576261211,
+          "market_cap": 1623.766055254582,
           "eps_estimate": 0.0033,
           "eps_actual": 0.02,
           "eps_surprise": 506.06,
@@ -252,15 +572,15 @@
           "revenue_actual": 206.116,
           "revenue_surprise": 4.69,
           "price_reaction": 5.37,
-          "cmp": 12.15,
-          "ah_bmo_move": 2.48
+          "cmp": 13.02,
+          "ah_bmo_move": null
         },
         {
           "ticker": "HIPO",
           "company": "Hippo Holdings Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 974.883726921629,
+          "market_cap": 950.3918844895538,
           "eps_estimate": 0.0775,
           "eps_actual": 0.33,
           "eps_surprise": 325.81,
@@ -268,7 +588,7 @@
           "revenue_actual": 156.0,
           "revenue_surprise": 1.38,
           "price_reaction": -1.46,
-          "cmp": 36.62,
+          "cmp": 35.7,
           "ah_bmo_move": null
         },
         {
@@ -276,7 +596,7 @@
           "company": "Civeo Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 371.82,
+          "market_cap": 373.2671662855858,
           "eps_estimate": -0.2741,
           "eps_actual": 0.5,
           "eps_surprise": 282.42,
@@ -284,7 +604,7 @@
           "revenue_actual": 193.101,
           "revenue_surprise": 10.94,
           "price_reaction": 17.74,
-          "cmp": 35.97,
+          "cmp": 36.11,
           "ah_bmo_move": null
         },
         {
@@ -292,7 +612,7 @@
           "company": "Hilton Grand Vacations Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 2896.432679535151,
+          "market_cap": 3108.7365834859525,
           "eps_estimate": 1.0791,
           "eps_actual": 4.03,
           "eps_surprise": 273.46,
@@ -300,7 +620,7 @@
           "revenue_actual": 1425.0,
           "revenue_surprise": 2.65,
           "price_reaction": 0.51,
-          "cmp": 38.2,
+          "cmp": 41.0,
           "ah_bmo_move": null
         },
         {
@@ -308,7 +628,7 @@
           "company": "Silicom Ltd",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 196.56332638976562,
+          "market_cap": 178.2863841686656,
           "eps_estimate": -0.0404,
           "eps_actual": 0.04,
           "eps_surprise": 199.01,
@@ -316,7 +636,7 @@
           "revenue_actual": 26.72,
           "revenue_surprise": 4.99,
           "price_reaction": -20.04,
-          "cmp": 34.2,
+          "cmp": 31.02,
           "ah_bmo_move": null
         },
         {
@@ -324,7 +644,7 @@
           "company": "Bicycle Therapeutics Plc ADR",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 178.8489975976944,
+          "market_cap": 182.37559423446658,
           "eps_estimate": -0.399,
           "eps_actual": -0.15,
           "eps_surprise": 62.41,
@@ -332,7 +652,7 @@
           "revenue_actual": 34.0754,
           "revenue_surprise": 178.89,
           "price_reaction": -1.55,
-          "cmp": 3.55,
+          "cmp": 3.62,
           "ah_bmo_move": null
         },
         {
@@ -340,7 +660,7 @@
           "company": "Caredx Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 4647.414202775874,
+          "market_cap": 4512.379115212843,
           "eps_estimate": 0.2548,
           "eps_actual": 0.7,
           "eps_surprise": 174.73,
@@ -348,15 +668,15 @@
           "revenue_actual": 139.362,
           "revenue_surprise": 14.27,
           "price_reaction": 22.22,
-          "cmp": 88.45,
-          "ah_bmo_move": 17.42
+          "cmp": 85.88,
+          "ah_bmo_move": null
         },
         {
           "ticker": "TAK",
           "company": "Takeda Pharmaceutical Co ADR",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 62460.29256248474,
+          "market_cap": 66677.56568126679,
           "eps_estimate": 0.145,
           "eps_actual": 0.3843,
           "eps_surprise": 165.03,
@@ -364,7 +684,7 @@
           "revenue_actual": 7547.4279,
           "revenue_surprise": 2.85,
           "price_reaction": 4.5,
-          "cmp": 19.55,
+          "cmp": 20.87,
           "ah_bmo_move": null
         },
         {
@@ -372,7 +692,7 @@
           "company": "Perella Weinberg Partners",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1404.9331650904173,
+          "market_cap": 1379.1983439409373,
           "eps_estimate": 0.169,
           "eps_actual": 0.39,
           "eps_surprise": 130.77,
@@ -380,7 +700,7 @@
           "revenue_actual": 251.373,
           "revenue_surprise": 45.46,
           "price_reaction": 8.19,
-          "cmp": 14.74,
+          "cmp": 14.47,
           "ah_bmo_move": null
         },
         {
@@ -388,15 +708,15 @@
           "company": "Weyerhaeuser Co",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 14717.431307358589,
+          "market_cap": 15344.472323074673,
           "eps_estimate": 0.035,
           "eps_actual": 0.08,
           "eps_surprise": 128.57,
-          "revenue_estimate": 1918.3646,
+          "revenue_estimate": 1906.2011,
           "revenue_actual": 1862.0,
-          "revenue_surprise": -2.94,
+          "revenue_surprise": -2.32,
           "price_reaction": 3.04,
-          "cmp": 20.42,
+          "cmp": 21.29,
           "ah_bmo_move": null
         },
         {
@@ -404,7 +724,7 @@
           "company": "Strategy Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 55696.437503480316,
+          "market_cap": 55189.9476467675,
           "eps_estimate": 20.1935,
           "eps_actual": 44.75,
           "eps_surprise": 121.61,
@@ -412,7 +732,7 @@
           "revenue_actual": 125.427,
           "revenue_surprise": -1.83,
           "price_reaction": -7.84,
-          "cmp": 131.96,
+          "cmp": 130.76,
           "ah_bmo_move": null
         },
         {
@@ -420,7 +740,7 @@
           "company": "Xerox Holdings Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 198.22362356359926,
+          "market_cap": 164.8033403288435,
           "eps_estimate": -0.1044,
           "eps_actual": 0.02,
           "eps_surprise": 119.16,
@@ -428,7 +748,7 @@
           "revenue_actual": 1870.0,
           "revenue_surprise": 0.3,
           "price_reaction": -40.32,
-          "cmp": 1.51,
+          "cmp": 1.25,
           "ah_bmo_move": null
         },
         {
@@ -436,7 +756,7 @@
           "company": "W & T Offshore Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 608.7424261161462,
+          "market_cap": 556.0776642203548,
           "eps_estimate": -0.0632,
           "eps_actual": 0.01,
           "eps_surprise": 115.82,
@@ -444,7 +764,7 @@
           "revenue_actual": 167.08,
           "revenue_surprise": 15.25,
           "price_reaction": 0.5,
-          "cmp": 3.93,
+          "cmp": 3.59,
           "ah_bmo_move": null
         },
         {
@@ -452,7 +772,7 @@
           "company": "Universal Logistics Holdings Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 595.65,
+          "market_cap": 752.5387972778022,
           "eps_estimate": 0.32,
           "eps_actual": 0.69,
           "eps_surprise": 115.62,
@@ -460,7 +780,7 @@
           "revenue_actual": 394.049,
           "revenue_surprise": 1.04,
           "price_reaction": 29.68,
-          "cmp": 22.59,
+          "cmp": 28.54,
           "ah_bmo_move": null
         },
         {
@@ -468,7 +788,7 @@
           "company": "Kimco Realty Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 16148.52062544854,
+          "market_cap": 16816.693739089333,
           "eps_estimate": 0.2034,
           "eps_actual": 0.41,
           "eps_surprise": 101.57,
@@ -476,7 +796,7 @@
           "revenue_actual": 539.725,
           "revenue_surprise": -1.7,
           "price_reaction": 4.36,
-          "cmp": 24.07,
+          "cmp": 25.07,
           "ah_bmo_move": null
         },
         {
@@ -484,7 +804,7 @@
           "company": "FST Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 61.33,
+          "market_cap": 57.301020417592746,
           "eps_estimate": 0.005,
           "eps_actual": 0.01,
           "eps_surprise": 100.0,
@@ -492,7 +812,7 @@
           "revenue_actual": 12.8044,
           "revenue_surprise": -8.01,
           "price_reaction": 4.58,
-          "cmp": 1.37,
+          "cmp": 1.28,
           "ah_bmo_move": null
         },
         {
@@ -500,7 +820,7 @@
           "company": "Hamilton Insurance Group Ltd",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 3440.59,
+          "market_cap": 3560.313636928531,
           "eps_estimate": 0.9056,
           "eps_actual": 1.78,
           "eps_surprise": 96.55,
@@ -508,7 +828,7 @@
           "revenue_actual": 819.702,
           "revenue_surprise": 18.2,
           "price_reaction": 1.83,
-          "cmp": 35.06,
+          "cmp": 36.28,
           "ah_bmo_move": null
         },
         {
@@ -532,7 +852,7 @@
           "company": "Olin Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 2006.09,
+          "market_cap": 2068.7802241795666,
           "eps_estimate": 0.147,
           "eps_actual": 0.2639,
           "eps_surprise": 79.52,
@@ -540,7 +860,7 @@
           "revenue_actual": 1747.7,
           "revenue_surprise": -4.69,
           "price_reaction": 9.66,
-          "cmp": 17.6,
+          "cmp": 18.15,
           "ah_bmo_move": null
         },
         {
@@ -548,7 +868,7 @@
           "company": "Interdigital Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 8109.711334336187,
+          "market_cap": 8136.739356655735,
           "eps_estimate": 1.3375,
           "eps_actual": 2.34,
           "eps_surprise": 74.95,
@@ -556,7 +876,7 @@
           "revenue_actual": 193.4,
           "revenue_surprise": 26.43,
           "price_reaction": 4.28,
-          "cmp": 314.9,
+          "cmp": 315.95,
           "ah_bmo_move": null
         },
         {
@@ -564,7 +884,7 @@
           "company": "CNO Financial Group Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 5335.71,
+          "market_cap": 5411.577887371373,
           "eps_estimate": 1.0985,
           "eps_actual": 1.9,
           "eps_surprise": 72.96,
@@ -572,7 +892,7 @@
           "revenue_actual": 1086.0,
           "revenue_surprise": 7.75,
           "price_reaction": 4.53,
-          "cmp": 57.67,
+          "cmp": 58.49,
           "ah_bmo_move": null
         },
         {
@@ -580,7 +900,7 @@
           "company": "Butterfly Network Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1741.502749234169,
+          "market_cap": 1634.9887936012183,
           "eps_estimate": -0.0353,
           "eps_actual": -0.01,
           "eps_surprise": 71.67,
@@ -588,7 +908,7 @@
           "revenue_actual": 32.598,
           "revenue_surprise": 14.91,
           "price_reaction": -3.84,
-          "cmp": 6.54,
+          "cmp": 6.14,
           "ah_bmo_move": null
         },
         {
@@ -596,7 +916,7 @@
           "company": "Hyatt Hotels Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 17246.266453514312,
+          "market_cap": 17524.266005946847,
           "eps_estimate": 0.7599,
           "eps_actual": 1.27,
           "eps_surprise": 67.13,
@@ -604,7 +924,7 @@
           "revenue_actual": 1743.0,
           "revenue_surprise": -0.54,
           "price_reaction": 6.32,
-          "cmp": 183.01,
+          "cmp": 185.96,
           "ah_bmo_move": null
         },
         {
@@ -612,7 +932,7 @@
           "company": "NovoCure Ltd",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1537.44,
+          "market_cap": 1544.4549846244488,
           "eps_estimate": -0.2349,
           "eps_actual": -0.09,
           "eps_surprise": 61.69,
@@ -620,7 +940,7 @@
           "revenue_actual": 193.399,
           "revenue_surprise": 6.1,
           "price_reaction": -7.48,
-          "cmp": 13.15,
+          "cmp": 13.21,
           "ah_bmo_move": null
         },
         {
@@ -628,7 +948,7 @@
           "company": "TriNet Group Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 2977.2052044767975,
+          "market_cap": 3094.4795700667555,
           "eps_estimate": 0.602,
           "eps_actual": 0.94,
           "eps_surprise": 56.15,
@@ -636,7 +956,7 @@
           "revenue_actual": 1175.0,
           "revenue_surprise": -0.49,
           "price_reaction": -9.53,
-          "cmp": 64.99,
+          "cmp": 67.55,
           "ah_bmo_move": null
         },
         {
@@ -644,7 +964,7 @@
           "company": "Blackstone Mortgage Trust Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1825.87,
+          "market_cap": 1875.6664862051875,
           "eps_estimate": 0.244,
           "eps_actual": 0.38,
           "eps_surprise": 55.74,
@@ -652,7 +972,7 @@
           "revenue_actual": 141.903,
           "revenue_surprise": -4.51,
           "price_reaction": 2.94,
-          "cmp": 11.0,
+          "cmp": 11.3,
           "ah_bmo_move": null
         },
         {
@@ -660,7 +980,7 @@
           "company": "Fiverr International Ltd",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 301.63,
+          "market_cap": 310.977267958488,
           "eps_estimate": 0.2864,
           "eps_actual": 0.43,
           "eps_surprise": 50.14,
@@ -668,7 +988,7 @@
           "revenue_actual": 90.899,
           "revenue_surprise": 8.5,
           "price_reaction": 12.0,
-          "cmp": 8.39,
+          "cmp": 8.65,
           "ah_bmo_move": null
         },
         {
@@ -676,7 +996,7 @@
           "company": "Acco Brands Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 502.65924412900756,
+          "market_cap": 503.9977126121521,
           "eps_estimate": 0.1867,
           "eps_actual": 0.28,
           "eps_surprise": 49.97,
@@ -684,7 +1004,7 @@
           "revenue_actual": 380.3,
           "revenue_surprise": -0.89,
           "price_reaction": 26.15,
-          "cmp": 5.45,
+          "cmp": 5.46,
           "ah_bmo_move": null
         },
         {
@@ -692,7 +1012,7 @@
           "company": "OneSpan Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 953.9919491631379,
+          "market_cap": 942.6615518919992,
           "eps_estimate": 0.236,
           "eps_actual": 0.35,
           "eps_surprise": 48.31,
@@ -700,7 +1020,7 @@
           "revenue_actual": 63.885,
           "revenue_surprise": 11.23,
           "price_reaction": 27.34,
-          "cmp": 25.86,
+          "cmp": 25.55,
           "ah_bmo_move": null
         },
         {
@@ -708,7 +1028,7 @@
           "company": "Grid Dynamics Holdings Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 1058.7105965725543,
+          "market_cap": 1110.6319855164277,
           "eps_estimate": 0.1252,
           "eps_actual": 0.18,
           "eps_surprise": 43.77,
@@ -716,7 +1036,7 @@
           "revenue_actual": 114.294,
           "revenue_surprise": 1.35,
           "price_reaction": 40.78,
-          "cmp": 13.05,
+          "cmp": 13.69,
           "ah_bmo_move": null
         },
         {
@@ -724,7 +1044,7 @@
           "company": "Builders Firstsource Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 7024.543832214919,
+          "market_cap": 7297.8641155885525,
           "eps_estimate": 1.0581,
           "eps_actual": 1.51,
           "eps_surprise": 42.71,
@@ -732,7 +1052,7 @@
           "revenue_actual": 3854.048,
           "revenue_surprise": 2.71,
           "price_reaction": 12.85,
-          "cmp": 65.28,
+          "cmp": 67.82,
           "ah_bmo_move": null
         },
         {
@@ -740,7 +1060,7 @@
           "company": "Tenet Healthcare Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 21807.11099725526,
+          "market_cap": 21400.417501795873,
           "eps_estimate": 4.6757,
           "eps_actual": 6.64,
           "eps_surprise": 42.01,
@@ -748,7 +1068,7 @@
           "revenue_actual": 5631.0,
           "revenue_surprise": 2.59,
           "price_reaction": 0.77,
-          "cmp": 274.0,
+          "cmp": 268.89,
           "ah_bmo_move": null
         },
         {
@@ -756,7 +1076,7 @@
           "company": "Escalade Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 270.6072697573717,
+          "market_cap": 288.0791230940795,
           "eps_estimate": 0.34,
           "eps_actual": 0.48,
           "eps_surprise": 41.18,
@@ -764,7 +1084,7 @@
           "revenue_actual": 65.608,
           "revenue_surprise": -4.2,
           "price_reaction": 8.63,
-          "cmp": 19.67,
+          "cmp": 20.94,
           "ah_bmo_move": null
         },
         {
@@ -772,7 +1092,7 @@
           "company": "UNIFI Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 109.66999999999999,
+          "market_cap": 108.18295059474119,
           "eps_estimate": -0.15,
           "eps_actual": -0.09,
           "eps_surprise": 40.0,
@@ -780,7 +1100,7 @@
           "revenue_actual": 127.9,
           "revenue_surprise": -1.55,
           "price_reaction": -7.23,
-          "cmp": 5.9,
+          "cmp": 5.82,
           "ah_bmo_move": null
         },
         {
@@ -788,7 +1108,7 @@
           "company": "FTI Consulting Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 4987.520773708415,
+          "market_cap": 5226.54032832268,
           "eps_estimate": 2.7437,
           "eps_actual": 3.84,
           "eps_surprise": 39.96,
@@ -796,7 +1116,7 @@
           "revenue_actual": 1012.563,
           "revenue_surprise": 0.51,
           "price_reaction": 14.28,
-          "cmp": 183.0,
+          "cmp": 191.77,
           "ah_bmo_move": null
         },
         {
@@ -804,7 +1124,7 @@
           "company": "Omnicell Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1703.7203642395616,
+          "market_cap": 1660.8423222554113,
           "eps_estimate": 0.4175,
           "eps_actual": 0.58,
           "eps_surprise": 38.92,
@@ -812,7 +1132,7 @@
           "revenue_actual": 307.851,
           "revenue_surprise": 1.12,
           "price_reaction": 2.59,
-          "cmp": 37.35,
+          "cmp": 36.41,
           "ah_bmo_move": null
         },
         {
@@ -820,7 +1140,7 @@
           "company": "Pro-Dex Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 189.1389508021457,
+          "market_cap": 184.4780229045811,
           "eps_estimate": 0.67,
           "eps_actual": 0.92,
           "eps_surprise": 37.31,
@@ -828,7 +1148,7 @@
           "revenue_actual": 20.56,
           "revenue_surprise": 0.78,
           "price_reaction": -5.58,
-          "cmp": 58.5,
+          "cmp": 57.65,
           "ah_bmo_move": null
         },
         {
@@ -836,7 +1156,7 @@
           "company": "Stoke Therapeutics Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 1773.186367441959,
+          "market_cap": 1708.6599337818493,
           "eps_estimate": -0.9291,
           "eps_actual": -1.08,
           "eps_surprise": -16.24,
@@ -844,7 +1164,7 @@
           "revenue_actual": 11.255,
           "revenue_surprise": 37.06,
           "price_reaction": -0.23,
-          "cmp": 27.48,
+          "cmp": 26.48,
           "ah_bmo_move": null
         },
         {
@@ -852,7 +1172,7 @@
           "company": "Titan International Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 304.9230543542051,
+          "market_cap": 321.09404437579815,
           "eps_estimate": -0.0475,
           "eps_actual": -0.03,
           "eps_surprise": 36.84,
@@ -860,7 +1180,7 @@
           "revenue_actual": 335.177,
           "revenue_surprise": -25.32,
           "price_reaction": -25.83,
-          "cmp": 4.72,
+          "cmp": 4.97,
           "ah_bmo_move": null
         },
         {
@@ -868,7 +1188,7 @@
           "company": "CarParts.com Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 55.650000000000006,
+          "market_cap": 60.08586719643044,
           "eps_estimate": -0.835,
           "eps_actual": -0.53,
           "eps_surprise": 36.53,
@@ -876,7 +1196,7 @@
           "revenue_actual": 129.331,
           "revenue_surprise": 4.27,
           "price_reaction": -19.95,
-          "cmp": 6.9,
+          "cmp": 7.45,
           "ah_bmo_move": null
         },
         {
@@ -884,7 +1204,7 @@
           "company": "Enerflex Ltd",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 2885.222897529602,
+          "market_cap": 2714.2829441070558,
           "eps_estimate": 0.3325,
           "eps_actual": 0.45,
           "eps_surprise": 35.34,
@@ -892,7 +1212,7 @@
           "revenue_actual": 623.0,
           "revenue_surprise": -1.53,
           "price_reaction": -2.8,
-          "cmp": 23.63,
+          "cmp": 22.23,
           "ah_bmo_move": null
         },
         {
@@ -900,7 +1220,7 @@
           "company": "AXT Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 3689.1476293804844,
+          "market_cap": 3160.627868036697,
           "eps_estimate": 0.308,
           "eps_actual": 0.41,
           "eps_surprise": 33.12,
@@ -908,7 +1228,7 @@
           "revenue_actual": 73.41,
           "revenue_surprise": 11.22,
           "price_reaction": -9.56,
-          "cmp": 56.26,
+          "cmp": 48.2,
           "ah_bmo_move": null
         },
         {
@@ -916,7 +1236,7 @@
           "company": "Lilly(Eli) & Co",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1328078.260955921,
+          "market_cap": 1327381.7743338896,
           "eps_estimate": 5.7104,
           "eps_actual": 7.48,
           "eps_surprise": 30.99,
@@ -924,7 +1244,7 @@
           "revenue_actual": 24397.0,
           "revenue_surprise": 8.03,
           "price_reaction": 6.63,
-          "cmp": 1411.73,
+          "cmp": 1410.99,
           "ah_bmo_move": null
         },
         {
@@ -932,7 +1252,7 @@
           "company": "DoorDash Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 78431.62868965973,
+          "market_cap": 82300.10888405562,
           "eps_estimate": 0.8108,
           "eps_actual": 1.06,
           "eps_surprise": 30.74,
@@ -940,7 +1260,7 @@
           "revenue_actual": 4616.0,
           "revenue_surprise": 1.21,
           "price_reaction": 5.61,
-          "cmp": 181.0,
+          "cmp": 190.07,
           "ah_bmo_move": null
         },
         {
@@ -948,7 +1268,7 @@
           "company": "Cheniere Energy Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 65677.28134207774,
+          "market_cap": 63644.22872272871,
           "eps_estimate": 4.3254,
           "eps_actual": 5.65,
           "eps_surprise": 30.62,
@@ -956,7 +1276,7 @@
           "revenue_actual": 6173.0,
           "revenue_surprise": 15.07,
           "price_reaction": 7.11,
-          "cmp": 321.63,
+          "cmp": 311.67,
           "ah_bmo_move": null
         },
         {
@@ -964,7 +1284,7 @@
           "company": "Leonardo DRS Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 10113.015603435902,
+          "market_cap": 9843.647457554915,
           "eps_estimate": 0.3538,
           "eps_actual": 0.46,
           "eps_surprise": 30.02,
@@ -972,7 +1292,7 @@
           "revenue_actual": 1066.0,
           "revenue_surprise": 3.57,
           "price_reaction": 11.66,
-          "cmp": 37.93,
+          "cmp": 36.92,
           "ah_bmo_move": null
         },
         {
@@ -980,7 +1300,7 @@
           "company": "Cavco Industries Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 4806.722135181334,
+          "market_cap": 5097.2279779042865,
           "eps_estimate": 5.5222,
           "eps_actual": 7.17,
           "eps_surprise": 29.84,
@@ -988,7 +1308,7 @@
           "revenue_actual": 656.378,
           "revenue_surprise": 7.06,
           "price_reaction": 13.11,
-          "cmp": 625.11,
+          "cmp": 662.89,
           "ah_bmo_move": null
         },
         {
@@ -996,7 +1316,7 @@
           "company": "Columbia Sportswear Co",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 3457.59,
+          "market_cap": 3640.8618146764293,
           "eps_estimate": 1.2837,
           "eps_actual": 1.66,
           "eps_surprise": 29.31,
@@ -1004,7 +1324,7 @@
           "revenue_actual": 962.582,
           "revenue_surprise": 1.87,
           "price_reaction": 6.04,
-          "cmp": 67.54,
+          "cmp": 71.12,
           "ah_bmo_move": null
         },
         {
@@ -1012,7 +1332,7 @@
           "company": "Fortrea Holdings Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 2067.0349490050785,
+          "market_cap": 1931.9346628338126,
           "eps_estimate": 0.2171,
           "eps_actual": 0.28,
           "eps_surprise": 28.97,
@@ -1020,7 +1340,7 @@
           "revenue_actual": 691.5,
           "revenue_surprise": 2.97,
           "price_reaction": -10.61,
-          "cmp": 21.42,
+          "cmp": 20.02,
           "ah_bmo_move": null
         },
         {
@@ -1028,7 +1348,7 @@
           "company": "Intel Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 343504.3419901117,
+          "market_cap": 317007.754224943,
           "eps_estimate": 0.4066,
           "eps_actual": 0.52,
           "eps_surprise": 27.89,
@@ -1036,15 +1356,15 @@
           "revenue_actual": 16513.0,
           "revenue_surprise": -0.25,
           "price_reaction": -28.58,
-          "cmp": 64.99,
-          "ah_bmo_move": -16.3
+          "cmp": 59.97,
+          "ah_bmo_move": null
         },
         {
           "ticker": "RKT",
           "company": "Rocket Companies Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 36321.75639602755,
+          "market_cap": 38991.71363707611,
           "eps_estimate": 0.1354,
           "eps_actual": 0.15,
           "eps_surprise": 10.78,
@@ -1052,7 +1372,7 @@
           "revenue_actual": 3284.0,
           "revenue_surprise": 27.26,
           "price_reaction": 7.38,
-          "cmp": 12.83,
+          "cmp": 13.77,
           "ah_bmo_move": null
         },
         {
@@ -1060,7 +1380,7 @@
           "company": "Donnelley Financial Solutions Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1656.0221409890223,
+          "market_cap": 1649.93382429421,
           "eps_estimate": 0.8433,
           "eps_actual": 1.07,
           "eps_surprise": 26.88,
@@ -1068,7 +1388,7 @@
           "revenue_actual": 185.0,
           "revenue_surprise": 2.83,
           "price_reaction": 14.97,
-          "cmp": 68.0,
+          "cmp": 67.75,
           "ah_bmo_move": null
         },
         {
@@ -1076,7 +1396,7 @@
           "company": "YPF ADR",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 18538.826721572874,
+          "market_cap": 17244.450399932863,
           "eps_estimate": 2.3704,
           "eps_actual": 3.0,
           "eps_surprise": 26.56,
@@ -1084,7 +1404,7 @@
           "revenue_actual": 6557.0,
           "revenue_surprise": 14.76,
           "price_reaction": -3.1,
-          "cmp": 47.14,
+          "cmp": 43.85,
           "ah_bmo_move": null
         },
         {
@@ -1101,14 +1421,14 @@
           "revenue_surprise": 4.13,
           "price_reaction": -18.05,
           "cmp": 42.88,
-          "ah_bmo_move": -11.13
+          "ah_bmo_move": null
         },
         {
           "ticker": "MEOH",
           "company": "Methanex Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 5604.731763916016,
+          "market_cap": 5295.291763916016,
           "eps_estimate": 2.9317,
           "eps_actual": 3.69,
           "eps_surprise": 25.87,
@@ -1116,7 +1436,7 @@
           "revenue_actual": 1388.0,
           "revenue_surprise": 5.9,
           "price_reaction": 14.04,
-          "cmp": 72.45,
+          "cmp": 68.45,
           "ah_bmo_move": null
         },
         {
@@ -1124,7 +1444,7 @@
           "company": "Strattec Security Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 249.98,
+          "market_cap": 253.24771122601624,
           "eps_estimate": 1.47,
           "eps_actual": 1.85,
           "eps_surprise": 25.85,
@@ -1132,7 +1452,7 @@
           "revenue_actual": 147.197,
           "revenue_surprise": 0.4,
           "price_reaction": -2.56,
-          "cmp": 62.73,
+          "cmp": 63.55,
           "ah_bmo_move": null
         },
         {
@@ -1140,7 +1460,7 @@
           "company": "Huntington Ingalls Industries Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 12486.99,
+          "market_cap": 12361.67904275851,
           "eps_estimate": 4.363,
           "eps_actual": 5.48,
           "eps_surprise": 25.6,
@@ -1148,7 +1468,7 @@
           "revenue_actual": 3537.0,
           "revenue_surprise": 4.72,
           "price_reaction": 13.23,
-          "cmp": 316.88,
+          "cmp": 313.7,
           "ah_bmo_move": null
         },
         {
@@ -1156,7 +1476,7 @@
           "company": "Rivian Automotive Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 18229.66817173102,
+          "market_cap": 19098.436268583708,
           "eps_estimate": -0.6438,
           "eps_actual": -0.48,
           "eps_surprise": 25.44,
@@ -1164,7 +1484,7 @@
           "revenue_actual": 2155.0,
           "revenue_surprise": 7.68,
           "price_reaction": 6.2,
-          "cmp": 12.59,
+          "cmp": 13.19,
           "ah_bmo_move": null
         },
         {
@@ -1172,7 +1492,7 @@
           "company": "Rimini Street Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 455.13520412956353,
+          "market_cap": 452.35436196785304,
           "eps_estimate": 0.09,
           "eps_actual": 0.1128,
           "eps_surprise": 25.33,
@@ -1180,7 +1500,7 @@
           "revenue_actual": 112.056,
           "revenue_surprise": 1.11,
           "price_reaction": 24.31,
-          "cmp": 4.91,
+          "cmp": 4.88,
           "ah_bmo_move": null
         },
         {
@@ -1204,7 +1524,7 @@
           "company": "Hershey Company",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 33351.69282670517,
+          "market_cap": 34408.5620071172,
           "eps_estimate": 2.1113,
           "eps_actual": 2.64,
           "eps_surprise": 25.04,
@@ -1212,7 +1532,7 @@
           "revenue_actual": 3275.51,
           "revenue_surprise": 0.79,
           "price_reaction": -2.13,
-          "cmp": 165.99,
+          "cmp": 171.25,
           "ah_bmo_move": null
         },
         {
@@ -1220,7 +1540,7 @@
           "company": "Indivior Pharmaceuticals Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 4166.647561924122,
+          "market_cap": 4282.322145255523,
           "eps_estimate": 1.0607,
           "eps_actual": 1.32,
           "eps_surprise": 24.45,
@@ -1228,7 +1548,7 @@
           "revenue_actual": 356.0,
           "revenue_surprise": 8.09,
           "price_reaction": 1.38,
-          "cmp": 35.3,
+          "cmp": 36.28,
           "ah_bmo_move": null
         },
         {
@@ -1236,7 +1556,7 @@
           "company": "Forum Energy Technologies Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 955.1011321899003,
+          "market_cap": 890.5099399861101,
           "eps_estimate": 1.215,
           "eps_actual": 1.51,
           "eps_surprise": 24.28,
@@ -1244,7 +1564,7 @@
           "revenue_actual": 236.813,
           "revenue_surprise": 1.48,
           "price_reaction": -4.3,
-          "cmp": 83.25,
+          "cmp": 77.62,
           "ah_bmo_move": null
         },
         {
@@ -1252,7 +1572,7 @@
           "company": "Textron Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 14517.58,
+          "market_cap": 14996.982327252073,
           "eps_estimate": 1.431,
           "eps_actual": 1.76,
           "eps_surprise": 22.99,
@@ -1260,7 +1580,7 @@
           "revenue_actual": 3751.0,
           "revenue_surprise": -0.46,
           "price_reaction": 11.67,
-          "cmp": 85.7,
+          "cmp": 88.53,
           "ah_bmo_move": null
         },
         {
@@ -1268,7 +1588,7 @@
           "company": "Wesco International Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 17082.132702889292,
+          "market_cap": 16331.643480119412,
           "eps_estimate": 4.695,
           "eps_actual": 5.77,
           "eps_surprise": 22.9,
@@ -1276,7 +1596,7 @@
           "revenue_actual": 7226.4,
           "revenue_surprise": 5.2,
           "price_reaction": 5.61,
-          "cmp": 350.98,
+          "cmp": 335.56,
           "ah_bmo_move": null
         },
         {
@@ -1284,7 +1604,7 @@
           "company": "Bristol-Myers Squibb Co",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 127550.95719054138,
+          "market_cap": 128818.28820472762,
           "eps_estimate": 1.0988,
           "eps_actual": 1.35,
           "eps_surprise": 22.86,
@@ -1292,7 +1612,7 @@
           "revenue_actual": 13069.0,
           "revenue_surprise": 2.72,
           "price_reaction": 1.35,
-          "cmp": 62.4,
+          "cmp": 63.02,
           "ah_bmo_move": null
         },
         {
@@ -1300,7 +1620,7 @@
           "company": "BridgeBio Pharma Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 14610.06063490816,
+          "market_cap": 14609.087165902234,
           "eps_estimate": -0.5422,
           "eps_actual": -0.42,
           "eps_surprise": 22.54,
@@ -1316,7 +1636,7 @@
           "company": "Miami International Holdings Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 3338.132143849586,
+          "market_cap": 3461.1788006991455,
           "eps_estimate": 0.3686,
           "eps_actual": 0.45,
           "eps_surprise": 22.08,
@@ -1324,7 +1644,7 @@
           "revenue_actual": 131.009,
           "revenue_surprise": 1.26,
           "price_reaction": 6.97,
-          "cmp": 33.64,
+          "cmp": 34.88,
           "ah_bmo_move": null
         },
         {
@@ -1332,7 +1652,7 @@
           "company": "CNX Resources Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 5355.86,
+          "market_cap": 5314.430172475389,
           "eps_estimate": 0.5908,
           "eps_actual": 0.612,
           "eps_surprise": 3.59,
@@ -1340,7 +1660,7 @@
           "revenue_actual": 580.004,
           "revenue_surprise": 22.03,
           "price_reaction": -3.31,
-          "cmp": 37.49,
+          "cmp": 37.2,
           "ah_bmo_move": null
         },
         {
@@ -1348,7 +1668,7 @@
           "company": "Asure Software Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 282.391492627013,
+          "market_cap": 298.68330895602554,
           "eps_estimate": 0.1871,
           "eps_actual": 0.2283,
           "eps_surprise": 22.02,
@@ -1356,7 +1676,7 @@
           "revenue_actual": 40.022,
           "revenue_surprise": 2.78,
           "price_reaction": 30.15,
-          "cmp": 9.36,
+          "cmp": 9.9,
           "ah_bmo_move": null
         },
         {
@@ -1364,7 +1684,7 @@
           "company": "WEC Energy Group Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 37873.477097628966,
+          "market_cap": 38091.795600374586,
           "eps_estimate": 0.9711,
           "eps_actual": 1.18,
           "eps_surprise": 21.51,
@@ -1372,7 +1692,7 @@
           "revenue_actual": 2290.6,
           "revenue_surprise": 0.89,
           "price_reaction": 3.74,
-          "cmp": 116.23,
+          "cmp": 116.9,
           "ah_bmo_move": null
         },
         {
@@ -1380,7 +1700,7 @@
           "company": "Forbright Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 960.31,
+          "market_cap": 1025.3172017306172,
           "eps_estimate": 0.3382,
           "eps_actual": 0.41,
           "eps_surprise": 21.23,
@@ -1388,7 +1708,7 @@
           "revenue_actual": 101.052,
           "revenue_surprise": 10.57,
           "price_reaction": 6.9,
-          "cmp": 18.17,
+          "cmp": 19.4,
           "ah_bmo_move": null
         },
         {
@@ -1396,7 +1716,7 @@
           "company": "AGCO Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 7732.149261711818,
+          "market_cap": 7820.4062767840505,
           "eps_estimate": 0.8683,
           "eps_actual": 1.05,
           "eps_surprise": 20.93,
@@ -1404,7 +1724,7 @@
           "revenue_actual": 2262.5,
           "revenue_surprise": -2.63,
           "price_reaction": 5.56,
-          "cmp": 112.14,
+          "cmp": 113.42,
           "ah_bmo_move": null
         },
         {
@@ -1412,7 +1732,7 @@
           "company": "West Pharmaceutical Services Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 28743.54,
+          "market_cap": 28413.34732753227,
           "eps_estimate": 2.2008,
           "eps_actual": 2.66,
           "eps_surprise": 20.87,
@@ -1420,7 +1740,7 @@
           "revenue_actual": 874.5,
           "revenue_surprise": 5.73,
           "price_reaction": 3.23,
-          "cmp": 412.62,
+          "cmp": 407.88,
           "ah_bmo_move": null
         },
         {
@@ -1428,7 +1748,7 @@
           "company": "Quanta Services Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 94358.54428622109,
+          "market_cap": 93597.62655364777,
           "eps_estimate": 5.0202,
           "eps_actual": 6.06,
           "eps_surprise": 20.71,
@@ -1436,7 +1756,7 @@
           "revenue_actual": 12014.877,
           "revenue_surprise": 8.89,
           "price_reaction": 4.66,
-          "cmp": 626.23,
+          "cmp": 621.18,
           "ah_bmo_move": null
         }
       ]
@@ -1449,7 +1769,7 @@
           "company": "ProPetro Holding Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 944.8154898218709,
+          "market_cap": 858.8114445334445,
           "eps_estimate": -0.0064,
           "eps_actual": 0.0938,
           "eps_surprise": 1565.62,
@@ -1457,7 +1777,7 @@
           "revenue_actual": 355.384,
           "revenue_surprise": 10.91,
           "price_reaction": 2.65,
-          "cmp": 7.58,
+          "cmp": 6.99,
           "ah_bmo_move": null
         },
         {
@@ -1465,7 +1785,7 @@
           "company": "KKR Real Estate Finance Trust Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 314.6782521258915,
+          "market_cap": 303.13043696852714,
           "eps_estimate": -0.3052,
           "eps_actual": -2.64,
           "eps_surprise": -765.01,
@@ -1473,7 +1793,7 @@
           "revenue_actual": 24.55,
           "revenue_surprise": 33.26,
           "price_reaction": 3.55,
-          "cmp": 5.45,
+          "cmp": 5.25,
           "ah_bmo_move": null
         },
         {
@@ -1481,7 +1801,7 @@
           "company": "Glaukos Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 14136.807723808732,
+          "market_cap": 14124.96852766304,
           "eps_estimate": -0.0964,
           "eps_actual": 0.47,
           "eps_surprise": 587.55,
@@ -1489,7 +1809,7 @@
           "revenue_actual": 211.03,
           "revenue_surprise": 25.58,
           "price_reaction": 33.65,
-          "cmp": 238.81,
+          "cmp": 238.61,
           "ah_bmo_move": null
         },
         {
@@ -1497,7 +1817,7 @@
           "company": "Frontier Group Holdings Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1529.9692547892564,
+          "market_cap": 1711.998724250608,
           "eps_estimate": -0.058,
           "eps_actual": 0.18,
           "eps_surprise": 410.34,
@@ -1505,7 +1825,7 @@
           "revenue_actual": 1355.0,
           "revenue_surprise": 5.14,
           "price_reaction": 11.57,
-          "cmp": 6.64,
+          "cmp": 7.43,
           "ah_bmo_move": null
         },
         {
@@ -1513,7 +1833,7 @@
           "company": "FinWise Bancorp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 183.11,
+          "market_cap": 183.94295505576466,
           "eps_estimate": 0.19,
           "eps_actual": 0.73,
           "eps_surprise": 284.21,
@@ -1521,7 +1841,7 @@
           "revenue_actual": 33.018,
           "revenue_surprise": -20.68,
           "price_reaction": 23.2,
-          "cmp": 13.19,
+          "cmp": 13.25,
           "ah_bmo_move": null
         },
         {
@@ -1529,7 +1849,7 @@
           "company": "Urban Edge Properties",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 2656.6200000000003,
+          "market_cap": 2753.9271427094877,
           "eps_estimate": 0.1166,
           "eps_actual": 0.41,
           "eps_surprise": 251.63,
@@ -1537,7 +1857,7 @@
           "revenue_actual": 119.249,
           "revenue_surprise": -1.03,
           "price_reaction": -1.14,
-          "cmp": 19.93,
+          "cmp": 20.66,
           "ah_bmo_move": null
         },
         {
@@ -1545,7 +1865,7 @@
           "company": "NN Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 367.55694241038753,
+          "market_cap": 348.7239662240352,
           "eps_estimate": 0.02,
           "eps_actual": 0.07,
           "eps_surprise": 250.0,
@@ -1553,7 +1873,7 @@
           "revenue_actual": 131.1,
           "revenue_surprise": 11.01,
           "price_reaction": 4.21,
-          "cmp": 3.92,
+          "cmp": 3.72,
           "ah_bmo_move": null
         },
         {
@@ -1561,7 +1881,7 @@
           "company": "DBV Technologies ADR",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 593.2095736312866,
+          "market_cap": 568.7020119857789,
           "eps_estimate": -0.26,
           "eps_actual": -0.14,
           "eps_surprise": 46.15,
@@ -1569,7 +1889,7 @@
           "revenue_actual": 1.6,
           "revenue_surprise": 220.0,
           "price_reaction": -3.38,
-          "cmp": 9.44,
+          "cmp": 9.05,
           "ah_bmo_move": null
         },
         {
@@ -1577,7 +1897,7 @@
           "company": "Patterson-UTI Energy Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 4961.820809080985,
+          "market_cap": 4500.344770445861,
           "eps_estimate": 0.0379,
           "eps_actual": 0.1182,
           "eps_surprise": 211.87,
@@ -1585,7 +1905,7 @@
           "revenue_actual": 1342.234,
           "revenue_surprise": 2.43,
           "price_reaction": 0.71,
-          "cmp": 13.01,
+          "cmp": 11.8,
           "ah_bmo_move": null
         },
         {
@@ -1593,7 +1913,7 @@
           "company": "Antero Midstream Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 10141.27,
+          "market_cap": 9857.863073113642,
           "eps_estimate": 0.2967,
           "eps_actual": 0.82,
           "eps_surprise": 176.37,
@@ -1601,7 +1921,7 @@
           "revenue_actual": 327.022,
           "revenue_surprise": -3.99,
           "price_reaction": 3.71,
-          "cmp": 21.47,
+          "cmp": 20.87,
           "ah_bmo_move": null
         },
         {
@@ -1609,7 +1929,7 @@
           "company": "Enel Chile SA ADR",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 5742.894806342125,
+          "market_cap": 5865.31888338089,
           "eps_estimate": 0.0793,
           "eps_actual": 0.17,
           "eps_surprise": 114.38,
@@ -1617,7 +1937,7 @@
           "revenue_actual": 1211.7665,
           "revenue_surprise": 8.06,
           "price_reaction": -1.84,
-          "cmp": 4.15,
+          "cmp": 4.24,
           "ah_bmo_move": null
         },
         {
@@ -1625,7 +1945,7 @@
           "company": "Stellantis N.V",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 13408.017331409455,
+          "market_cap": 13668.647392416,
           "eps_estimate": -0.1495,
           "eps_actual": -0.0111,
           "eps_surprise": 92.58,
@@ -1633,7 +1953,7 @@
           "revenue_actual": 41896.7735,
           "revenue_surprise": 3.5,
           "price_reaction": 13.04,
-          "cmp": 4.63,
+          "cmp": 4.72,
           "ah_bmo_move": null
         },
         {
@@ -1641,7 +1961,7 @@
           "company": "Heritage Insurance Holdings Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 1075.1446401169155,
+          "market_cap": 1068.5796744384882,
           "eps_estimate": 0.93,
           "eps_actual": 1.72,
           "eps_surprise": 84.95,
@@ -1649,7 +1969,7 @@
           "revenue_actual": 219.241,
           "revenue_surprise": 0.87,
           "price_reaction": 4.06,
-          "cmp": 36.16,
+          "cmp": 35.94,
           "ah_bmo_move": null
         },
         {
@@ -1657,7 +1977,7 @@
           "company": "Evercore Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 11280.4396296122,
+          "market_cap": 11662.722303275603,
           "eps_estimate": 2.5193,
           "eps_actual": 4.28,
           "eps_surprise": 69.89,
@@ -1665,7 +1985,7 @@
           "revenue_actual": 1176.877,
           "revenue_surprise": 33.99,
           "price_reaction": 12.51,
-          "cmp": 293.32,
+          "cmp": 303.26,
           "ah_bmo_move": null
         },
         {
@@ -1673,7 +1993,7 @@
           "company": "MediaAlpha Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 868.3446553634385,
+          "market_cap": 874.8557401262705,
           "eps_estimate": 0.2819,
           "eps_actual": 0.46,
           "eps_surprise": 63.18,
@@ -1681,7 +2001,7 @@
           "revenue_actual": 375.946,
           "revenue_surprise": 8.05,
           "price_reaction": 20.56,
-          "cmp": 14.67,
+          "cmp": 14.78,
           "ah_bmo_move": null
         },
         {
@@ -1689,7 +2009,7 @@
           "company": "Axogen Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 2816.3077579060314,
+          "market_cap": 2977.5807612055864,
           "eps_estimate": 0.1313,
           "eps_actual": 0.21,
           "eps_surprise": 59.94,
@@ -1697,7 +2017,7 @@
           "revenue_actual": 75.834,
           "revenue_surprise": 3.24,
           "price_reaction": 31.47,
-          "cmp": 47.15,
+          "cmp": 49.85,
           "ah_bmo_move": null
         },
         {
@@ -1705,7 +2025,7 @@
           "company": "LSB Industries Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 836.6702189303351,
+          "market_cap": 795.6287581596272,
           "eps_estimate": 0.1386,
           "eps_actual": 0.22,
           "eps_surprise": 58.73,
@@ -1713,7 +2033,7 @@
           "revenue_actual": 158.602,
           "revenue_surprise": -0.98,
           "price_reaction": 8.07,
-          "cmp": 11.62,
+          "cmp": 11.05,
           "ah_bmo_move": null
         },
         {
@@ -1721,7 +2041,7 @@
           "company": "Bausch + Lomb Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 7210.724602274895,
+          "market_cap": 7153.525056824684,
           "eps_estimate": 0.2145,
           "eps_actual": 0.34,
           "eps_surprise": 58.51,
@@ -1729,7 +2049,7 @@
           "revenue_actual": 1375.0,
           "revenue_surprise": 0.21,
           "price_reaction": 15.78,
-          "cmp": 20.17,
+          "cmp": 20.01,
           "ah_bmo_move": null
         },
         {
@@ -1737,7 +2057,7 @@
           "company": "Universal Display Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 3778.4,
+          "market_cap": 4044.9410101238577,
           "eps_estimate": 1.1275,
           "eps_actual": 1.72,
           "eps_surprise": 52.55,
@@ -1745,7 +2065,7 @@
           "revenue_actual": 160.432,
           "revenue_surprise": -1.41,
           "price_reaction": -6.09,
-          "cmp": 83.92,
+          "cmp": 89.84,
           "ah_bmo_move": null
         },
         {
@@ -1753,7 +2073,7 @@
           "company": "HF Sinclair Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 19484.897007451596,
+          "market_cap": 19135.301051927647,
           "eps_estimate": 7.83,
           "eps_actual": 11.75,
           "eps_surprise": 50.06,
@@ -1761,7 +2081,7 @@
           "revenue_actual": 10857.0,
           "revenue_surprise": 22.18,
           "price_reaction": -1.97,
-          "cmp": 113.7,
+          "cmp": 111.66,
           "ah_bmo_move": null
         },
         {
@@ -1769,7 +2089,7 @@
           "company": "Invitation Homes Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 15302.660000000002,
+          "market_cap": 15475.506973072848,
           "eps_estimate": 0.1806,
           "eps_actual": 0.27,
           "eps_surprise": 49.5,
@@ -1777,7 +2097,7 @@
           "revenue_actual": 731.278,
           "revenue_surprise": -1.52,
           "price_reaction": -0.41,
-          "cmp": 26.56,
+          "cmp": 26.86,
           "ah_bmo_move": null
         },
         {
@@ -1785,7 +2105,7 @@
           "company": "Merchants Bancorp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 2392.91,
+          "market_cap": 2419.0946413082424,
           "eps_estimate": 1.3933,
           "eps_actual": 2.06,
           "eps_surprise": 47.85,
@@ -1793,7 +2113,7 @@
           "revenue_actual": 224.941,
           "revenue_surprise": 22.95,
           "price_reaction": 5.84,
-          "cmp": 52.09,
+          "cmp": 52.66,
           "ah_bmo_move": null
         },
         {
@@ -1801,7 +2121,7 @@
           "company": "Jersey Mike's Subs Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 5872.0049001650605,
+          "market_cap": 5970.400488438694,
           "eps_estimate": 0.1558,
           "eps_actual": 0.23,
           "eps_surprise": 47.63,
@@ -1809,7 +2129,7 @@
           "revenue_actual": 209.0,
           "revenue_surprise": 0.26,
           "price_reaction": 2.77,
-          "cmp": 18.5,
+          "cmp": 18.81,
           "ah_bmo_move": null
         },
         {
@@ -1817,7 +2137,7 @@
           "company": "EPR Properties",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 4423.31,
+          "market_cap": 4566.64047964316,
           "eps_estimate": 0.8278,
           "eps_actual": 1.22,
           "eps_surprise": 47.38,
@@ -1825,7 +2145,7 @@
           "revenue_actual": 175.29,
           "revenue_surprise": 3.27,
           "price_reaction": 5.1,
-          "cmp": 57.71,
+          "cmp": 59.58,
           "ah_bmo_move": null
         },
         {
@@ -1833,7 +2153,7 @@
           "company": "Vanda Pharmaceuticals Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 248.7116966369518,
+          "market_cap": 234.62227841100244,
           "eps_estimate": -0.682,
           "eps_actual": -0.37,
           "eps_surprise": 45.75,
@@ -1841,7 +2161,7 @@
           "revenue_actual": 69.815,
           "revenue_surprise": 0.89,
           "price_reaction": 1.25,
-          "cmp": 4.11,
+          "cmp": 3.88,
           "ah_bmo_move": null
         },
         {
@@ -1849,7 +2169,7 @@
           "company": "Aercap Holdings NV",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 24480.26,
+          "market_cap": 25224.611853264203,
           "eps_estimate": 4.5559,
           "eps_actual": 6.56,
           "eps_surprise": 43.99,
@@ -1857,7 +2177,7 @@
           "revenue_actual": 2415.329,
           "revenue_surprise": 12.32,
           "price_reaction": 3.62,
-          "cmp": 158.52,
+          "cmp": 163.34,
           "ah_bmo_move": null
         },
         {
@@ -1865,7 +2185,7 @@
           "company": "Ryerson Holding Corp",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 1610.76,
+          "market_cap": 1719.8675939797831,
           "eps_estimate": 0.43,
           "eps_actual": 0.61,
           "eps_surprise": 41.86,
@@ -1873,7 +2193,7 @@
           "revenue_actual": 2177.8,
           "revenue_surprise": 16.14,
           "price_reaction": 4.48,
-          "cmp": 31.15,
+          "cmp": 33.26,
           "ah_bmo_move": null
         },
         {
@@ -1881,7 +2201,7 @@
           "company": "SEACOR Marine Holdings Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 267.71,
+          "market_cap": 254.40595909800976,
           "eps_estimate": -0.61,
           "eps_actual": -0.36,
           "eps_surprise": 40.98,
@@ -1889,7 +2209,7 @@
           "revenue_actual": 57.251,
           "revenue_surprise": 8.05,
           "price_reaction": 10.08,
-          "cmp": 9.86,
+          "cmp": 9.37,
           "ah_bmo_move": null
         },
         {
@@ -1897,7 +2217,7 @@
           "company": "Bausch Health Companies Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 3070.457914266586,
+          "market_cap": 2999.399971199036,
           "eps_estimate": 1.267,
           "eps_actual": 1.77,
           "eps_surprise": 39.7,
@@ -1905,7 +2225,7 @@
           "revenue_actual": 2941.0,
           "revenue_surprise": 6.76,
           "price_reaction": 28.76,
-          "cmp": 8.21,
+          "cmp": 8.02,
           "ah_bmo_move": null
         },
         {
@@ -1929,7 +2249,7 @@
           "company": "Silicon Motion Technology Corp ADR",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 7159.838615112304,
+          "market_cap": 6371.688793029784,
           "eps_estimate": 3.2958,
           "eps_actual": 4.35,
           "eps_surprise": 31.99,
@@ -1937,7 +2257,7 @@
           "revenue_actual": 560.2,
           "revenue_surprise": 5.88,
           "price_reaction": 3.71,
-          "cmp": 211.14,
+          "cmp": 187.9,
           "ah_bmo_move": null
         },
         {
@@ -1945,7 +2265,7 @@
           "company": "Biogen Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 37473.89968708472,
+          "market_cap": 36808.708758735214,
           "eps_estimate": 1.992,
           "eps_actual": 2.62,
           "eps_surprise": 31.53,
@@ -1953,7 +2273,7 @@
           "revenue_actual": 2804.1,
           "revenue_surprise": 6.43,
           "price_reaction": -3.43,
-          "cmp": 253.51,
+          "cmp": 249.01,
           "ah_bmo_move": null
         },
         {
@@ -1961,7 +2281,7 @@
           "company": "Sterling Infrastructure Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 10782.644085203601,
+          "market_cap": 10232.073804824953,
           "eps_estimate": 6.1997,
           "eps_actual": 7.58,
           "eps_surprise": 22.26,
@@ -1969,7 +2289,7 @@
           "revenue_actual": 1563.927,
           "revenue_surprise": 31.28,
           "price_reaction": -3.91,
-          "cmp": 353.5,
+          "cmp": 335.45,
           "ah_bmo_move": null
         },
         {
@@ -1977,7 +2297,7 @@
           "company": "Replimune Group Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1664.633497416577,
+          "market_cap": 1847.665195353218,
           "eps_estimate": -0.784,
           "eps_actual": -0.54,
           "eps_surprise": 31.12,
@@ -1985,7 +2305,7 @@
           "revenue_actual": 0.0,
           "revenue_surprise": null,
           "price_reaction": 23.07,
-          "cmp": 17.56,
+          "cmp": 19.49,
           "ah_bmo_move": null
         },
         {
@@ -1993,7 +2313,7 @@
           "company": "Teladoc Health Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 1529.4447688062664,
+          "market_cap": 1573.1952311937334,
           "eps_estimate": -0.2173,
           "eps_actual": -0.15,
           "eps_surprise": 30.97,
@@ -2001,7 +2321,7 @@
           "revenue_actual": 605.102,
           "revenue_surprise": 2.88,
           "price_reaction": 26.89,
-          "cmp": 8.39,
+          "cmp": 8.63,
           "ah_bmo_move": null
         },
         {
@@ -2009,7 +2329,7 @@
           "company": "Etsy Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 7737.834922062423,
+          "market_cap": 7969.728140658387,
           "eps_estimate": 0.7636,
           "eps_actual": 1.0,
           "eps_surprise": 30.96,
@@ -2017,7 +2337,7 @@
           "revenue_actual": 692.469,
           "revenue_surprise": 3.5,
           "price_reaction": 5.35,
-          "cmp": 89.76,
+          "cmp": 92.45,
           "ah_bmo_move": null
         },
         {
@@ -2025,7 +2345,7 @@
           "company": "VF Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 7176.035403133264,
+          "market_cap": 7632.65636757007,
           "eps_estimate": 0.5351,
           "eps_actual": 0.7,
           "eps_surprise": 30.82,
@@ -2033,7 +2353,7 @@
           "revenue_actual": 2695.132,
           "revenue_surprise": 1.13,
           "price_reaction": 1.17,
-          "cmp": 18.23,
+          "cmp": 19.39,
           "ah_bmo_move": null
         },
         {
@@ -2041,7 +2361,7 @@
           "company": "Stepan Co",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1582.41,
+          "market_cap": 1598.0954870526075,
           "eps_estimate": 0.725,
           "eps_actual": 0.94,
           "eps_surprise": 29.66,
@@ -2049,7 +2369,7 @@
           "revenue_actual": 692.154,
           "revenue_surprise": 9.12,
           "price_reaction": 4.91,
-          "cmp": 69.61,
+          "cmp": 70.3,
           "ah_bmo_move": null
         },
         {
@@ -2057,7 +2377,7 @@
           "company": "International Paper Co",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 19435.21906663784,
+          "market_cap": 19403.444139935727,
           "eps_estimate": 0.2857,
           "eps_actual": 0.37,
           "eps_surprise": 29.51,
@@ -2065,7 +2385,7 @@
           "revenue_actual": 6197.0,
           "revenue_surprise": -1.29,
           "price_reaction": 3.3,
-          "cmp": 36.7,
+          "cmp": 36.64,
           "ah_bmo_move": null
         },
         {
@@ -2073,7 +2393,7 @@
           "company": "MYR Group Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 4401.645867979024,
+          "market_cap": 4332.203220510508,
           "eps_estimate": 2.9731,
           "eps_actual": 3.82,
           "eps_surprise": 28.49,
@@ -2081,7 +2401,7 @@
           "revenue_actual": 1259.032,
           "revenue_surprise": 8.52,
           "price_reaction": 1.1,
-          "cmp": 282.7,
+          "cmp": 278.24,
           "ah_bmo_move": null
         },
         {
@@ -2089,7 +2409,7 @@
           "company": "Neogenomics Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 2255.2596247966308,
+          "market_cap": 2133.6333933204382,
           "eps_estimate": 0.0555,
           "eps_actual": 0.07,
           "eps_surprise": 26.13,
@@ -2097,7 +2417,7 @@
           "revenue_actual": 209.254,
           "revenue_surprise": 1.23,
           "price_reaction": -0.33,
-          "cmp": 17.43,
+          "cmp": 16.49,
           "ah_bmo_move": null
         },
         {
@@ -2105,7 +2425,7 @@
           "company": "Constellium SE",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 3141.4287437761504,
+          "market_cap": 3091.65010340784,
           "eps_estimate": 0.73,
           "eps_actual": 0.9119,
           "eps_surprise": 24.92,
@@ -2113,7 +2433,7 @@
           "revenue_actual": 2639.0,
           "revenue_surprise": 5.66,
           "price_reaction": -0.53,
-          "cmp": 23.35,
+          "cmp": 22.98,
           "ah_bmo_move": null
         },
         {
@@ -2121,7 +2441,7 @@
           "company": "Cohu Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 2488.0391098146097,
+          "market_cap": 2290.132270817364,
           "eps_estimate": 0.3453,
           "eps_actual": 0.43,
           "eps_surprise": 24.53,
@@ -2129,7 +2449,7 @@
           "revenue_actual": 172.956,
           "revenue_surprise": 1.59,
           "price_reaction": 0.49,
-          "cmp": 52.55,
+          "cmp": 48.37,
           "ah_bmo_move": null
         },
         {
@@ -2137,7 +2457,7 @@
           "company": "NextDecade Corp",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 1951.5305596452847,
+          "market_cap": 1790.222370247636,
           "eps_estimate": -0.7129,
           "eps_actual": -0.54,
           "eps_surprise": 24.25,
@@ -2145,7 +2465,7 @@
           "revenue_actual": 0.0,
           "revenue_surprise": null,
           "price_reaction": 0.93,
-          "cmp": 7.26,
+          "cmp": 6.66,
           "ah_bmo_move": null
         },
         {
@@ -2153,7 +2473,7 @@
           "company": "Cactus Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 5239.322503374004,
+          "market_cap": 4964.805926193443,
           "eps_estimate": 0.7732,
           "eps_actual": 0.96,
           "eps_surprise": 24.16,
@@ -2161,7 +2481,7 @@
           "revenue_actual": 430.888,
           "revenue_surprise": -1.61,
           "price_reaction": 1.79,
-          "cmp": 65.66,
+          "cmp": 62.22,
           "ah_bmo_move": null
         },
         {
@@ -2169,7 +2489,7 @@
           "company": "Tenable Holdings Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 5639.163039695101,
+          "market_cap": 5226.138409153229,
           "eps_estimate": 0.5079,
           "eps_actual": 0.63,
           "eps_surprise": 24.04,
@@ -2177,7 +2497,7 @@
           "revenue_actual": 276.387,
           "revenue_surprise": 1.77,
           "price_reaction": 6.28,
-          "cmp": 51.2,
+          "cmp": 47.45,
           "ah_bmo_move": null
         },
         {
@@ -2185,7 +2505,7 @@
           "company": "ClearPoint Neuro Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 364.7785952493612,
+          "market_cap": 318.94085383613924,
           "eps_estimate": -0.315,
           "eps_actual": -0.24,
           "eps_surprise": 23.81,
@@ -2193,7 +2513,7 @@
           "revenue_actual": 12.075,
           "revenue_surprise": -1.83,
           "price_reaction": 1.23,
-          "cmp": 11.38,
+          "cmp": 9.95,
           "ah_bmo_move": null
         },
         {
@@ -2201,7 +2521,7 @@
           "company": "Climb Global Solutions Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 758.26,
+          "market_cap": 749.6773496301508,
           "eps_estimate": 0.3767,
           "eps_actual": 0.43,
           "eps_surprise": 14.15,
@@ -2209,7 +2529,7 @@
           "revenue_actual": 220.306,
           "revenue_surprise": 21.73,
           "price_reaction": 26.29,
-          "cmp": 40.64,
+          "cmp": 40.18,
           "ah_bmo_move": null
         },
         {
@@ -2217,7 +2537,7 @@
           "company": "Vertiv Holdings Co",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 91105.28993731886,
+          "market_cap": 86345.94331778052,
           "eps_estimate": 1.8191,
           "eps_actual": 2.21,
           "eps_surprise": 21.49,
@@ -2225,7 +2545,7 @@
           "revenue_actual": 4312.8,
           "revenue_surprise": 15.03,
           "price_reaction": 16.48,
-          "cmp": 236.6,
+          "cmp": 224.24,
           "ah_bmo_move": null
         },
         {
@@ -2233,7 +2553,7 @@
           "company": "Sempreon Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 364.16937467154776,
+          "market_cap": 380.0214484306766,
           "eps_estimate": 0.3224,
           "eps_actual": 0.39,
           "eps_surprise": 20.97,
@@ -2241,7 +2561,7 @@
           "revenue_actual": 117.911,
           "revenue_surprise": -1.49,
           "price_reaction": 9.2,
-          "cmp": 17.0,
+          "cmp": 17.74,
           "ah_bmo_move": null
         },
         {
@@ -2249,7 +2569,7 @@
           "company": "FormFactor Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 7041.805230462979,
+          "market_cap": 6819.9425590399915,
           "eps_estimate": 0.8622,
           "eps_actual": 1.04,
           "eps_surprise": 20.62,
@@ -2257,7 +2577,7 @@
           "revenue_actual": 280.547,
           "revenue_surprise": 3.71,
           "price_reaction": -11.65,
-          "cmp": 90.14,
+          "cmp": 87.3,
           "ah_bmo_move": null
         },
         {
@@ -2265,7 +2585,7 @@
           "company": "Scorpio Tankers Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 4637.53,
+          "market_cap": 4338.043930417778,
           "eps_estimate": 2.0648,
           "eps_actual": 2.49,
           "eps_surprise": 20.59,
@@ -2273,7 +2593,7 @@
           "revenue_actual": 249.094,
           "revenue_surprise": 2.1,
           "price_reaction": 3.97,
-          "cmp": 92.6,
+          "cmp": 86.62,
           "ah_bmo_move": null
         },
         {
@@ -2281,7 +2601,7 @@
           "company": "Clean Harbors Inc",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 16000.343779359482,
+          "market_cap": 15611.725091716375,
           "eps_estimate": 3.2598,
           "eps_actual": 3.93,
           "eps_surprise": 20.56,
@@ -2289,7 +2609,7 @@
           "revenue_actual": 1869.449,
           "revenue_surprise": 8.11,
           "price_reaction": 0.11,
-          "cmp": 303.44,
+          "cmp": 296.07,
           "ah_bmo_move": null
         },
         {
@@ -2297,7 +2617,7 @@
           "company": "Phillips 66",
           "session": "BMO",
           "report_time": "08:30",
-          "market_cap": 108366.0108668242,
+          "market_cap": 107285.51462048866,
           "eps_estimate": 11.7283,
           "eps_actual": 14.08,
           "eps_surprise": 20.05,
@@ -2305,7 +2625,7 @@
           "revenue_actual": 49728.3333,
           "revenue_surprise": 10.73,
           "price_reaction": 1.95,
-          "cmp": 277.81,
+          "cmp": 275.04,
           "ah_bmo_move": null
         },
         {
@@ -2313,7 +2633,7 @@
           "company": "Equinix Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 100344.46,
+          "market_cap": 98363.70277365374,
           "eps_estimate": 4.1076,
           "eps_actual": 4.93,
           "eps_surprise": 20.02,
@@ -2321,7 +2641,7 @@
           "revenue_actual": 2571.0,
           "revenue_surprise": 0.31,
           "price_reaction": 2.88,
-          "cmp": 1013.7,
+          "cmp": 993.69,
           "ah_bmo_move": null
         },
         {
@@ -2329,7 +2649,7 @@
           "company": "Microvision Inc",
           "session": "AMC",
           "report_time": "16:30",
-          "market_cap": 42.2106136902948,
+          "market_cap": 38.5373323610565,
           "eps_estimate": null,
           "eps_actual": -0.45,
           "eps_surprise": null,
@@ -2337,7 +2657,7 @@
           "revenue_actual": 2.4,
           "revenue_surprise": 20.0,
           "price_reaction": 10.77,
-          "cmp": 1.38,
+          "cmp": 1.26,
           "ah_bmo_move": null
         }
       ]
