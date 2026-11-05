@@ -135,6 +135,18 @@
   .daytab .cnt{ color:var(--muted); font-weight:400; margin-left:4px; }
   .daytab.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
   .daytab.active .cnt{ color:rgba(255,255,255,.85); }
+  .earnings-sortbar{ display:flex; align-items:center; gap:8px; margin-bottom:14px; flex-wrap:wrap; }
+  .sort-label{ color:var(--muted); font-size:12.5px; font-weight:600; }
+  .sortSelect{
+    background:var(--card); border:1px solid var(--border); color:var(--text);
+    font-size:12.5px; font-weight:600; padding:6px 10px; border-radius:8px; cursor:pointer;
+  }
+  .sortDirBtn{
+    background:var(--card); border:1px solid var(--border); color:var(--muted);
+    font-size:12.5px; font-weight:600; padding:6px 12px; border-radius:8px;
+    cursor:pointer; user-select:none; white-space:nowrap;
+  }
+  .sortDirBtn:hover{ color:var(--text); border-color:var(--borderStrong); }
   /* Card list instead of a wide table — every field wraps onto the next
      line when it doesn't fit, so there's never a horizontal scrollbar, on
      a huge desktop monitor or a phone. */
@@ -225,6 +237,19 @@
   <div id="earnings">
     <div class="earnings-meta" id="earningsMeta">Loading Earnings…</div>
     <div class="daytabs" id="dayTabs"></div>
+    <div class="earnings-sortbar">
+      <span class="sort-label">Sort by</span>
+      <select id="earningsSort" class="sortSelect">
+        <option value="surprise">Surprise % (default)</option>
+        <option value="market_cap">Market Cap</option>
+        <option value="session">Session (BMO / AMC)</option>
+        <option value="eps_surprise">EPS Surprise %</option>
+        <option value="eps_actual">EPS Actual ($)</option>
+        <option value="revenue_surprise">Revenue Surprise %</option>
+        <option value="revenue_actual">Revenue Actual ($M)</option>
+      </select>
+      <span class="sortDirBtn" id="sortDirBtn" title="Toggle sort direction">&#9660; High&rarr;Low</span>
+    </div>
     <div class="earnings-list" id="earningsBody"></div>
     <div id="earningsEmpty" style="display:none;">No names beat EPS or Revenue estimates by 20%+ this day.</div>
   </div>
@@ -236,6 +261,45 @@ let MOVERS = [];
 let MAPS_HISTORY = [];
 let EARNINGS_DAYS = [];
 let activeEarningsDay = null;
+let earningsSortField = 'surprise';
+let earningsSortDir = 'desc';
+
+// Each function returns the numeric value to sort THIS field by, or
+// null/undefined when the entry doesn't have one — sortEarningsEntries()
+// always pushes those to the bottom regardless of direction, so switching
+// sort fields never buries real data under a wall of blank rows.
+const EARNINGS_SORT_KEYS = {
+  // Same ranking update_earnings.py uses by default: the larger of the two
+  // surprise magnitudes (EPS or Revenue), whichever beat harder.
+  surprise: e => {
+    const vals = [e.eps_surprise, e.revenue_surprise]
+      .filter(v => v !== null && v !== undefined)
+      .map(Math.abs);
+    return vals.length ? Math.max(...vals) : null;
+  },
+  market_cap: e => e.market_cap,
+  // "Before open" (BMO) sorts ahead of "after market" (AMC) by default —
+  // the default direction is "High -> Low", so BMO needs the HIGHER code
+  // here to land first; the direction toggle flips which group comes first.
+  session: e => e.session === 'BMO' ? 1 : (e.session === 'AMC' ? 0 : -1),
+  eps_surprise: e => e.eps_surprise,
+  eps_actual: e => e.eps_actual,
+  revenue_surprise: e => e.revenue_surprise,
+  revenue_actual: e => e.revenue_actual,
+};
+
+function sortEarningsEntries(entries){
+  const keyFn = EARNINGS_SORT_KEYS[earningsSortField] || EARNINGS_SORT_KEYS.surprise;
+  return [...entries].sort((a, b) => {
+    const av = keyFn(a), bv = keyFn(b);
+    const aNull = av === null || av === undefined;
+    const bNull = bv === null || bv === undefined;
+    if (aNull && bNull) return 0;
+    if (aNull) return 1;
+    if (bNull) return -1;
+    return earningsSortDir === 'desc' ? (bv - av) : (av - bv);
+  });
+}
 
 // This project standardizes on ET everywhere — the Python scrapers write
 // every stored timestamp (headline times, generated_at) as a real ET-offset
@@ -437,7 +501,7 @@ function renderEarnings(){
   const empty = document.getElementById('earningsEmpty');
   body.innerHTML = '';
   const day = EARNINGS_DAYS.find(d => d.date === activeEarningsDay);
-  const entries = day ? day.entries : [];
+  const entries = sortEarningsEntries(day ? day.entries : []);
   empty.style.display = entries.length ? 'none' : 'block';
   for(const e of entries){
     const card = document.createElement('div');
@@ -539,6 +603,19 @@ document.getElementById('dayTabs').addEventListener('click', (ev)=>{
   if(!t) return;
   activeEarningsDay = t.dataset.date;
   renderDayTabs();
+  renderEarnings();
+});
+
+document.getElementById('earningsSort').addEventListener('change', (ev)=>{
+  earningsSortField = ev.target.value;
+  renderEarnings();
+});
+
+document.getElementById('sortDirBtn').addEventListener('click', ()=>{
+  earningsSortDir = earningsSortDir === 'desc' ? 'asc' : 'desc';
+  document.getElementById('sortDirBtn').innerHTML = earningsSortDir === 'desc'
+    ? '&#9660; High&rarr;Low'
+    : '&#9650; Low&rarr;High';
   renderEarnings();
 });
 
