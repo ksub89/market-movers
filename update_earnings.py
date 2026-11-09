@@ -3,7 +3,12 @@
 Earnings tab — last 4 NYSE trading days of earnings reports, filtered down to
 only the names that BEAT estimates by 20% or more: EPS Surprise % >= 20 OR
 Revenue/"Sales" Surprise % >= 20. A big miss (e.g. -76%) does NOT qualify —
-only positive beats count.
+only positive beats count. ONE exception: any name with a market cap over
+$99B is always included even without a qualifying beat — a mega-cap's
+earnings are worth seeing regardless of surprise size, since "beat by 20%+"
+is a much higher bar for a company that large. Those entries carry
+"mega_cap_override": true so the page can call them out separately instead
+of implying they cleared the normal bar.
 
 Data source: Finviz Elite's earnings-calendar export
 (https://elite.finviz.com/export/calendar/earnings?dateFrom=...&dateTo=...&auth=...).
@@ -52,6 +57,10 @@ MOVERS_PATH = SCRIPT_DIR / "docs" / "movers.json"
 
 MIN_SURPRISE_PCT = 20.0
 NUM_DAYS = 4
+
+# Finviz's "Market Cap" column is already in $ millions (matches fmtCap() on
+# the page, which does the same /1000 -> "B" conversion), so $99B is 99,000.
+MEGA_CAP_THRESHOLD_M = 99_000.0
 
 # This guard is effectively dead code now — every trigger arrives as
 # workflow_dispatch (from the Cloudflare Worker's scheduler or a manual
@@ -220,12 +229,17 @@ def build_days():
 
         eps_surprise = to_float(row.get("EPS Surprise"))
         rev_surprise = to_float(row.get("Revenue Surprise"))
+        market_cap = to_float(row.get("Market Cap"))
 
         # Positive beats only — a name that missed estimates (even by a lot)
-        # doesn't qualify, only one that beat EPS or Revenue by 20%+.
+        # doesn't qualify, only one that beat EPS or Revenue by 20%+. The one
+        # exception is MEGA_CAP_THRESHOLD_M: a mega-cap gets in regardless,
+        # but flagged via mega_cap_override so it's visually distinct from a
+        # name that actually cleared the surprise bar.
         hits_eps = eps_surprise is not None and eps_surprise >= MIN_SURPRISE_PCT
         hits_rev = rev_surprise is not None and rev_surprise >= MIN_SURPRISE_PCT
-        if not (hits_eps or hits_rev):
+        hits_mega_cap = market_cap is not None and market_cap > MEGA_CAP_THRESHOLD_M
+        if not (hits_eps or hits_rev or hits_mega_cap):
             continue
 
         entry = {
@@ -233,7 +247,7 @@ def build_days():
             "company": row.get("Company", "").strip(),
             "session": session_label(time_part.strip()),
             "report_time": time_part.strip(),
-            "market_cap": to_float(row.get("Market Cap")),
+            "market_cap": market_cap,
             "eps_estimate": to_float(row.get("EPS Estimate")),
             "eps_actual": to_float(row.get("EPS Actual")),
             "eps_surprise": eps_surprise,
@@ -241,6 +255,10 @@ def build_days():
             "revenue_actual": to_float(row.get("Revenue Actual")),
             "revenue_surprise": rev_surprise,
             "price_reaction": to_float(row.get("1-Day Price Reaction")),
+            # True only when this entry is here SOLELY because of its market
+            # cap — a mega-cap that also genuinely beat by 20%+ is left
+            # false, since it earned its place the normal way too.
+            "mega_cap_override": hits_mega_cap and not (hits_eps or hits_rev),
             "report_date": date_part,  # kept internally for the movers cross-reference below; stripped before writing
         }
         buckets[date_part].append(entry)
@@ -292,7 +310,12 @@ def main():
     print("Fetching Finviz Elite earnings calendar...")
     days = build_days()
     for d in days:
-        print(f"  {d['date']}: {len(d['entries'])} name(s) beating EPS/Revenue by {MIN_SURPRISE_PCT:.0f}%+")
+        n_override = sum(1 for e in d["entries"] if e.get("mega_cap_override"))
+        n_beat = len(d["entries"]) - n_override
+        print(
+            f"  {d['date']}: {n_beat} name(s) beating EPS/Revenue by {MIN_SURPRISE_PCT:.0f}%+, "
+            f"{n_override} mega-cap (>${MEGA_CAP_THRESHOLD_M/1000:.0f}B) override(s)"
+        )
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(
@@ -300,6 +323,7 @@ def main():
             {
                 "generated_at": datetime.now(ZoneInfo("America/New_York")).isoformat(),
                 "min_surprise_pct": MIN_SURPRISE_PCT,
+                "mega_cap_threshold_m": MEGA_CAP_THRESHOLD_M,
                 "days": days,
             },
             indent=2,
