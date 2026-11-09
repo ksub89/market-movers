@@ -190,7 +190,7 @@
   .sym{ cursor:pointer; }
   .sym:hover{ text-decoration:underline dotted; }
   .chart-popover{
-    display:none; position:fixed; z-index:50; width:340px;
+    display:none; position:fixed; z-index:50; width:640px;
     background:var(--card); border:1px solid var(--borderStrong); border-radius:10px;
     box-shadow:0 8px 28px rgba(0,0,0,.18); overflow:hidden;
     animation:fadeIn .12s ease;
@@ -211,13 +211,16 @@
     flex:0 0 auto;
   }
   .chart-popover-close:hover{ color:var(--text); }
-  .chart-popover-body{ width:100%; height:240px; position:relative; }
+  .chart-popover-body{ width:100%; height:420px; position:relative; }
   .chart-popover-body .chart-loading, .chart-popover-body .chart-error{
     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
     color:var(--muted); font-size:12px; text-align:center; padding:0 16px;
   }
-  @media (max-width:420px){
+  @media (max-width:680px){
     .chart-popover{ width:calc(100vw - 20px); }
+  }
+  @media (max-width:420px){
+    .chart-popover-body{ height:320px; }
   }
 </style>
 </head>
@@ -821,6 +824,17 @@ function positionChartPopover(anchorEl){
   pop.style.top = top + 'px';
 }
 
+// TradingView's embed widget takes an initial "range" like "6M"/"12M" rather
+// than a literal bar count, so to show ~180 candles on BOTH toggle states we
+// convert 180 candles into the calendar span that holds roughly that many
+// bars at each interval (and round up slightly, so the most recent 180 bars
+// are always fully inside the initial view rather than clipped at the edge):
+//   Daily:  180 trading days ≈ 8.5 months  -> "9M"  (~189 trading days)
+//   Weekly: 180 weeks        ≈ 3.46 years  -> "42M" (~182 weeks)
+// Confirmed empirically (not just from docs) that the widget honors custom
+// "<N>M" range values beyond the usual 1M/3M/6M/12M preset buttons.
+const CHART_RANGE_BY_TF = { D: '9M', W: '42M' };
+
 function renderChartWidget(symbol, interval){
   const body = document.getElementById('chartPopBody');
   body.innerHTML = '<div class="chart-loading">Loading chart…</div>';
@@ -840,6 +854,7 @@ function renderChartWidget(symbol, interval){
       autosize: true,
       symbol: symbol,
       interval: interval,
+      range: CHART_RANGE_BY_TF[interval] || '12M', // ~180 candles visible at load
       timezone: 'America/New_York',
       theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light',
       style: '1', // candlesticks
