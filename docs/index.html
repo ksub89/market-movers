@@ -183,6 +183,42 @@
   .stat-val .neg{ color:var(--red); font-weight:700; }
   .arrow{ color:var(--muted); padding:0 3px; }
   #earningsEmpty{ text-align:center; color:var(--muted); padding:40px 0; font-size:13px; }
+
+  /* Hover/tap-a-ticker chart popover — shared by Movers and Earnings, since
+     both render the ticker inside a <span class="sym">. A floating card
+     positioned next to whatever ticker triggered it, never a new page/tab. */
+  .sym{ cursor:pointer; }
+  .sym:hover{ text-decoration:underline dotted; }
+  .chart-popover{
+    display:none; position:fixed; z-index:50; width:340px;
+    background:var(--card); border:1px solid var(--borderStrong); border-radius:10px;
+    box-shadow:0 8px 28px rgba(0,0,0,.18); overflow:hidden;
+    animation:fadeIn .12s ease;
+  }
+  .chart-popover-header{
+    display:flex; align-items:center; gap:8px; padding:8px 10px;
+    border-bottom:1px solid var(--border); background:var(--colTint);
+  }
+  .chart-popover-sym{ font-weight:700; font-size:13px; flex:0 0 auto; }
+  .chart-tf-toggle{ display:flex; gap:4px; flex:1 1 auto; }
+  .chart-tf-btn{
+    background:var(--card); border:1px solid var(--border); color:var(--muted);
+    font-size:11px; font-weight:600; padding:3px 9px; border-radius:7px; cursor:pointer;
+  }
+  .chart-tf-btn.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
+  .chart-popover-close{
+    cursor:pointer; color:var(--muted); font-size:18px; line-height:1; padding:0 2px;
+    flex:0 0 auto;
+  }
+  .chart-popover-close:hover{ color:var(--text); }
+  .chart-popover-body{ width:100%; height:240px; position:relative; }
+  .chart-popover-body .chart-loading, .chart-popover-body .chart-error{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    color:var(--muted); font-size:12px; text-align:center; padding:0 16px;
+  }
+  @media (max-width:420px){
+    .chart-popover{ width:calc(100vw - 20px); }
+  }
 </style>
 </head>
 <body>
@@ -265,6 +301,21 @@
     <div class="earnings-list" id="earningsBody"></div>
     <div id="earningsEmpty" style="display:none;">No names beat EPS or Revenue estimates by 20%+ this day.</div>
   </div>
+</div>
+
+<!-- Hover/tap a ticker (Movers or Earnings) to open this — see the
+     "Chart popover" JS section below. Lives outside the page divs since it
+     floats above whichever tab is active. -->
+<div class="chart-popover" id="chartPopover">
+  <div class="chart-popover-header">
+    <span class="chart-popover-sym" id="chartPopSym"></span>
+    <span class="chart-tf-toggle">
+      <span class="chart-tf-btn active" data-tf="D">Daily</span>
+      <span class="chart-tf-btn" data-tf="W">Weekly</span>
+    </span>
+    <span class="chart-popover-close" id="chartPopClose" title="Close">&times;</span>
+  </div>
+  <div class="chart-popover-body" id="chartPopBody"></div>
 </div>
 
 <script>
@@ -718,6 +769,167 @@ function setupManualTrigger(){
   });
 }
 setupManualTrigger();
+
+// ---- Chart popover (hover or tap a ticker) -----------------------------
+// Embeds TradingView's free "Advanced Chart" widget for whichever ticker
+// was hovered/tapped, in a small floating card next to it — never a new
+// page or tab. Daily is the default view; the Daily/Weekly buttons in the
+// popover's header re-render the SAME popover with a different interval
+// (never both at once). A 50-period Simple Moving Average is overlaid via
+// the widget's own `studies` option.
+//
+// The widget needs TradingView's own tv.js script (loaded once, lazily, on
+// the first hover/tap — not up front, so the Movers/Maps/Earnings tabs
+// never wait on a third-party script they might not need this visit) and
+// live internet access to TradingView's servers; it pulls price data
+// directly from them, nothing from docs/*.json. Tickers are passed bare
+// (e.g. "AAPL", no exchange prefix) — TradingView resolves that to the
+// primary US listing for the vast majority of names here, but a ticker
+// that's ambiguous across exchanges/countries could occasionally resolve
+// to the wrong instrument; there's no exchange field in movers.json or
+// earnings.json to disambiguate with.
+let tvScriptPromise = null;
+let activeChartSymbol = null;
+let activeChartTF = 'D';
+let chartCloseTimer = null;
+
+function loadTradingViewScript(){
+  if (window.TradingView) return Promise.resolve();
+  if (tvScriptPromise) return tvScriptPromise;
+  tvScriptPromise = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://s3.tradingview.com/tv.js';
+    s.onload = () => resolve();
+    s.onerror = () => reject(new Error('tv.js failed to load'));
+    document.head.appendChild(s);
+  });
+  return tvScriptPromise;
+}
+
+function positionChartPopover(anchorEl){
+  const pop = document.getElementById('chartPopover');
+  const rect = anchorEl.getBoundingClientRect();
+  const popW = pop.offsetWidth || 340;
+  const popH = pop.offsetHeight || 280;
+  let left = rect.left;
+  let top = rect.bottom + 6;
+  if (left + popW > window.innerWidth - 8) left = window.innerWidth - popW - 8;
+  if (left < 8) left = 8;
+  if (top + popH > window.innerHeight - 8) top = rect.top - popH - 6; // flip above if no room below
+  if (top < 8) top = 8;
+  pop.style.left = left + 'px';
+  pop.style.top = top + 'px';
+}
+
+function renderChartWidget(symbol, interval){
+  const body = document.getElementById('chartPopBody');
+  body.innerHTML = '<div class="chart-loading">Loading chart…</div>';
+  const containerId = 'tvw_' + Math.random().toString(36).slice(2);
+  loadTradingViewScript().then(() => {
+    // The popover may have been closed, or switched to a different
+    // ticker/timeframe, while tv.js was still loading — bail rather than
+    // render a now-stale chart into a container that may no longer exist.
+    if (activeChartSymbol !== symbol || activeChartTF !== interval) return;
+    body.innerHTML = '';
+    const div = document.createElement('div');
+    div.id = containerId;
+    div.style.width = '100%';
+    div.style.height = '100%';
+    body.appendChild(div);
+    new TradingView.widget({
+      autosize: true,
+      symbol: symbol,
+      interval: interval,
+      timezone: 'America/New_York',
+      theme: document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light',
+      style: '1', // candlesticks
+      locale: 'en',
+      toolbar_bg: 'rgba(0,0,0,0)',
+      enable_publishing: false,
+      hide_top_toolbar: true,
+      hide_legend: false,
+      withdateranges: false,
+      save_image: false,
+      studies: [{ id: 'MASimple@tv-basicstudies', inputs: { length: 50 } }], // 50-day SMA overlay
+      container_id: containerId,
+    });
+  }).catch(() => {
+    if (activeChartSymbol !== symbol || activeChartTF !== interval) return;
+    body.innerHTML = '<div class="chart-error">Could not load the chart (TradingView unreachable).</div>';
+  });
+}
+
+function openChartPopover(symbol, anchorEl){
+  clearTimeout(chartCloseTimer);
+  activeChartSymbol = symbol;
+  activeChartTF = 'D';
+  document.getElementById('chartPopSym').textContent = symbol;
+  document.querySelectorAll('.chart-tf-btn').forEach(b => b.classList.toggle('active', b.dataset.tf === 'D'));
+  const pop = document.getElementById('chartPopover');
+  pop.style.display = 'block';
+  positionChartPopover(anchorEl);
+  renderChartWidget(symbol, 'D');
+}
+
+function closeChartPopover(){
+  activeChartSymbol = null;
+  document.getElementById('chartPopover').style.display = 'none';
+  document.getElementById('chartPopBody').innerHTML = '';
+}
+
+function scheduleChartClose(){
+  clearTimeout(chartCloseTimer);
+  chartCloseTimer = setTimeout(closeChartPopover, 250);
+}
+
+// Delegated on document (not per-row) since Movers/Earnings rows are
+// regenerated on every refresh — this way nothing needs re-wiring after
+// each renderMovers()/renderEarnings() call. mouseover/mouseout bubble
+// (mouseenter/mouseleave don't), which is what makes delegation work here.
+document.addEventListener('mouseover', (ev) => {
+  const el = ev.target.closest('.sym');
+  if (!el) return;
+  if (el.textContent.trim() === activeChartSymbol) { clearTimeout(chartCloseTimer); return; }
+  openChartPopover(el.textContent.trim(), el);
+});
+document.addEventListener('mouseout', (ev) => {
+  const el = ev.target.closest('.sym');
+  if (!el) return;
+  scheduleChartClose();
+});
+// Tap-to-open on touch devices, which don't fire hover events. Always
+// (re)opens rather than toggling closed on a second click — on desktop,
+// a real click is preceded by its own mousemove, which already opens the
+// popover via the hover handler above; a toggle-to-close here would just
+// immediately close what hover just opened.
+document.addEventListener('click', (ev) => {
+  const el = ev.target.closest('.sym');
+  if (el) {
+    openChartPopover(el.textContent.trim(), el);
+    return;
+  }
+  // Click outside the popover (and not on a ticker) closes it.
+  const pop = document.getElementById('chartPopover');
+  if (pop.style.display === 'block' && !pop.contains(ev.target)) closeChartPopover();
+});
+document.addEventListener('keydown', (ev) => {
+  if (ev.key === 'Escape') closeChartPopover();
+});
+// Hovering the popover itself (moving from the ticker into the chart)
+// cancels the pending close instead of letting it disappear mid-move.
+const chartPopoverEl = document.getElementById('chartPopover');
+chartPopoverEl.addEventListener('mouseenter', () => clearTimeout(chartCloseTimer));
+chartPopoverEl.addEventListener('mouseleave', scheduleChartClose);
+document.getElementById('chartPopClose').addEventListener('click', closeChartPopover);
+document.querySelectorAll('.chart-tf-btn').forEach(btn => {
+  btn.addEventListener('click', (ev) => {
+    ev.stopPropagation(); // don't let the document click-outside handler fire
+    if (!activeChartSymbol) return;
+    activeChartTF = btn.dataset.tf;
+    document.querySelectorAll('.chart-tf-btn').forEach(b => b.classList.toggle('active', b === btn));
+    renderChartWidget(activeChartSymbol, activeChartTF);
+  });
+});
 
 loadMovers();
 loadMaps();
