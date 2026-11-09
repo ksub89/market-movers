@@ -9,11 +9,13 @@
     --bg:#f7f8fa; --card:#ffffff; --border:#e3e5e9; --text:#15171c; --muted:#6b7280;
     --green:#17803d; --red:#dc2626; --accent:#2563eb; --greenSoft:rgba(23,128,61,.10); --redSoft:rgba(220,38,38,.10);
     --borderStrong:#c7cbd3; --colTint:rgba(15,23,42,.045);
+    --mega:#9a5b00; --megaSoft:rgba(154,91,0,.08);
   }
   [data-theme="dark"]{
     --bg:#0b0c10; --card:#15171c; --border:#242731; --text:#e8e9ec; --muted:#8a8f9c;
     --green:#1fae5f; --red:#ff4d4f; --accent:#3b82f6; --greenSoft:rgba(31,174,95,.15); --redSoft:rgba(255,77,79,.15);
     --borderStrong:#3a3f4c; --colTint:rgba(255,255,255,.045);
+    --mega:#e3a73f; --megaSoft:rgba(227,167,63,.12);
   }
   *{box-sizing:border-box;}
   body{
@@ -154,6 +156,16 @@
   .erow{
     border:1px solid var(--border); border-radius:10px; padding:12px 14px;
     background:var(--card); animation:fadeIn .2s ease;
+  }
+  /* Mega-cap override: included despite NOT clearing the normal 20%+ beat
+     bar, purely because its market cap is over the mega-cap threshold.
+     Amber accent (distinct from the green/red used for beats/misses
+     elsewhere) + a left border so it reads as "included for a different
+     reason" at a glance, not as a stronger or weaker beat. */
+  .erow.mega-override{ border-left:3px solid var(--mega); background:var(--megaSoft); }
+  .mega-badge{
+    font-size:10.5px; font-weight:700; color:var(--mega); border:1px solid var(--mega);
+    padding:1px 6px; border-radius:8px; white-space:nowrap;
   }
   .eline1{ display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
   .eline1 .sym{ font-weight:700; font-size:15px; }
@@ -505,12 +517,13 @@ function renderEarnings(){
   empty.style.display = entries.length ? 'none' : 'block';
   for(const e of entries){
     const card = document.createElement('div');
-    card.className = 'erow';
+    card.className = 'erow' + (e.mega_cap_override ? ' mega-override' : '');
     card.innerHTML = `
       <div class="eline1">
         <span class="sym">${e.ticker}</span>
         <span class="session">${e.session}</span>
         <span class="ecap">${fmtCap(e.market_cap)}</span>
+        ${e.mega_cap_override ? '<span class="mega-badge" title="Included for its market cap, not because it beat estimates">Mega-Cap · no beat</span>' : ''}
       </div>
       <div class="ename">${e.company}</div>
       <div class="estats">
@@ -549,8 +562,9 @@ async function loadEarnings(){
     const genLabel = json.generated_at ? new Date(json.generated_at).toLocaleString('en-US', {
       timeZone: 'America/New_York', month:'short', day:'numeric', hour:'numeric', minute:'2-digit', timeZoneName:'short'
     }) : 'unknown';
+    const megaCapB = json.mega_cap_threshold_m ? (json.mega_cap_threshold_m / 1000).toFixed(0) : '99';
     document.getElementById('earningsMeta').textContent = EARNINGS_DAYS.length
-      ? `Last ${EARNINGS_DAYS.length} trading days · Showing names that beat EPS or Revenue estimates by ${json.min_surprise_pct}%+ · Data refreshed: ${genLabel}`
+      ? `Last ${EARNINGS_DAYS.length} trading days · Showing names that beat EPS or Revenue estimates by ${json.min_surprise_pct}%+, plus any mega-cap over $${megaCapB}B regardless of beat · Data refreshed: ${genLabel}`
       : 'No data yet — the daily job hasn\'t run.';
     renderDayTabs();
     renderEarnings();
