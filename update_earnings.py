@@ -66,13 +66,29 @@ MEGA_CAP_THRESHOLD_M = 99_000.0
 # workflow_dispatch (from the Cloudflare Worker's scheduler or a manual
 # click), and in_run_window() below always lets that through regardless of
 # time. Kept in sync with the Worker's SCHEDULES anyway as documentation /
-# a safety net should a `schedule:` trigger ever come back. The evening mark
-# is 17:45, not 17:00 — update_movers.yml also has a 17:00 mark of its own,
-# and two different workflows firing at the same moment can race to commit
-# to main at the same time (one workflow's push getting rejected because the
-# other just moved main out from under it); see cloudflare-worker.js's
-# SCHEDULES comment for the full explanation.
-RUN_WINDOWS_ET = [(8, 0), (17, 45)]  # (hour, minute), 24h clock, America/New_York
+# a safety net should a `schedule:` trigger ever come back.
+#
+# Evening mark: 20:00, not 17:45. Moved later after CRWV's AMC report
+# (earnings call at 5:00pm ET) was still missing its EPS/Revenue Surprise %
+# in Finviz's earnings-CALENDAR export at our old 17:45 run — only ~45 min
+# after the call started. That export endpoint appears to lag Finviz's own
+# live quote page (which can already show the computed surprise by then) by
+# its own separate refresh/batch cycle, so a same-day evening run needs more
+# of a cushion after the close for same-day AMC reporters to have their
+# actual EPS/Revenue + surprise % finalized in that specific feed. 20:00 ET
+# gives ~3 hours of cushion after a typical 5pm call instead of ~45 minutes.
+# (Each run re-fetches the full NUM_DAYS-day window fresh, so even if a
+# report is still missing its surprise % at 20:00, the following morning's
+# 8:30 run re-pulls the same day and should pick it up.)
+#
+# Morning mark: unchanged at 8:00 — update_movers.yml's own morning cluster
+# (7:15, 7:45, 8:15, 8:28, 8:45, 9:15) leaves no gap near 8:00-8:45 wide
+# enough to fit another safely-spaced mark, so 8:00 (already 15 min clear of
+# Movers' 7:45/8:15) stays put rather than risk a same-tick/identical-mark
+# collision (see cloudflare-worker.js's SCHEDULES comment for why marks
+# across DIFFERENT workflow files must stay spaced out: a same-tick dispatch
+# of two workflows can race to commit to main, with one push rejected).
+RUN_WINDOWS_ET = [(8, 0), (20, 0)]  # (hour, minute), 24h clock, America/New_York
 RUN_TOLERANCE_MIN = 20
 
 NYSE = mcal.get_calendar("NYSE")
