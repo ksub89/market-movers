@@ -119,46 +119,56 @@ TIME_RE = re.compile(r"\[(\d{1,2}/\d{1,2}/\d{4}\s+\d{1,2}:\d{2}\s*[AP]M)\]\s*$")
 NYSE = mcal.get_calendar("NYSE")
 
 
-def most_recent_market_open() -> datetime:
-    """The most recent NYSE 9:30am-ET open that has already happened, as an
-    ET-aware datetime (the project standardizes on ET everywhere — no UTC —
-    to keep every timestamp in the code, logs, and JSON directly readable
-    without a mental timezone conversion). A symbol often carries several
-    headlines spanning multiple days (e.g. an analyst note two days ago, an
-    after-hours release last night, a wire-service rehash this morning) —
-    the one that actually explains a PREmarket or afterhours move is the
-    newest one that landed before the open, not whatever's merely most
-    recent chronologically. Anything stamped after that open is just
-    same-day market-hours noise by the time this runs again (next premarket
-    or afterhours window), so it's deprioritized in favor of the real
-    pre-open catalyst. Computed via the exchange calendar (not hardcoded
-    9:30) for the same reason the other two scripts do — holidays/early
-    closes shift what "today's session" even is. pandas_market_calendars
-    hands back its schedule in UTC internally (that's the library's own
-    native format, not something we control), so each open is immediately
-    converted to America/New_York here — nothing UTC-labeled ever leaves
-    this function."""
+def next_market_open() -> datetime:
+    """The next NYSE 9:30am-ET open at-or-after right now, as an ET-aware
+    datetime (the project standardizes on ET everywhere — no UTC — to keep
+    every timestamp in the code, logs, and JSON directly readable without a
+    mental timezone conversion). This is the upper bound of the CURRENT
+    Premarket window: during premarket hours (before today's open) that's
+    today's own 9:30am open — even though it hasn't happened yet — and
+    during afterhours/overnight it's tomorrow's (or next trading day's)
+    open, since any overnight headline before that open is a valid
+    pre-open catalyst for the upcoming session.
+
+    Named/renamed from the previous most_recent_market_open() (which
+    returned the last open that had ALREADY happened) after that version
+    caused a real bug: a run during today's premarket hours would resolve
+    to YESTERDAY's 9:30am open as the window's upper bound, so every one of
+    TODAY's genuine premarket headlines (timestamped after yesterday's open
+    but before today's) read as "outside" the Premarket window and lost out
+    to a stale prior-day headline that happened to fall before that
+    too-early cutoff (e.g. LUNR's real Nov 12 earnings-beat headlines were
+    silently passed over in favor of a Nov 11 "earnings preview" headline).
+    "The open that bounds the premarket session in progress" is always the
+    NEXT one, never the last one that already happened.
+
+    Computed via the exchange calendar (not hardcoded 9:30) for the same
+    reason the other two scripts do — holidays/early closes shift what
+    "today's session" even is. pandas_market_calendars hands back its
+    schedule in UTC internally (that's the library's own native format, not
+    something we control), so each open is immediately converted to
+    America/New_York here — nothing UTC-labeled ever leaves this function."""
     now_et = datetime.now(ZoneInfo("America/New_York"))
     sched = NYSE.schedule(
-        start_date=(now_et - timedelta(days=10)).date(), end_date=now_et.date()
+        start_date=now_et.date(), end_date=(now_et + timedelta(days=10)).date()
     )
     opens = [
         o.to_pydatetime().astimezone(ZoneInfo("America/New_York"))
         for o in sched["market_open"]
     ]
-    opens = [o for o in opens if o <= now_et]
+    opens = [o for o in opens if o >= now_et]
     if not opens:
         raise RuntimeError(
-            f"pandas_market_calendars found no past NYSE opens in the 10 days "
-            f"up to {now_et.date()} — that shouldn't happen."
+            f"pandas_market_calendars found no upcoming NYSE opens in the 10 "
+            f"days from {now_et.date()} — that shouldn't happen."
         )
-    return opens[-1]
+    return opens[0]
 
 
 def most_recent_market_close() -> datetime:
     """The most recent NYSE 4:00pm-ET close that has already happened, as an
     ET-aware datetime — the Afterhours-side counterpart to
-    most_recent_market_open() above, and computed the same way (via the
+    next_market_open() above, and computed the same way (via the
     exchange calendar, so holidays/early closes shift it correctly)."""
     now_et = datetime.now(ZoneInfo("America/New_York"))
     sched = NYSE.schedule(
@@ -371,7 +381,7 @@ def window_for(source_page: str, open_cutoff: datetime, close: datetime) -> tupl
 
 
 def build_dataset():
-    open_cutoff = most_recent_market_open()
+    open_cutoff = next_market_open()
     close = most_recent_market_close()
 
     all_entries = []
