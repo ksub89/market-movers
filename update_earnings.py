@@ -68,27 +68,33 @@ MEGA_CAP_THRESHOLD_M = 99_000.0
 # time. Kept in sync with the Worker's SCHEDULES anyway as documentation /
 # a safety net should a `schedule:` trigger ever come back.
 #
-# Evening mark: 20:00, not 17:45. Moved later after CRWV's AMC report
-# (earnings call at 5:00pm ET) was still missing its EPS/Revenue Surprise %
-# in Finviz's earnings-CALENDAR export at our old 17:45 run — only ~45 min
-# after the call started. That export endpoint appears to lag Finviz's own
-# live quote page (which can already show the computed surprise by then) by
-# its own separate refresh/batch cycle, so a same-day evening run needs more
-# of a cushion after the close for same-day AMC reporters to have their
-# actual EPS/Revenue + surprise % finalized in that specific feed. 20:00 ET
-# gives ~3 hours of cushion after a typical 5pm call instead of ~45 minutes.
-# (Each run re-fetches the full NUM_DAYS-day window fresh, so even if a
-# report is still missing its surprise % at 20:00, the following morning's
-# 8:30 run re-pulls the same day and should pick it up.)
+# Five marks, not two. This script re-fetches Finviz's earnings-calendar
+# export completely fresh on every run (no caching, no incremental state),
+# so the ONLY reason a same-day report can still be missing its EPS/Revenue
+# Surprise % is that Finviz's own calendar backend hadn't finished posting
+# those structured fields yet at run time — a separate system from general
+# news coverage, with its own update lag that's decoupled from how fast a
+# press release spreads elsewhere. (LUNR's Nov 12 BMO report: the numbers
+# were already public well before our old single 8:00am check, yet still
+# weren't picked up — proof that "push the check later" doesn't reliably
+# fix this, only "check more often" does, since the lag is on Finviz's
+# side, not a fixed delay after the report crosses the wire.)
 #
-# Morning mark: unchanged at 8:00 — update_movers.yml's own morning cluster
-# (7:15, 7:45, 8:15, 8:28, 8:45, 9:15) leaves no gap near 8:00-8:45 wide
-# enough to fit another safely-spaced mark, so 8:00 (already 15 min clear of
-# Movers' 7:45/8:15) stays put rather than risk a same-tick/identical-mark
-# collision (see cloudflare-worker.js's SCHEDULES comment for why marks
-# across DIFFERENT workflow files must stay spaced out: a same-tick dispatch
-# of two workflows can race to commit to main, with one push rejected).
-RUN_WINDOWS_ET = [(8, 0), (20, 0)]  # (hour, minute), 24h clock, America/New_York
+# So instead of two widely-spaced checks (the old 8:00/17:45, then
+# 8:00/20:00), this runs five times, clustered around when BMO and AMC
+# reports actually land: 6:00, 7:00, 8:00, 9:00am ET (BMO coverage, each a
+# fresh independent shot at whatever Finviz has posted by then) and 21:00
+# (9:00pm) ET (AMC coverage, now with ~4 hours of cushion after a typical
+# 5pm call instead of chasing an exact "cushion" number at all).
+#
+# All five are spaced to stay clear of update_movers.yml's own morning/
+# afternoon cluster (7:15, 7:45, 8:15, 8:28, 8:45, 9:15, 15:30-18:00) — see
+# cloudflare-worker.js's SCHEDULES comment for why marks across DIFFERENT
+# workflow files must stay >=13 min apart (two workflows dispatched on the
+# same tick can race to commit to main, with one push rejected). 9:00am
+# was chosen over 8:40/8:50 specifically because Movers' 8:45 mark leaves no
+# safe gap any closer than 8:58-9:02.
+RUN_WINDOWS_ET = [(6, 0), (7, 0), (8, 0), (9, 0), (21, 0)]  # (hour, minute), ET
 RUN_TOLERANCE_MIN = 20
 
 NYSE = mcal.get_calendar("NYSE")
